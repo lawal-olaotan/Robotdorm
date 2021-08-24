@@ -14,9 +14,8 @@ const express = require ('express'),
     app.use(cors({ origin:"*" })); 
 
 
-    const port = process.env.Port || 8000;
+    const port = process.env.PORT || 8000;
     
     app.listen(port, ()=> {
-
         console.log(`server listening at port ${port}`)
     })
