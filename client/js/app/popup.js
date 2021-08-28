@@ -17,6 +17,12 @@ jumiaScrapper.config(function($stateProvider, $urlRouterProvider){
         url:'/signup',
         templateUrl:'../views/signup.html'
     })
+    .state('welcome', {
+        url:'/welcome',
+        templateUrl:'../views/welcome.html'
+    })
+
+
 
     $urlRouterProvider.otherwise('login')
 
@@ -26,14 +32,15 @@ jumiaScrapper.config(function($stateProvider, $urlRouterProvider){
 jumiaScrapper.controller("popupCtrl", ['$scope', '$state', function($scope,$state){
     console.log('popupCtrl initialized');
 
-
-
-
     $scope.login = function(formData){
         console.log(formData);
         chrome.runtime.sendMessage({type:"login", data:formData}, 
             function(response){
                 console.log('response from background is:',response ) 
+                if(response.user){
+                    $scope.name = response.user.username;
+                    $state.go('welcome');
+                }
             }
         
         )
@@ -44,9 +51,9 @@ jumiaScrapper.controller("popupCtrl", ['$scope', '$state', function($scope,$stat
         chrome.runtime.sendMessage({type:"signup",data:formData}, 
         function(response){
             console.log('response from background is:',response )
-            // if(response.token){
-            //     $state.go('login');
-            // }
+            if(response.token){
+                $state.go('login');
+            }
         
         }
         
