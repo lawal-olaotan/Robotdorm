@@ -62,3 +62,10 @@ jumiaScrapper.controller("popupCtrl", ['$scope', '$state', function($scope,$stat
 
    
 }])
+
+
+jumiaScrapper.controller("ScraperCtrl", ['$scope', '$state', function($scope,$state){
+    console.log('ScraperCtrl initialized');
+
+
+}])
