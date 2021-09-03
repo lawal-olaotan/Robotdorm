@@ -8,6 +8,7 @@ let domain = dev ? "http://localhost:8000/" : 'https://yapaextension.com/'
 chrome.runtime.onMessage.addListener(
 
   function(message,sender,sendResponse){
+    
     // switch statement used to find cases based on the user current state
     switch (message.type){
       case "login":
@@ -29,12 +30,22 @@ chrome.runtime.onMessage.addListener(
           allAjax('POST',userCreds,'user/signup','',function(response){
             sendResponse(response)
             console.log('response from the server',response)
-            
           })
           return true;
           break;
       case"products":
           console.log('purchaseYears event was hit in background',message.data);
+          let orderDetails = []
+          for(let i=0; i < message.data.length; i++){
+            let value = message.data[i]
+            if(value.includes(' ')){
+              orderDetails.unshift(value.split(' ')[1]);
+            }
+          }
+          console.log(message.type);
+          let uniqueDetails = [...new Set(orderDetails)];
+          setStorageItem(message.type,uniqueDetails);
+          sendResponse('all good');
           return true;
           break;
       default:
@@ -64,7 +75,6 @@ function allAjax(type,data,path,token,callback){
 
 
 function setStorageItem(varName,data){
-  console.log('varable Name', varName)
   if(varName!= 'searchPageData'){
     console.log('data',data);
     window.localStorage.setItem(varName,JSON.stringify(data))
