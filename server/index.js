@@ -4,6 +4,7 @@ const express = require ('express'),
     mongoose = require('mongoose'),
     cors = require ('cors');
     const user = require("./routes/user");
+    const product = require("./routes/product")
 
     
 
@@ -25,6 +26,7 @@ const express = require ('express'),
     app.use(cors({ origin:"*" }));
 
     app.use("/user", user);
+    app.use("/product", product);
 
 
     app.post('/save-product',(req,res)=> {
