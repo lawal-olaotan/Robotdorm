@@ -19,7 +19,12 @@
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.13.7",
     "morgan": "^1.10.0",
+    "node-fetch": "^3.0.0",
     "nodemon": "^2.0.12",
-    "puppeteer": "^10.2.0"
+    "promise-poller": "^1.7.1",
+    "puppeteer": "^1.20.0",
+    "puppeteer-extra": "^3.1.18",
+    "puppeteer-extra-plugin-recaptcha": "^3.4.0",
+    "puppeteer-extra-plugin-stealth": "^2.7.8"
   }
 }

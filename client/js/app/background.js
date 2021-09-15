@@ -8,7 +8,6 @@ let domain = dev ? "http://localhost:8000/" : 'https://yapaextension.com/'
 chrome.runtime.onMessage.addListener(
 
   function(message,sender,sendResponse){
-    
     // switch statement used to find cases based on the user current state
     switch (message.type){
       case "login":
@@ -36,15 +35,25 @@ chrome.runtime.onMessage.addListener(
       case"products":
           console.log('purchaseYears event was hit in background',message.data);
           let orderDetails = []
-          for(let i=0; i < message.data.length; i++){
-            let value = message.data[i]
+          for(let i=0; i < message.data.product.length; i++){
+            let value = message.data.product[i]
             if(value.includes(' ')){
               orderDetails.unshift(value.split(' ')[1]);
             }
           }
-          console.log(message.type);
-          let uniqueDetails = [...new Set(orderDetails)];
+          let uniqueDetails =[... new Set(orderDetails)];
+          console.log(uniqueDetails);
           setStorageItem(message.type,uniqueDetails);
+  
+
+          let autoData = message.data
+          autoData.product = uniqueDetails;
+
+          allAjax('POST',autoData,'product/orderhistory','',function(response){
+            sendResponse(response)
+            console.log('response from the server',response)
+          });
+
           sendResponse('all good');
           return true;
           break;
@@ -73,10 +82,8 @@ function allAjax(type,data,path,token,callback){
   });
 }
 
-
 function setStorageItem(varName,data){
   if(varName!= 'searchPageData'){
-    console.log('data',data);
     window.localStorage.setItem(varName,JSON.stringify(data))
   }
 
