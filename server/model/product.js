@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const {objectId} = mongoose.Schema;
+const { ObjectId } = mongoose.Schema;
 
 const productSchema = new mongoose.Schema({
     title : {
@@ -9,20 +9,20 @@ const productSchema = new mongoose.Schema({
         max:160,
         required:true,
     },
-    amount:{
+    image:{
         type:String,
     }, 
-    order_no:{
+    qty:{
         type:String,
     }, 
-    delivery_date: {
+    price: {
         type:String
     },
-    productimg_url:{
+    deliveryDate:{
         type:String
     },
     postedBy:{
-        type:objectId,
+        type:ObjectId,
         ref:'User'
     }
 },
