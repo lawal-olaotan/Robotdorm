@@ -10,6 +10,12 @@ chrome.runtime.onMessage.addListener(
   function(message,sender,sendResponse){
     // switch statement used to find cases based on the user current state
     switch (message.type){
+
+      case "onPopupInit":
+        console.log('onPopupInit login ran')
+        sendResponse(getStorageItem('user'));
+        return true;
+        break;
       case "login":
           console.log('login logic ran with FormData ', message.data)
           let userInfo = message.data; 
@@ -32,6 +38,17 @@ chrome.runtime.onMessage.addListener(
           })
           return true;
           break;
+      case "initiateHistory":
+          console.log('message:',message);
+          chrome.tabs.create({url:'https://www.jumia.com.ng/customer/order/index/'});
+          return true; 
+        break;
+      case "visitJumia":
+          console.log('message:',message);
+          chrome.tabs.create({url:'https://www.jumia.com.ng'});
+          sendResponse('website redirected');
+          return true; 
+        break;
       case"products":
           console.log('purchaseYears event was hit in background',message.data);
           let orderDetails = []
@@ -48,15 +65,34 @@ chrome.runtime.onMessage.addListener(
 
           let autoData = message.data
           autoData.product = uniqueDetails;
+          autoData._id = getStorageItem('user').user._id;
 
-          allAjax('POST',autoData,'product/orderhistory','',function(response){
-            sendResponse(response)
+
+          allAjax('POST',autoData,'product/orderhistory','',
+            function(response){
             console.log('response from the server',response)
           });
-
           sendResponse('all good');
           return true;
           break;
+        case"searchData":
+        console.log('search data event hit in background', message.data);
+        message.data._id = getStorageItem('user').user._id;
+        setStorageItem(message.type,message.data);
+        sendResponse('data succesffully recieved in background');
+        return true; 
+        break;
+        case"keywordSearch": 
+        console.log('keyword event event hit background');
+        const data = getStorageItem('searchData');
+        
+        allAjax('POST',data,'product/searchScrapper','',
+            function(response){
+            console.log('response from the server',response)
+          });
+        sendResponse('data recieved')
+        return true; 
+        break;
       default:
           console.log('no match found')
     }
@@ -83,12 +119,9 @@ function allAjax(type,data,path,token,callback){
 }
 
 function setStorageItem(varName,data){
-  if(varName!= 'searchPageData'){
     window.localStorage.setItem(varName,JSON.stringify(data))
-  }
-
 }
 
 function getStorageItem(varName){
-  return JSON.parse(localstorage.getItem(varName))
+  return JSON.parse(localStorage.getItem(varName))
 }
