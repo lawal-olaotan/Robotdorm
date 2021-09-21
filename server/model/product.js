@@ -21,6 +21,9 @@ const productSchema = new mongoose.Schema({
     deliveryDate:{
         type:String
     },
+    orderNo:{
+        type:String,
+    },
     postedBy:{
         type:ObjectId,
         ref:'User'

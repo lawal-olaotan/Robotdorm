@@ -1,19 +1,11 @@
 <div ng-controller="ScraperCtrl">
 
-    <p>Hi there {{name}}, what would you like to scrape your amazon Today ?</p>
+    <p> Hi {{name}}, what would you like to scrape your Jumia data Today ?</p>
 
-    <a ng-click="showSearchOptions()" class="btn btn-block btn-info mb-3"> scrape search results</a>
+    <a ng-click="keywordSearch()" id="keywordbtn" class="btn btn-block btn-info mt-2 mb-3 {{search}}"> scrape search results</a>
     <br/>
-    <a ng-click="fetchHistory()" class="btn btn-block btn-info mb-3">purchase history</a>
+    <a ng-click="fetchHistory()" class="btn btn-block btn-info mt-2 mb-4">purchase history</a>
     <br/>
-    <div class="row">
-        <div class="jumbotron text-muted text-center">
-            <p> Need Assistance 
-                <a target="_blank" href="#">Contact Support</a>
-            </p>
-
-        </div>
-    </div>
-
-
+    
+    <br/>
 </div>
