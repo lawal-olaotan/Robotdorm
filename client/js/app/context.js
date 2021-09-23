@@ -27,9 +27,16 @@ console.log(url);
                 }
                     
                 if(url.includes('?q=')){
+                    const urlArray = []
                     let searchLink = url;
+                    urlArray.push(searchLink);
+                    for(let i =2; i <= 50; i++){
+                    let searchlinks = `${url}&page=${[i]}#catalog-listing`;
+                        urlArray.push(searchlinks);
+                    }
+        
                     let queryData = document.querySelector('.brcbs.col16.-pvs').lastChild.innerHTML;
-                    const searchData = {searchLink : searchLink , keyWord : queryData};
+                    const searchData = {searchLink : urlArray , keyWord : queryData};
                     sendToBackground('searchData',searchData);
                     sendToPopup(true,'enable')
                 }else{

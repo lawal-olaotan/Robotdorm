@@ -23,20 +23,15 @@ const express = require ('express'),
     app.use(bodyParser.json({limit:'200mb',extended:true}));
     app.use(bodyParser.urlencoded({limit:'200mb', extended:true}));
 
-    app.use(cors({ origin:"*" }));
+    app.use(cors({ origin:"*"}));
 
     app.use("/user", user);
     app.use("/product", product);
 
 
-    app.post('/save-product',(req,res)=> {
-        console.log(res.body)
-        res.send('all good')
-    })
-
-
+    
     const port = process.env.PORT || 8000;
     
-    app.listen(port, ()=> {
+    app.listen(port,()=> {
         console.log(`server listening at port ${port}`)
     })
