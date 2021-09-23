@@ -13,7 +13,9 @@ exports.withBrowser = async ( fn )=> {
 
 
 exports.withPage = (browser) => async (fn) => {
+
     const page = await browser.newPage();
+    
     try{
         return await fn(page);
     } finally{

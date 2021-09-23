@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const bluebird = require('bluebird'); 
 const puppeteer = require('puppeteer-extra');
 const RecaptchaPlugin = require('puppeteer-extra-plugin-recaptcha');
 const StealthPlugin = require('puppeteer-extra-plugin-stealth');
@@ -9,13 +10,11 @@ const saveData = require('../controllers/product');
 const {withBrowser,withPage} = require('../helpers/product'); 
 
 
-const apiKey = '4601b5f10c47ad8454b4f94a654d3784'
-
 puppeteer.use(StealthPlugin())
 
 puppeteer.use(
     RecaptchaPlugin({
-      provider: { id:'2captcha',token:apiKey},
+      provider: { id:'2captcha',token:process.env.API_KEY},
       visualFeedback: true // colorize reCAPTCHAs (violet = detected, green = solved)
     })
 ); 
@@ -59,65 +58,40 @@ router.post("/searchScrapper",
 
 const searchPage = async(data) => {
 
-
+    const urls = data.searchLink; 
+    let searchProducts = [];
     try {
-         // executablePath:'/Applications/Google Chrome.app/Contents/MacOS/Google Chrome',
-        // const browser = await puppeteer.launch({headless:true})
-        // const [page] = await browser.pages();
+        await withBrowser(async(browser)=> {
+            await bluebird.map(urls,async (url) => {
+                await withPage (browser)(async (page) => {
+                    await page.setRequestInterception(true);
+                    // initializing request interceptor 
+                    await page.on('request', request=> {
+                    // if the page makes request to a image and stylesheet 
+                        if(request.resourceType() === 'image' || request.resourceType() === 'stylesheet' || request.resourceType() === 'eventsource' || request.resourceType() === 'script' || request.resourceType() === 'font' ){
+                            request.abort()
+                        }else{
+                            request.continue()
+                        }
+                    })
+                    await page.solveRecaptchas();
 
+                    await page.goto(url);
 
-            await withBrowser(async(browser)=> {
+                    if(await page.$('.-pvs.col12')){
+                            let otherdata = await getProducts(page); 
+                            searchProducts.push(otherdata); 
+                    }else{
+                            console.log('cannot load website')
+                    }
+            
+                    let  searchedProducts  = Array.prototype.concat.apply([],searchProducts);
+                    console.log(searchedProducts);
+                    
+                })
 
-            await withPage (browser)(async (page) => {
-
-
-                let searchProducts = []
-
-
-            await page.setRequestInterception(true);
-            // initializing request interceptor 
-            await page.on('request', request=> {
-           // if the page makes request to a image and stylesheet 
-            if(request.resourceType() === 'image' || request.resourceType() === 'stylesheet' || request.resourceType() === 'eventsource' || request.resourceType() === 'script' || request.resourceType() === 'font' ){
-                request.abort()
-                console.log('removed contents')
-            }else{
-                request.continue()
-            }
-            })
-
-            await page.goto(data.searchLink, {
-                waitUntil:'networkidle0'
-            });
-    
-            await page.solveRecaptchas();
-        
-            if(await page.$('.-pvs.col12')){
-            let firstpage = await getProducts(page); 
-            console.log(firstpage.length);
-            searchProducts.push(firstpage);
-            console.log('first page scrapped');
-            }else{
-            console.log('cannot load website')
-            }
-
-        
-            for(let i =2; i <= 50; i++){
-                let searchlinks = `${data.searchLink}&page=${[i]}#catalog-listing`;
-                await page.goto(searchlinks);
-
-                if(await page.$('.-pvs.col12')){
-                    let otherdata = await getProducts(page); 
-                    searchProducts.push(otherdata); 
-                }else{
-                    console.log('cannot load website')
-                }  
-            }
-
-            let  searchedProducts  = Array.prototype.concat.apply([],searchProducts);
-            console.log(searchedProducts);
-            })
-        })
+            },{concurrency:6});  
+        });
 
     }catch(err){
                 if (err instanceof puppeteer.errors.TimeoutError){
@@ -125,9 +99,6 @@ const searchPage = async(data) => {
                 }
     }
 }
-
-
-
 
 
 const getProducts = async(page) => {
@@ -174,9 +145,7 @@ const getProducts = async(page) => {
                             shipping = 'Jumia Express'
                        }else{
                            shipping = 'Local Inventory'
-                       }
-                     
-                        
+                       }  
                         let products = {
                             title : title,
                             img : img,
