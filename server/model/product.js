@@ -2,6 +2,9 @@ const mongoose = require('mongoose');
 const { ObjectId } = mongoose.Schema;
 
 const productSchema = new mongoose.Schema({
+    keyWord:{
+        type:String,
+    },
     title : {
         type:String,
         trim:true,
@@ -9,19 +12,31 @@ const productSchema = new mongoose.Schema({
         max:160,
         required:true,
     },
-    image:{
+    img:{
         type:String,
     }, 
-    qty:{
+    link:{
         type:String,
     }, 
     price: {
         type:String
     },
-    deliveryDate:{
+    sales:{
+        type:Number
+    },
+    revenue:{
         type:String
     },
-    orderNo:{
+    ratings:{
+        type:Number
+    },
+    customer:{
+        type:Number,
+    },
+    mode:{
+        type:String,
+    },
+    shipping:{
         type:String,
     },
     postedBy:{

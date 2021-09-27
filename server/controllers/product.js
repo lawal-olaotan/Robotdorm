@@ -1,13 +1,14 @@
 const Product = require('../model/product');
 
 
-function saveData(data,id){
+exports.saveData = (data,id,keyword) => {
     
     for( let y = 0; y < data.length; y ++){
         let newProduct = new Product; 
         let newKeys = data[y]; 
         Object.assign(newProduct, newKeys);
         newProduct.postedBy = id;
+        newProduct.keyWord = keyword;
 
         newProduct.save((err,result)=>{
 
@@ -19,6 +20,3 @@ function saveData(data,id){
         })
     }
 }
-
-
-module.exports = (data) => saveData(data)
