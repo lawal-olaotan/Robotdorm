@@ -9,7 +9,7 @@ const productSchema = new mongoose.Schema({
         type:String,
         trim:true,
         min:3,
-        max:160,
+        max:250,
         required:true,
     },
     img:{
