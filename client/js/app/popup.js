@@ -22,6 +22,19 @@ jumiaScrapper.config(function($stateProvider, $urlRouterProvider){
         url:'/welcome',
         templateUrl:'../views/welcome.html'
     })
+    .state('products', {
+        url:'/products',
+        templateUrl:'../views/products.html'
+    })
+    .state('error', {
+        url:'/error',
+        templateUrl:'../views/error.html'
+    })
+    .state('loader', {
+        url:'/loader',
+        templateUrl:'../views/loader.html'
+    })
+
 
 
 
@@ -131,7 +144,6 @@ jumiaScrapper.controller("popupCtrl", ['$scope', '$state', function($scope,$stat
 
 jumiaScrapper.controller("ScraperCtrl", ['$scope', '$state', function($scope,$state){
 
-
     console.log('ScraperCtrl initialized');
 
     $scope.fetchHistory = function(){
@@ -149,11 +161,26 @@ jumiaScrapper.controller("ScraperCtrl", ['$scope', '$state', function($scope,$st
     }
 
     $scope.keywordSearch = function(){
+        $state.go('loader');
         chrome.runtime.sendMessage({type:'keywordSearch'}, 
-        function(response){
-            console.log('message from background',response);
-        }
+            function(response){
+                if (response === 'no data'){
+                    $state.go('error')
+                }else{
+                    window.close();
+                    chrome.runtime.sendMessage({type:'FetchData'}, 
+                        function(response){
+                            console.log(response)
+                        }
+                    )
+                    // $state.go('products')
+                }
+            }
         )
+
+       
+
+
     }
 
 }])
@@ -189,5 +216,3 @@ jumiaScrapper.controller("homeCtrl", ['$scope', '$state', function($scope,$state
     // }
 
 }])
-
-
