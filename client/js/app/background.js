@@ -25,7 +25,8 @@ chrome.runtime.onMessage.addListener(
             setStorageItem('user',response)
             console.log('response from the server', response);
            
-          })
+          }); 
+
           return true;
           break; 
       case "signup": 
@@ -66,9 +67,8 @@ chrome.runtime.onMessage.addListener(
           let autoData = message.data
           autoData.product = uniqueDetails;
           autoData._id = getStorageItem('user').user._id;
-
-
-          allAjax('POST',autoData,'product/orderhistory','',
+          
+          allAjax('POST',autoData,'product/orderhistory',token,
             function(response){
             console.log('response from the server',response)
           });
@@ -77,22 +77,51 @@ chrome.runtime.onMessage.addListener(
           break;
         case"searchData":
         console.log('search data event hit in background', message.data);
-        message.data._id = getStorageItem('user').user._id;
-        setStorageItem(message.type,message.data);
-        sendResponse('data succesffully recieved in background');
+        const storedData = getStorageItem('searchData');
+        if (message.data.keyWord === storedData.keyWord){
+            console.log('file exist');
+        }else{
+          message.data._id = getStorageItem('user').user._id;
+          setStorageItem(message.type,message.data);
+          sendResponse('data succesffully recieved in background');
+        }
+        
         return true; 
         break;
         case"keywordSearch": 
         console.log('keyword event event hit background');
         const data = getStorageItem('searchData');
-        
         allAjax('POST',data,'product/searchScrapper','',
             function(response){
-            console.log('response from the server',response)
+              if(response.status === 500){
+                sendResponse('no data')
+              }else{
+                sendResponse('recieved')
+                console.log('response from the server',response)
+              }
           });
-        sendResponse('data recieved')
         return true; 
         break;
+        case"FetchData": 
+        console.log('fetch event event hit background');
+        let queryData = getStorageItem('searchData').keyWord;
+    
+        allAjax('GET','',`product/getProducts/${queryData}`,'',
+          function(response){
+            const scrappeddata = response;
+            chrome.tabs.query({active:true,currentWindow:true}, function(tabs){
+              chrome.tabs.sendMessage(tabs[0].id,{type:"displayData",data:scrappeddata},function(response){
+                console.log(response);
+              })
+            })
+          });
+
+          
+          
+        return true; 
+        break;
+
+
       default:
           console.log('no match found')
     }
