@@ -6,8 +6,8 @@
     "content_scripts":[
         {
             "js": ["js/lib/jquery-3.6.0.min.js","js/app/context.js"],
-            "matches":["<all_urls>"]
-
+            "matches":["<all_urls>"], 
+            "css":["style/content.css"]
         }
     ],
     "background": {

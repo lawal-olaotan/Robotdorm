@@ -59,6 +59,7 @@ chrome.runtime.onMessage.addListener(function(msg,sender,response){
     if(msg.type === 'displayData'){
         console.log(msg.data);
         response('data recieved from bg');
+        injectShadow(); 
     }
 })
 
@@ -66,13 +67,53 @@ chrome.runtime.onMessage.addListener(function(msg,sender,response){
 
 
 
-// shadow dom 
+const injectShadow =()=> {
 
-// const injectPage = () => {
+    let root = document.createElement('div');
+    const rootDiv = document.createElement('div');
+    root.setAttribute('id','keyword');
+    let shadow = rootDiv.attachShadow({mode:'open'});
+    root.appendChild(rootDiv);
 
-//     const hostEle = document.createElement('div'); 
+
+    // jumia dom 
+    const parentEle = document.body
+    const jumiaDiv = parentEle.querySelector('#jm')
+
+    // inserting shadow dom into the jumia dom 
+    parentEle.insertBefore(root,jumiaDiv); 
+
+    // // applying style 
+    const linkEle = document.createElement('style');
+    linkEle.innerHTML= `
+    .jumcontainer{
+        z-index: 9999999999;
+        position: fixed;
+        width: 100%;
+        height: 300%;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom:0;
+        background-color:rgba(255, 0, 0, 0.31); 
+    }
     
-// }
+    
+    `; 
 
+
+    // creating container;
+    const container = document.createElement('div');
+    
+    container.setAttribute('class','jumcontainer')
+
+    shadow.appendChild(linkEle);
+    shadow.appendChild(container);
+
+
+
+
+
+}
 
 
