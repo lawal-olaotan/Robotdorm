@@ -27,6 +27,12 @@ const productSchema = new mongoose.Schema({
     revenue:{
         type:String
     },
+    revenueNum:{
+        type:Number
+    },
+    salesPrice:{
+        type:Number
+    },
     ratings:{
         type:Number
     },
