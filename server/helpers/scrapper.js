@@ -38,7 +38,7 @@ exports.searchPage = async(data) => {
         });
 
     let  searchedProducts  = Array.prototype.concat.apply([],searchProducts);
-    let topProd = (searchedProducts.sort((a,b)=> b.customer - a.customer ));
+    let topProd = searchedProducts.sort((a,b)=> b.customer - a.customer );
     return topProd; 
 };
 
@@ -46,7 +46,7 @@ exports.searchPage = async(data) => {
 const getProducts = async(page) => {
     const data = await page.evaluate(()=> {
         const products = document.querySelectorAll('article.prd._fb.col.c-prd');
-        const productArray = []
+        const productArray = []; 
         products.forEach(product => {
                         const container = product.childNodes[0]
                         const link = container.href
@@ -54,7 +54,6 @@ const getProducts = async(page) => {
                         const img = container.childNodes[0].childNodes[0].dataset.src
                         const productInfo = container.childNodes[1];
                         const price = productInfo.querySelector('.prc').innerHTML;
-        
                         const modeEle = productInfo.querySelector('.tag._glb._sm');
                         let mode; 
                         if(modeEle === null){
@@ -66,8 +65,8 @@ const getProducts = async(page) => {
                         let rating;
                         let customer;
                         if(ratingEle === null ){
-                            rating = 'no rating';
-                            customer = 'no customer review'
+                            rating = 0
+                            customer = 0
                         }else{
                             rating = parseFloat(ratingEle.childNodes[0].innerText.split(' ')[0]);
                             let customerArry = ratingEle.textContent.split(' ')[3].split('');
@@ -82,7 +81,7 @@ const getProducts = async(page) => {
                        }
                        let salesPrice;
                        
-                       let sales = (customer * 15)
+                       let sales = (customer * 11)
                        if(price !== ''){
                         let priceNum = price.split(' ');
                         if(priceNum.length > 2){
@@ -91,8 +90,9 @@ const getProducts = async(page) => {
                              salesPrice = parseInt(priceNum[1].replace(/,/g, ''))
                         }
                        }
-                       
-                       let revenue = (salesPrice*sales).toLocaleString();
+
+                       let revenueNum = (salesPrice*sales); 
+                       let revenue = revenueNum.toLocaleString();
                         let products = {
                             title : title,
                             img : img,
@@ -100,16 +100,24 @@ const getProducts = async(page) => {
                             price:price,
                             sales:sales,
                             revenue:'₦'+' '+revenue,
+                            revenueNum:revenueNum,
+                            salesPrice:salesPrice,
                             ratings:rating,
                             customer:customer,
                             mode:mode,
-                            shipping: shipping
+                            shipping:shipping
                         }
                         productArray.push(products)
-        })
+        });
 
-        let newProd = productArray.filter(item => item.customer !== 'no customer review')
-        return newProd; 
+        let newProd = productArray.filter(item => item.customer !== 0);
+        const valueSet = new Set(); 
+        const noDup = newProd.filter( (obj) => {
+            const dupValue = valueSet.has(obj.title); 
+            valueSet.add(obj.title); 
+            return !dupValue; 
+        }); 
+        return noDup; 
     })
 
     return data; 
