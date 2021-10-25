@@ -4,7 +4,6 @@ const { saveData,getData } = require('../controllers/product');
 
 
 router.post("/searchScrapper",saveData);
-
-router.get("/getProducts/:queryData",getData)
+router.get("/getProducts/:queryData",getData); 
 
 module.exports = router;

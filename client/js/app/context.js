@@ -1,14 +1,14 @@
 console.log('content script currently running');
 
+// current weppage location
 let url = window.location.href;
 
+// checking webpage and sending boolean response to popup js for view manipulation. 
     if(!url.includes('https://www.jumia.com.ng/')){
         console.log('not on jumia');
-        console.log(url);
         sendToPopup(false, 'mypage')
     }else{
         sendToPopup(true, 'mypage'); 
-
         if(url.includes('?q=')){
             sendToPopup(true,'enable')
             const urlArray = []
@@ -26,31 +26,41 @@ let url = window.location.href;
         }
     }
   
-function sendToBackground(eventName,eventData){
-        chrome.runtime.sendMessage({type:eventName,data:eventData}, 
-        function(response){
-            console.log('this is the response from the background page for the '+ eventName+ ' Event: ',response);
-        })
-}
 
-function sendToPopup(message,title){
-    chrome.runtime.onMessage.addListener((msg,sender,response)=> {
-        if((msg.from === 'popup') && (msg.subject === title)){
-            console.log('message recieved from popup ')
-            response(message);
+// eventlisterners 
+chrome.runtime.onMessage.addListener(
+
+    function(msg,sender,response){
+        switch(msg.type){
+
+            case "success":
+                response('go it');
+                sendToBackground('FetchData','');
+            return true; 
+            break;
+
+            case "initateLoader":
+                console.log('loader created')
+                response('loader created')
+            return true; 
+            break; 
+
+            case "displayData":
+                injectShadow(msg.data);
+                response('data recieved from bg');
+            return true; 
+            break;
+
+            default:
+            console.log('no match found')
+    
         }
-    })
-}
-
-chrome.runtime.onMessage.addListener(function(msg,sender,response){
-    if(msg.type === 'displayData'){
-        injectShadow(msg.data);
-        response('data recieved from bg');
-    }
 })
 
 
 
+
+// helper functions 
 const injectShadow =(data)=> {
 
     let root = document.createElement('div');
@@ -69,7 +79,6 @@ const injectShadow =(data)=> {
     // // applying style 
     const linkEle = document.createElement('style');
     linkEle.innerHTML= `
-
     *{
         margin:0;
         padding:0;
@@ -276,7 +285,8 @@ const injectShadow =(data)=> {
     const infoBody = document.createElement('div');
     infoBody.setAttribute('class','contentbody'); 
 
-
+    // information ready state 
+e
     // close btn
     const iconbox = document.createElement('button');
     iconbox.setAttribute('class', 'iconbox');
@@ -547,7 +557,11 @@ const injectShadow =(data)=> {
          paginationContainer.appendChild(l); 
     }); 
 
-    footercon.appendChild(paginationContainer); 
+    footercon.appendChild(paginationContainer);
+
+
+
+
 
     // container with major components
     infoBody.appendChild(iconbox);
@@ -558,9 +572,9 @@ const injectShadow =(data)=> {
     infoBody.appendChild(footercon); 
 
 
+
     innerContainer.appendChild(infoBody);
     container.appendChild(innerContainer); 
-
     shadow.appendChild(linkEle);
     shadow.appendChild(container);
 
@@ -572,14 +586,11 @@ const injectShadow =(data)=> {
     
 }
 
-
-
 function setAttr(elem, attrs){
     for(let key in attrs){
         elem.setAttribute(key,attrs[key])
     }
 }
-
 
 const getSummary = (data)=> {
 
@@ -614,7 +625,6 @@ const getSummary = (data)=> {
 
 }
 
-
 const shortenTitle = (title) => {
 
     let wordcount = 50; 
@@ -623,4 +633,20 @@ const shortenTitle = (title) => {
         return title 
     }
     return title.slice(0,wordcount) + '...'; 
+}
+
+function sendToBackground(eventName,eventData){
+    chrome.runtime.sendMessage({type:eventName,data:eventData}, 
+    function(response){
+        console.log('this is the response from the background page for the '+ eventName+ ' Event: ',response);
+    })
+}
+
+function sendToPopup(message,title){
+chrome.runtime.onMessage.addListener((msg,sender,response)=> {
+    if(msg.type === title){
+        console.log('message recieved from popup ')
+        response(message);
+    }
+})
 }
