@@ -1,4 +1,5 @@
 const { searchPage } = require('../helpers/scrapper')
+
 const Product = require('../model/product');
 
 exports.saveData = async (req,res)=> {
@@ -54,9 +55,5 @@ exports.getData = (req,res)=> {
             console.log('cannot find product')
         }
         res.json(data); 
-    })
-    
-    
-
-
+    }); 
 }

@@ -38,8 +38,14 @@ exports.searchPage = async(data) => {
         });
 
     let  searchedProducts  = Array.prototype.concat.apply([],searchProducts);
-    let topProd = searchedProducts.sort((a,b)=> b.customer - a.customer );
-    return topProd; 
+    let topProd = searchedProducts.sort((a,b)=> b.customer - a.customer ); 
+    const valueSet = new Set(); 
+        const noDup = topProd.filter( (obj) => {
+            const dupValue = valueSet.has(obj.title); 
+            valueSet.add(obj.title); 
+            return !dupValue; 
+        }); 
+    return noDup; 
 };
 
 
@@ -111,13 +117,7 @@ const getProducts = async(page) => {
         });
 
         let newProd = productArray.filter(item => item.customer !== 0);
-        const valueSet = new Set(); 
-        const noDup = newProd.filter( (obj) => {
-            const dupValue = valueSet.has(obj.title); 
-            valueSet.add(obj.title); 
-            return !dupValue; 
-        }); 
-        return noDup; 
+        return newProd; 
     })
 
     return data; 
