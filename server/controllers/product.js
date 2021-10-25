@@ -45,15 +45,36 @@ exports.saveData = async (req,res)=> {
 
 }
 
-exports.getData = (req,res)=> {
+const calcPagination = (page,size) => {
+    // number of item to fetch from db
+    const limit = size ? +size : 10;
 
-    const conditions = req.params.queryData;
-    console.log(conditions);
+    // numbers of item to skip
+    const offset = page ? page * limit : 0
 
-    Product.find({'keyWord':conditions}, (err,data)=> {
-        if(err){
-            console.log('cannot find product')
-        }
-        res.json(data); 
-    }); 
+    return {limit,offset}
+}
+
+
+
+exports.getData = async (req,res)=> {
+
+    try{
+        const {page,size,querydata} = req.query; 
+        const {limit,offset} = calcPagination(page,size); 
+    
+        await Product.paginate({'keyWord':querydata},{limit,offset},
+        (err,data)=> {
+            if(err){
+                console.log('cannot find product')
+            }
+           res.send(data.docs);
+           console.log(data); 
+        });
+
+
+    }catch (err){
+        console.log(err.message);
+        res.status(500).send("data not saved")
+    }
 }
