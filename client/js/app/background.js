@@ -58,12 +58,11 @@ chrome.runtime.onMessage.addListener(
         }
         return true; 
         break;
+
         case"keywordSearch": 
         console.log('keyword event event hit background');
-   
         // trigger loading animation using shadowdom in contentjs
         sendToContent('initateLoader');
-        
         const data = getStorageItem('searchData');
         // sscrapping data using puppeteer with node js endpoint
         allAjax('POST',data,'product/searchScrapper','',
@@ -74,22 +73,32 @@ chrome.runtime.onMessage.addListener(
         sendResponse('data sent'); 
         return true; 
         break;
+
         case"FetchData": 
+
         console.log('fetch event event hit background');
         let queryData = getStorageItem('searchData').keyWord;
-        allAjax('GET','',`product/getProducts/${queryData}`,'',
+        const askNew = {
+          querydata:queryData,
+          page:0,
+          size:10
+        }
+        
+        allAjax('GET',askNew,'product/getProducts','',
           function(response){
             const scrappeddata = response;
+            // send requested data to context script
             chrome.tabs.query({active:true,currentWindow:true}, function(tabs){
               chrome.tabs.sendMessage(tabs[0].id,{type:"displayData",data:scrappeddata},function(response){
                 console.log(response);
               })
             })
+
+
         });
+        
         return true; 
         break;
-
-
       default:
           console.log('no match found')
     }

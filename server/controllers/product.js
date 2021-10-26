@@ -68,8 +68,16 @@ exports.getData = async (req,res)=> {
             if(err){
                 console.log('cannot find product')
             }
-           res.send(data.docs);
-           console.log(data); 
+         
+
+          const dbData = {
+            totalProducts: data.totalDocs,
+            data : data.docs, 
+            totalPage : data.totalPages,
+            currentPage: data.page,
+          } 
+          res.send(dbData);
+          console.log(dbData); 
         });
 
 
