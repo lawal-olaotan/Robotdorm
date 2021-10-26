@@ -537,7 +537,6 @@ const injectShadow =(data)=> {
             src: 'https://i.ibb.co/74DgytS/chevrons-right.png', 
             id:'fastnextbtn',
         },
-        
     ]
 
     const iconlibrary = []
