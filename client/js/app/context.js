@@ -46,6 +46,7 @@ chrome.runtime.onMessage.addListener(
             break; 
 
             case "displayData":
+                console.log(msg.data); 
                 injectShadow(msg.data);
                 response('data recieved from bg');
             return true; 
@@ -62,6 +63,13 @@ chrome.runtime.onMessage.addListener(
 
 // helper functions 
 const injectShadow =(data)=> {
+
+    console.log(data);
+
+
+    let productData = data.data; 
+
+
 
     let root = document.createElement('div');
     const rootDiv = document.createElement('div');
@@ -261,14 +269,20 @@ const injectShadow =(data)=> {
         display:flex;
         align-items:center;
         text-decoration:none;
-        border:0.6px solid #307BD1;
         background:center;
         width:22px;
-        color:#307BD1;
+        color:#000;
         justify-content:center;
-        font-size:18px;
+        font-size:17px;
+        border:0.5px solid #DCDCDC;
     }
+    #currentpage{
+        border:0.6px solid #307BD1;
+        color:#307BD1;
+    }
+    .noactivebtn{
 
+    }
     .fastbackicon{
         width:100%;
     }
@@ -286,7 +300,6 @@ const injectShadow =(data)=> {
     infoBody.setAttribute('class','contentbody'); 
 
     // information ready state 
-e
     // close btn
     const iconbox = document.createElement('button');
     iconbox.setAttribute('class', 'iconbox');
@@ -337,7 +350,7 @@ e
 
 
     //  data
-    const keytitle = data[0].keyWord;
+    const keytitle = productData[0].keyWord;
 
     const totalListed = document.querySelector('.-gy5.-phs').textContent.split(' ')[0]; 
 
@@ -380,7 +393,7 @@ e
 
 
     // data summary section 
-    const summData = getSummary(data);
+    const summData = getSummary(productData);
     let summarySection = document.createElement('div');
     summarySection.setAttribute('class', 'summarysection');
 
@@ -423,14 +436,11 @@ e
     })
 
     // table body 
-    
-    const newdata = data.slice(0,10);
-
     const tablebody = document.createElement("div");
     tablebody.setAttribute('class', 'tablebody');
     
     // table row
-    newdata.forEach(tabitem => {
+    productData.forEach(tabitem => {
 
         let bodyrow = document.createElement("div");
         bodyrow.setAttribute("class", 'tableheadercon');
@@ -525,13 +535,15 @@ e
         },
         {
             src: 'https://i.ibb.co/74DgytS/chevrons-right.png', 
-            id:'fastnextbtn'
+            id:'fastnextbtn',
         },
+        
     ]
 
     const iconlibrary = []
 
     paginationicons.forEach( i => {
+
         const fastbackcon = document.createElement("button");
         fastbackcon.setAttribute("id", `${i.id}`); 
         fastbackcon.setAttribute("class", 'pagibtn');
@@ -543,14 +555,20 @@ e
         iconlibrary.push(fastbackcon); 
     })
 
-    // dummy information
-    const number = [3,2,1]; 
+    const pagenumber = data.currentPage;
+    const pagenum = [(pagenumber+2),(pagenumber +1), pagenumber];
 
-    number.forEach( j => {
+
+    pagenum.forEach( j => {
         const number = document.createElement("button")
         number.setAttribute("class", 'pagibtn');
         number.innerHTML = `${j}`
         iconlibrary.splice(2,0,number); 
+
+        if(j === pagenum[2]){
+            number.setAttribute("id",'currentpage');
+        }
+       
     }); 
 
     iconlibrary.forEach( l => {
@@ -558,6 +576,10 @@ e
     }); 
 
     footercon.appendChild(paginationContainer);
+
+
+    // pagination script 
+
 
 
 
