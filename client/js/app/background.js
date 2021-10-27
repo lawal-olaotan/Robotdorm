@@ -75,16 +75,13 @@ chrome.runtime.onMessage.addListener(
         break;
 
         case"FetchData": 
-
+       
         console.log('fetch event event hit background');
-        let queryData = getStorageItem('searchData').keyWord;
-        const askNew = {
-          querydata:queryData,
-          page:0,
-          size:10
-        }
-        
-        allAjax('GET',askNew,'product/getProducts','',
+
+        message.data.querydata = getStorageItem('searchData').keyWord;
+        message.data.size = 10
+
+        allAjax('GET',message.data,'product/getProducts','',
           function(response){
             const scrappeddata = response;
             // send requested data to context script
@@ -93,8 +90,6 @@ chrome.runtime.onMessage.addListener(
                 console.log(response);
               })
             })
-
-
         });
         
         return true; 
