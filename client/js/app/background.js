@@ -80,10 +80,12 @@ chrome.runtime.onMessage.addListener(
 
         message.data.querydata = getStorageItem('searchData').keyWord;
         message.data.size = 10
+        console.log(message.data); 
 
         allAjax('GET',message.data,'product/getProducts','',
           function(response){
             const scrappeddata = response;
+
             // send requested data to context script
             chrome.tabs.query({active:true,currentWindow:true}, function(tabs){
               chrome.tabs.sendMessage(tabs[0].id,{type:"displayData",data:scrappeddata},function(response){

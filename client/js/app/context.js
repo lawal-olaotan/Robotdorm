@@ -406,7 +406,6 @@ const injectShadow =(data)=> {
         summarySection.appendChild(summcontainer); 
     }
 
-
     // table section 
     let tableCon = document.createElement("div"); 
     tableCon.setAttribute("class", 'tablecontainer');
@@ -680,7 +679,8 @@ const paginationElements = (ele,data) => {
 
 const paginationEvent = (channel,data) => {
     channel.addEventListener('click', function (){
-        sendToBackground('FetchData',data);   
+        const evData = {page:data}
+        sendToBackground('FetchData',evData);   
     })
 
 }
