@@ -35,10 +35,10 @@ chrome.runtime.onMessage.addListener(
 
             case "success":
                 response('go it');
-                sendToBackground('FetchData','');
+                const dbData = {page:0}
+                sendToBackground('FetchData',dbData);
             return true; 
             break;
-
             case "initateLoader":
                 console.log('loader created')
                 response('loader created')
@@ -49,6 +49,7 @@ chrome.runtime.onMessage.addListener(
                 console.log(msg.data); 
                 injectShadow(msg.data);
                 response('data recieved from bg');
+                 
             return true; 
             break;
 
@@ -58,19 +59,12 @@ chrome.runtime.onMessage.addListener(
         }
 })
 
-
-
-
 // helper functions 
 const injectShadow =(data)=> {
 
     console.log(data);
 
-
     let productData = data.data; 
-
-
-
     let root = document.createElement('div');
     const rootDiv = document.createElement('div');
     root.setAttribute('id','keyword');
@@ -112,7 +106,6 @@ const injectShadow =(data)=> {
         left:0;
         width:100%;
         height:100%; 
-        overflow:hidden; 
         background-color:rgba(255, 0, 0, 0.31); 
     }
     .contentbody{
@@ -125,7 +118,6 @@ const injectShadow =(data)=> {
         left: 7pc;
         flex-direction:column; 
         padding:1.8rem;
-        overflow:scroll; 
     }
     .iconbox{
         position: absolute;
@@ -273,9 +265,10 @@ const injectShadow =(data)=> {
         width:22px;
         color:#000;
         justify-content:center;
-        font-size:17px;
+        font-size:16.5px;
         border:0.5px solid #DCDCDC;
     }
+
     #currentpage{
         border:0.6px solid #307BD1;
         color:#307BD1;
@@ -418,9 +411,6 @@ const injectShadow =(data)=> {
     let tableCon = document.createElement("div"); 
     tableCon.setAttribute("class", 'tablecontainer');
 
-    // const headerdata = data[0];
-    // const {_id,link,revenueNum,salesPrice,postedBy,keyWord,__v,customer, ...newHeader} = headerdata;
-
     // table header
     const headerData = ['Product Details', 'Price','Est. Sales','Est. Revenue','Ratings','Sellers Location','Shipping Mode']; 
     let tableHeaderCon = document.createElement("div");
@@ -539,6 +529,9 @@ const injectShadow =(data)=> {
         },
     ]
 
+    const pagenumber = data.currentPage;
+    const totalPage = data.totalPage
+
     const iconlibrary = []
 
     paginationicons.forEach( i => {
@@ -554,34 +547,25 @@ const injectShadow =(data)=> {
         iconlibrary.push(fastbackcon); 
     })
 
-    const pagenumber = data.currentPage;
-    const pagenum = [(pagenumber+2),(pagenumber +1), pagenumber];
-
-
-    pagenum.forEach( j => {
+   
+    let pages = showPages(pagenumber,totalPage)
+    pages.forEach( j => {
         const number = document.createElement("button")
         number.setAttribute("class", 'pagibtn');
+        number.setAttribute("id", `${j}`);
         number.innerHTML = `${j}`
         iconlibrary.splice(2,0,number); 
-
-        if(j === pagenum[2]){
+        if(j === pagenumber){
             number.setAttribute("id",'currentpage');
         }
-       
-    }); 
+    });
+
 
     iconlibrary.forEach( l => {
          paginationContainer.appendChild(l); 
     }); 
 
     footercon.appendChild(paginationContainer);
-
-
-    // pagination script 
-
-
-
-
 
 
     // container with major components
@@ -593,18 +577,17 @@ const injectShadow =(data)=> {
     infoBody.appendChild(footercon); 
 
 
-
     innerContainer.appendChild(infoBody);
     container.appendChild(innerContainer); 
     shadow.appendChild(linkEle);
     shadow.appendChild(container);
 
-
     // close container 
     iconbox.addEventListener('click', function (){
         container.classList.add('closebody');
     })
-    
+
+    paginationElements(paginationContainer,data); 
 }
 
 function setAttr(elem, attrs){
@@ -671,3 +654,36 @@ chrome.runtime.onMessage.addListener((msg,sender,response)=> {
     }
 })
 }
+
+const showPages = (pagenumber,totalPage) => {
+    let pagenum = []
+    if(pagenumber === totalPage){
+        pagenum = [pagenumber,(pagenumber -1),(pagenumber-2) ];
+    }else if((totalPage -pagenumber) === 1){
+        pagenum = [totalPage , pagenumber, (pagenumber - 1)]
+    }else{
+        pagenum = [(pagenumber+2),(pagenumber +1), pagenumber];
+    }
+    return pagenum; 
+}
+
+const paginationElements = (ele,data) => {
+    let pagiEles = ele.childNodes
+    
+    for(b=0; b < pagiEles.length; b++){
+
+        if(pagiEles[b].getAttribute("id") === 'nextbtn'){
+            paginationEvent(pagiEles[b],data.currentPage)
+        }
+    }
+}
+
+const paginationEvent = (channel,data) => {
+    channel.addEventListener('click', function (){
+        sendToBackground('FetchData',data);   
+    })
+
+}
+
+
+
