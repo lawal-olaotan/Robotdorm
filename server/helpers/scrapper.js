@@ -45,7 +45,7 @@ exports.searchPage = async(data) => {
             valueSet.add(obj.title); 
             return !dupValue; 
         }); 
-    return noDup; 
+    return noDup;
 };
 
 
@@ -117,12 +117,51 @@ const getProducts = async(page) => {
         });
 
         let newProd = productArray.filter(item => item.customer !== 0);
+
         return newProd; 
     })
 
     return data; 
     
 }; 
+
+
+exports.getSummary = async(data)=> {
+
+    try {
+    let totalRev = 0;
+    let totalSales = 0;
+    let totalPrice = 0;
+    let totalrating=0;
+
+    for(let i=0; i < data.length; i++){
+        totalRev += data[i].revenueNum; 
+        totalSales += data[i].sales; 
+        totalPrice += data[i].salesPrice; 
+        totalrating += data[i].ratings; 
+    }
+
+    let totalfig = totalRev.toLocaleString();
+    let avgRev = parseInt((totalRev/data.length).toFixed()).toLocaleString();
+    let avgPrice = parseFloat((totalPrice/data.length).toFixed()).toLocaleString();
+    let avgRatings = (totalrating/data.length).toFixed(1)
+    let totalsell = totalSales.toLocaleString()
+
+
+    const summaryData= {
+        "Est Total Revenue" :'₦'+' '+totalfig, 
+        "Est Total Units sold" : totalsell,
+        "Est Average Revenue" : '₦'+' '+avgRev,
+        "Average Price":'₦'+' '+avgPrice,
+        "Average Rating": avgRatings
+    }
+
+    return summaryData; 
+
+  }catch (err){
+    console.log(err.message);
+    }
+}
 
 
 
