@@ -1,6 +1,7 @@
-const { searchPage } = require('../helpers/scrapper')
+const { searchPage , getSummary } = require('../helpers/scrapper')
 
 const Product = require('../model/product');
+const Summary = require('../model/summary')
 
 exports.saveData = async (req,res)=> {
     const data = req.body;
@@ -18,6 +19,10 @@ exports.saveData = async (req,res)=> {
         if (checkDb.length === 0){
             console.log(true); 
             const dbData =  await searchPage(data);
+            const summary = await getSummary(dbData);
+            summary.keyWord = keyword;
+            summary.postedBy = dbid;
+            saveToDb(new Summary(summary));
 
             for( let y = 0; y < dbData.length; y++){
                 let newProduct = new Product; 
@@ -25,15 +30,9 @@ exports.saveData = async (req,res)=> {
                 Object.assign(newProduct, newKeys);
                 newProduct.postedBy = dbid;
                 newProduct.keyWord = keyword;
-                newProduct.save((err)=>{
-                    if(err){
-                        console.log('this is the error',err)  
-                    }
-                })
+                saveToDb(newProduct)
             }
-
             res.status(200).send('data saved successfull'); 
-             
         }else{
             res.status(200).send('data found') 
         }
@@ -61,28 +60,51 @@ exports.getData = async (req,res)=> {
 
     try{
         const {page,size,querydata} = req.query; 
-        const {limit,offset} = calcPagination(page,size); 
-    
-        await Product.paginate({'keyWord':querydata},{limit,offset},
+        const {limit,offset} = calcPagination(page,size);
+        console.log(page); 
+
+        let summData ={},dbData = {}; 
+
+
+       Product.paginate({'keyWord':querydata},{limit,offset},
         (err,data)=> {
             if(err){
                 console.log('cannot find product')
             }
-         
-
-          const dbData = {
+          dbData = {
             totalProducts: data.totalDocs,
             data : data.docs, 
             totalPage : data.totalPages,
             currentPage: data.page,
           } 
-          res.send(dbData);
-          console.log(dbData); 
+          
         });
 
+        if(page > 0){
+            summData = ''
+        }else{
+            console.log('first page');
+            summData = Summary.find({'keyWord':querydata},(err,sumdata)=> {
+                if(err){
+                    console.log('cannot find product')
+                }; 
+                return sumdata; 
+            });
+        }
+
+        dbData.summary = summData
+        res.send(dbData); 
 
     }catch (err){
         console.log(err.message);
         res.status(500).send("data not saved")
     }
+}
+
+const saveToDb = (schema) => {
+    schema.save((err)=>{
+        if(err){
+            console.log('this is the error',err)  
+        }
+    })
 }
