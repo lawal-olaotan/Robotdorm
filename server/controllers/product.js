@@ -61,40 +61,31 @@ exports.getData = async (req,res)=> {
     try{
         const {page,size,querydata} = req.query; 
         const {limit,offset} = calcPagination(page,size);
-        console.log(page); 
 
-        let summData ={},dbData = {}; 
-
-
-       Product.paginate({'keyWord':querydata},{limit,offset},
-        (err,data)=> {
+       Product.paginate({'keyWord':querydata},{limit,offset},(err,data)=> {
             if(err){
                 console.log('cannot find product')
             }
-          dbData = {
-            totalProducts: data.totalDocs,
-            data : data.docs, 
-            totalPage : data.totalPages,
-            currentPage: data.page,
-          } 
-          
+            let dbData = {
+                totalProducts: data.totalDocs,
+                data : data.docs, 
+                totalPage : data.totalPages,
+                currentPage: data.page,
+            }
+
+            if(page > 0){
+                res.send(dbData);
+            }else{
+                Summary.find({'keyWord':querydata},(err,sumdata)=> {
+
+                    if(err){
+                        console.log('cannot find product')
+                    };
+                    dbData['summaryData'] = sumdata
+                    res.send(dbData);
+                });
+            }
         });
-
-        if(page > 0){
-            summData = ''
-        }else{
-            console.log('first page');
-            summData = Summary.find({'keyWord':querydata},(err,sumdata)=> {
-                if(err){
-                    console.log('cannot find product')
-                }; 
-                return sumdata; 
-            });
-        }
-
-        dbData.summary = summData
-        res.send(dbData); 
-
     }catch (err){
         console.log(err.message);
         res.status(500).send("data not saved")
@@ -107,4 +98,8 @@ const saveToDb = (schema) => {
             console.log('this is the error',err)  
         }
     })
+}
+
+const dbData = (pageNum) => {
+
 }
