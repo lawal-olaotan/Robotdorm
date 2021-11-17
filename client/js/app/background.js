@@ -61,40 +61,36 @@ chrome.runtime.onMessage.addListener(
 
         case"keywordSearch": 
         console.log('keyword event event hit background');
+
         // trigger loading animation using shadowdom in contentjs
-        sendToContent('initateLoader');
+        sendToContent('initateLoader','');
+
         const data = getStorageItem('searchData');
+
         // sscrapping data using puppeteer with node js endpoint
         allAjax('POST',data,'product/searchScrapper','',
-            function(response){
+          function(response){
               if(response)
-              sendToContent('success');  
+              sendToContent('success',''); 
+              console.log(response.data) 
         });
+
         sendResponse('data sent'); 
         return true; 
         break;
 
         case"FetchData": 
-       
         console.log('fetch event event hit background');
-
         message.data.querydata = getStorageItem('searchData').keyWord;
-        message.data.size = 10
-        console.log(message.data); 
+        message.data.size = 10; 
 
         allAjax('GET',message.data,'product/getProducts','',
           function(response){
             const scrappeddata = response;
-
             // send requested data to context script
-            chrome.tabs.query({active:true,currentWindow:true}, function(tabs){
-              chrome.tabs.sendMessage(tabs[0].id,{type:"displayData",data:scrappeddata},function(response){
-                console.log(response);
-              })
-            })
+            sendToContent("displayData",scrappeddata);  
         });
-        
-        return true; 
+        return true;
         break;
       default:
           console.log('no match found')
@@ -129,11 +125,11 @@ function getStorageItem(varName){
   return JSON.parse(localStorage.getItem(varName))
 }
 
-function sendToContent(msgtype){
+function sendToContent(msgtype,data){
   chrome.tabs.query({active:true,currentWindow: true},function(tabs){  
     // send request for the current tab 
     chrome.tabs.sendMessage(
-        tabs[0].id,{type:msgtype},function (response){ 
+        tabs[0].id,{type:msgtype,data:data },function (response){ 
       console.log(response);                  
     })
   })

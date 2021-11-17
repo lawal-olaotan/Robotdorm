@@ -23,7 +23,6 @@ exports.saveData = async (req,res)=> {
             summary.keyWord = keyword;
             summary.postedBy = dbid;
             saveToDb(new Summary(summary));
-
             for( let y = 0; y < dbData.length; y++){
                 let newProduct = new Product; 
                 let newKeys = dbData[y]; 
@@ -34,6 +33,7 @@ exports.saveData = async (req,res)=> {
             }
             res.status(200).send('data saved successfull'); 
         }else{
+
             res.status(200).send('data found') 
         }
 
