@@ -20,6 +20,11 @@ let url = window.location.href;
             }
             let queryData = document.querySelector('.brcbs.col16.-pvs').lastChild.innerHTML;
             const searchData = {searchLink : urlArray , keyWord : queryData};
+            const PrevKey = localStorage.getItem('Keyword');
+            if(PrevKey !== queryData ){
+                window.sessionStorage.clear()
+            }; 
+         
             sendToBackground('searchData',searchData);   
         }else{
             sendToPopup(false,'enable');
@@ -32,7 +37,6 @@ chrome.runtime.onMessage.addListener(
 
     function(msg,sender,response){
         switch(msg.type){
-
             case "success":
                 response('go it');
                 const dbData = {page:0}
@@ -42,29 +46,43 @@ chrome.runtime.onMessage.addListener(
             case "initateLoader":
                 console.log('loader created')
                 response('loader created')
-            return true; 
+                return true; 
             break; 
-
             case "displayData":
-                console.log(msg.data); 
-                injectShadow(msg.data);
-                response('data recieved from bg');
-                 
-            return true; 
-            break;
 
+                let storeKey = window.sessionStorage.getItem('myStore');
+                if( storeKey === null ){
+                    let myArr = [msg.data]
+                    window.sessionStorage.setItem('myStore',JSON.stringify(myArr));
+                }else{
+                    console.log('not long'); 
+                    let keyData = JSON.parse(storeKey)
+                    keyData.push(msg.data);
+                    window.sessionStorage.setItem('myStore',JSON.stringify(keyData));
+                }
+                injectShadow(msg.data);
+                return true; 
+            break;
             default:
             console.log('no match found')
     
         }
 })
 
+// index bd database
+
 // helper functions 
 const injectShadow =(data)=> {
 
-    console.log(data);
+    let productData = data.data;
+    let summarydata; 
 
-    let productData = data.data; 
+    if(data.currentPage === 1){
+        summarydata = getSummary(data.summaryData[0]); 
+    }else{
+        summarydata = JSON.parse(window.localStorage.getItem('summaryData'))
+    }
+
     let root = document.createElement('div');
     const rootDiv = document.createElement('div');
     root.setAttribute('id','keyword');
@@ -344,6 +362,7 @@ const injectShadow =(data)=> {
 
     //  data
     const keytitle = productData[0].keyWord;
+    localStorage.setItem('Keyword', keytitle); 
 
     const totalListed = document.querySelector('.-gy5.-phs').textContent.split(' ')[0]; 
 
@@ -385,11 +404,11 @@ const injectShadow =(data)=> {
     detailsec.appendChild(listcontainer)
 
 
-    // data summary section 
-    const summData = getSummary(productData);
+    // data summary section , plug data here 
+    const summData = summarydata;
+
     let summarySection = document.createElement('div');
     summarySection.setAttribute('class', 'summarysection');
-
     for(const prop in summData){
         let summcontainer = document.createElement('div');
         summcontainer.setAttribute('class', 'summcontainer'); 
@@ -586,7 +605,7 @@ const injectShadow =(data)=> {
         container.classList.add('closebody');
     })
 
-    paginationElements(paginationContainer,data); 
+    paginationElements(paginationContainer,data,container); 
 }
 
 function setAttr(elem, attrs){
@@ -595,37 +614,11 @@ function setAttr(elem, attrs){
     }
 }
 
+
 const getSummary = (data)=> {
-
-    let totalRev = 0;
-    let totalSales = 0;
-    let totalPrice = 0;
-    let totalrating=0;
-
-    for(let i=0; i < data.length; i++){
-        totalRev += data[i].revenueNum; 
-        totalSales += data[i].sales; 
-        totalPrice += data[i].salesPrice; 
-        totalrating += data[i].ratings; 
-    }
-
-    let totalfig = totalRev.toLocaleString();
-    let avgRev = parseInt((totalRev/data.length).toFixed()).toLocaleString();
-    let avgPrice = parseFloat((totalPrice/data.length).toFixed()).toLocaleString();
-    let avgRatings = (totalrating/data.length).toFixed(1)
-    let totalsell = totalSales.toLocaleString()
-
-
-    const summaryData= {
-        "Est. Total Revenue" :'₦'+' '+totalfig, 
-        "Est. Total Units sold" : totalsell,
-        "Est. Average Revenue" : '₦'+' '+avgRev,
-        "Average Price":'₦'+' '+avgPrice,
-        "Average Rating": avgRatings
-    }
-    
-    return summaryData; 
-
+        let {_id,postedBy,__v, ...rest} = data;
+        window.localStorage.setItem('summaryData',JSON.stringify(rest)); 
+        return rest; 
 }
 
 const shortenTitle = (title) => {
@@ -666,23 +659,51 @@ const showPages = (pagenumber,totalPage) => {
     return pagenum; 
 }
 
-const paginationElements = (ele,data) => {
-    let pagiEles = ele.childNodes
+const paginationElements = (ele,data,page) => {
     
-    for(b=0; b < pagiEles.length; b++){
+    let pagiEles = ele.childNodes;
 
+    for(b=0; b < pagiEles.length; b++){
         if(pagiEles[b].getAttribute("id") === 'nextbtn'){
-            paginationEvent(pagiEles[b],data.currentPage)
+            paginationEvent(pagiEles[b],data.currentPage,page)
+        } else if(pagiEles[b].getAttribute("id") === 'fastprevbtn'){
+            if(data.currentPage > 1){
+                paginationEvent(pagiEles[b],0,page)
+            }
+        }else if(pagiEles[b].getAttribute("id") === 'prevbtn'){
+            if(data.currentPage > 1){
+                paginationEvent(pagiEles[b],(data.currentPage-2),page)
+            }
+        }else if(pagiEles[b].getAttribute("id") === 'currentpage'){
+            paginationEvent(pagiEles[b],data.currentPage-1,page)
+        }else if( pagiEles[b].getAttribute("id") === (data.currentPage+1).toString()){
+            paginationEvent(pagiEles[b],data.currentPage,page)
+        }else if( pagiEles[b].getAttribute("id") === (data.currentPage+2).toString()){
+            paginationEvent(pagiEles[b],data.currentPage+1,page)
+        }else if( pagiEles[b].getAttribute("id") === 'fastnextbtn'){
+            paginationEvent(pagiEles[b],data.totalPage-1,page)
         }
     }
-}
+}; 
 
-const paginationEvent = (channel,data) => {
+const paginationEvent = (channel,data,page) => {
     channel.addEventListener('click', function (){
         const evData = {page:data}
-        sendToBackground('FetchData',evData);   
-    })
+        page.innerHTML = ''; 
+        // will check data exist here and if not will allow background to send data
+            let storeKey = window.sessionStorage.getItem('myStore');
+            const keyData = JSON.parse(storeKey);
+            const calcPage = data + 1;
+            const filtStore = keyData.filter(key => key.currentPage === calcPage);
+            // if data exists inject to shadow dom 
 
+            if(filtStore.length === 0 ){
+                sendToBackground('FetchData',evData);  
+            }else{
+                injectShadow(filtStore[0]);
+            }
+  
+    })
 }
 
 
