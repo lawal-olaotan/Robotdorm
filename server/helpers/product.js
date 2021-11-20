@@ -12,7 +12,7 @@ puppeteer.use(
 ); 
 
 exports.withBrowser = async ( fn )=> {
-    const browser = await puppeteer.launch({headless:true});
+    const browser = await puppeteer.launch({headless:true, args:['--no-sandbox']});
     try{
         return await fn(browser)
     }finally{
