@@ -8,6 +8,7 @@ let domain = dev ? "http://localhost:8000/" : 'https://yapaextension.com/'
 chrome.runtime.onMessage.addListener(
 
   function(message,sender,sendResponse){
+
     // switch statement used to find cases based on the user current state
     switch (message.type){
 
@@ -24,9 +25,7 @@ chrome.runtime.onMessage.addListener(
             sendResponse(response);
             setStorageItem('user',response)
             console.log('response from the server', response);
-           
           }); 
-
           return true;
           break; 
       case "signup": 
@@ -46,32 +45,28 @@ chrome.runtime.onMessage.addListener(
           return true; 
         break;
         case"searchData":
-        console.log('search data event hit in background', message.data);
-        const storedData = getStorageItem('searchData');
-        if (message.data.keyWord === storedData.keyWord){
-            console.log('file exist');
-            sendResponse('all good');
-        }else{
+          console.log('search data event hit in background', message.data);
           message.data._id = getStorageItem('user').user._id;
           setStorageItem(message.type,message.data);
           sendResponse('data succesffully recieved in background');
-        }
         return true; 
         break;
-
         case"keywordSearch": 
         console.log('keyword event event hit background');
 
         // trigger loading animation using shadowdom in contentjs
         sendToContent('initateLoader','');
+        
+        const data = getStorageItem('searchData'); 
 
-        const data = getStorageItem('searchData');
-
-        // sscrapping data using puppeteer with node js endpoint
+        // scrapping data using puppeteer with node js endpoint
         allAjax('POST',data,'product/searchScrapper','',
           function(response){
-              if(response)
-              sendToContent('success',''); 
+              if(response.status === 500){
+                sendToContent('error', ''); 
+              }else{
+                sendToContent('success',''); 
+              } 
               console.log(response.data) 
         });
 
@@ -122,7 +117,9 @@ function setStorageItem(varName,data){
 }
 
 function getStorageItem(varName){
+  console.log(JSON.parse(localStorage.getItem(varName))); 
   return JSON.parse(localStorage.getItem(varName))
+
 }
 
 function sendToContent(msgtype,data){
