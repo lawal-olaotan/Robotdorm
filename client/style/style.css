@@ -13,6 +13,7 @@ body{
     padding: 4px 0 !important; 
     background-color: #fff !important;
     color: #000 !important; 
+    font-family: 'Poppins', sans-serif;
 }
 
 .input-btn{
@@ -95,10 +96,27 @@ body{
 }
 
 .mybtn{
-    width:55% !important; 
-    padding: .5rem 1rem !important; 
+    width:auto !important; 
+    padding: .8rem 1rem !important; 
+    
+}
+.btn{
+    box-shadow: rgba(0, 0, 0, 0.25) 0px 14px 28px, rgba(0, 0, 0, 0.22) 0px 10px 10px !important;
 }
 
 .visit-text{
     color: white;
+    margin-left: 1rem;
+}
+
+.btn-contact{
+    background-color:#307BD1;
+    border-radius: 8px;
+    -webkit-border-radius: 8px;
+    -moz-border-radius: 8px;
+    -ms-border-radius: 8px;
+    -o-border-radius: 8px;
+    color: white !important;
+    text-decoration: none;
+    font-size: 1rem;
 }
