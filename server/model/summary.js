@@ -23,9 +23,10 @@ const summarySchema = new mongoose.Schema({
     postedBy:{
         type:ObjectId,
         ref:'User'
-    }
+    },
+    createdAt: {type:Date,default:Date.now}
 },
-{timestamp:true}
+{timestamp:true},
 );
 
 module.exports = mongoose.model('Summary',summarySchema)

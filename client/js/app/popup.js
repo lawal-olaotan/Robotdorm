@@ -1,6 +1,4 @@
 
-
-
 let jumiaScrapper = angular.module("jumiascrapper",['ui.router']);
 
 jumiaScrapper.config(function($stateProvider, $urlRouterProvider){
@@ -31,11 +29,13 @@ jumiaScrapper.controller("popupCtrl", ['$scope', '$state', function($scope,$stat
 
     $scope.onPopupInit = function(){
         console.log('ran popup init function');
+
         chrome.runtime.sendMessage({type:"onPopupInit"}, 
             function(response){
                 console.log('this is the response from the background page',response);
                 if(response.user === null){
                     $state.go('login');
+                    
                 }else{
                     chrome.tabs.query({
                         active:true,
@@ -46,8 +46,8 @@ jumiaScrapper.controller("popupCtrl", ['$scope', '$state', function($scope,$stat
                             tabs[0].id,
                             {type:'mypage'}
                         ,function (data){
+                            $scope.name = response.user.username;
                             if(data === true){
-                                $scope.name = response.user.username;
                                 $state.go('welcome')
                                 $scope.search = 'disabled'
                                 $scope.messageContext(); 
@@ -65,6 +65,9 @@ jumiaScrapper.controller("popupCtrl", ['$scope', '$state', function($scope,$stat
     $scope.onPopupInit();
 
     $scope.login = function(formData){
+        
+
+
         chrome.runtime.sendMessage({type:"login", data:formData}, 
             function(response){
                 console.log('response from background is:',response);
@@ -76,6 +79,7 @@ jumiaScrapper.controller("popupCtrl", ['$scope', '$state', function($scope,$stat
     )}
     $scope.signup  = function(formData){
         chrome.runtime.sendMessage({type:"signup",data:formData}, 
+
         function(response){
             console.log('response from background is:',response )
             if(response.token){

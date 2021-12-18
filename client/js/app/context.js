@@ -27,14 +27,12 @@ let url = window.location.href;
             if(PrevKey !== queryData ){
                 window.sessionStorage.clear()
             }; 
-         
             sendToBackground('searchData',searchData);   
         }else{
             sendToPopup(false,'enable');
+            sendToBackground('search',''); 
         }
     }
-  
- 
 
 // eventlisterners 
 chrome.runtime.onMessage.addListener(
@@ -129,7 +127,7 @@ const injectShadow =(data)=> {
     .contentbody{
         position: relative;
         width: 1200px;
-        height: 700px;
+        height: 720px;
         background: white;
         top: 2pc;
         display: flex;
@@ -384,12 +382,15 @@ const injectShadow =(data)=> {
             // header button section starts here
             const headerButton = document.createElement('a');
             headerButton.setAttribute('class', 'headerbtn'); 
-            headerButton.setAttribute('href', '#');
+            headerButton.setAttribute('href', 'https://wa.link/xpvur2');
+            headerButton.setAttribute("target", "_blank");
+
             const wsLogo = document.createElement('img');
             const wsattr = {
                 "src": 'https://i.ibb.co/SdsmzSK/whatsapp.png',
                 "alt": 'whatsapp button',
-                "class": "wsicon", 
+                "class": "wsicon",
+                
 
             }
             setAttr(wsLogo, wsattr);
@@ -697,7 +698,7 @@ function setAttr(elem, attrs){
 
 
 const getSummary = (data)=> {
-        let {_id,postedBy,__v, ...rest} = data;
+        let {_id,postedBy,__v,createdAt, ...rest} = data;
         window.localStorage.setItem('summaryData',JSON.stringify(rest)); 
         return rest; 
 }

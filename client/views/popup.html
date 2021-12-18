@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm" crossorigin="anonymous">
     <!-- style links  -->
     <link rel="stylesheet" href="../style/bootstrap.min.css">
     <link rel="stylesheet" href="../style/style.css">
@@ -11,22 +12,21 @@
     <script src="../js/lib/angular.min.js"></script>
     <script src="../js/lib/angular-ui-router.min.js"></script>
     <script src="../js/app/popup.js"></script>
-
-    <title>Jumia webscrapper</title>
+    <title>Shopply Chrome Extension</title>
 </head>
 <body ng-app="jumiascrapper">
-    <div class="container">
-        <div class="pt- row text-center">
-
+    <div class="container p-4">
+        <div class="row text-center">
             <div class="col-m-6">
-                <div  ng-controller="popupCtrl" class="container">
+                <div  ng-controller="popupCtrl">
                     <div class="page-header">
-                        <h3>Jumia Scrapper Tool</h3>
+                        <h3 class="header-title">Shopply Extension</h3>
+                        <h5 class="header-beta">Beta</h5>
                     </div>
                     <div ui-view></div>
                     <div class="row">
-                        <div class="jumbotron text-muted text-center">
-                            <p> Need Assistance <a target="_blank" href="#">Contact Support</a> </p>
+                        <div class="jumbotron text-muted text-center d-flex align-center justify-content-start">
+                            <p> <span class="context"> Need Assistance</span> <a class="signupbtn" target="_blank" href="https://wa.link/f2fjvu">Contact Support</a> </p>
                         </div>
                     </div>
                    

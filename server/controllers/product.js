@@ -9,7 +9,7 @@ exports.saveData = async (req,res)=> {
         const dbid = data._id
         const keyword = data.keyWord;
 
-        const checkDb =  await Product.find({'keyWord':keyword,'postedBy':dbid},(err,mondata)=> {
+        const checkDb =  await Product.find({'keyWord':keyword},(err,mondata)=> {
             if(err){
                 console.log('cannot find product')
             }; 
@@ -22,7 +22,9 @@ exports.saveData = async (req,res)=> {
             const summary = await getSummary(dbData);
             summary.keyWord = keyword;
             summary.postedBy = dbid;
+
             saveToDb(new Summary(summary));
+
             for( let y = 0; y < dbData.length; y++){
                 let newProduct = new Product; 
                 let newKeys = dbData[y]; 
@@ -31,7 +33,9 @@ exports.saveData = async (req,res)=> {
                 newProduct.keyWord = keyword;
                 saveToDb(newProduct)
             }
-            res.status(200).send('data saved successfull'); 
+
+            res.status(200).send('data saved successfull');
+
         }else{
 
             res.status(200).send('data found') 
@@ -41,7 +45,6 @@ exports.saveData = async (req,res)=> {
         console.log(err.message);
         res.status(500).send("data not saved")
     }
-
 }
 
 const calcPagination = (page,size) => {
@@ -53,8 +56,6 @@ const calcPagination = (page,size) => {
 
     return {limit,offset}
 }
-
-
 
 exports.getData = async (req,res)=> {
 
@@ -77,7 +78,6 @@ exports.getData = async (req,res)=> {
                 res.send(dbData);
             }else{
                 Summary.find({'keyWord':querydata},(err,sumdata)=> {
-
                     if(err){
                         console.log('cannot find product')
                     };
@@ -93,6 +93,7 @@ exports.getData = async (req,res)=> {
 }
 
 const saveToDb = (schema) => {
+    
     schema.save((err)=>{
         if(err){
             console.log('this is the error',err)  
@@ -100,6 +101,4 @@ const saveToDb = (schema) => {
     })
 }
 
-const dbData = (pageNum) => {
 
-}
