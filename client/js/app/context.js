@@ -97,10 +97,13 @@ const injectShadow =(data)=> {
     // // applying style 
     const linkEle = document.createElement('style');
     linkEle.innerHTML= `
+
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;500;600;1,300&display=swap');
     *{
         margin:0;
         padding:0;
-        box-sizing:border-box; 
+        box-sizing:border-box;
+        font-family: 'Poppins', sans-serif;
     }
     .jumcontainer{
         z-index: 9999999999;
@@ -126,8 +129,6 @@ const injectShadow =(data)=> {
     }
     .contentbody{
         position: relative;
-        width: 1200px;
-        height: 720px;
         background: white;
         top: 2pc;
         display: flex;
@@ -160,10 +161,13 @@ const injectShadow =(data)=> {
         justify-content:space-between;
     }
     .logo{
+        display:flex;
+        justify-content:space-between;
+        align-items:center;
         font-size: 1.4rem;
         color: #307BD1; 
         text-decoration:none;
-        font-weight: 800; 
+        font-weight: 500; 
     }
     .headerbtn{
         display:flex;
@@ -183,7 +187,6 @@ const injectShadow =(data)=> {
     }
     .detailsec{
         display:flex;
-        width:60%;
         align-items:center;
         margin-bottom:1rem; 
         justify-content:space-between;
@@ -210,18 +213,15 @@ const injectShadow =(data)=> {
         margin-bottom:1.5rem;
     } 
     .summcontainer{
-        padding:1rem;
         border:1px solid #307BD1;
         border-radius:10px;
         text-align:center;
-        width:15%;
     }
     .sumtitle{
         margin-bottom:.6rem;
         font-size:.65rem; 
     }
     .sumvalue{
-        font-size: .85rem;
         font-weight: 700;  
     }
     .tablecontainer{
@@ -233,12 +233,9 @@ const injectShadow =(data)=> {
     }
     .tableheadercon{
         display:table-row;
-        font-weight:bold; 
-        font-size:12px;
     }
     .headercell{
         display:table-cell;
-        padding:6px;
         text-align:center;
         border-bottom:0.2px solid #D7DBDB;
         border-right: 0.2px solid #D7DBDB;
@@ -265,12 +262,11 @@ const injectShadow =(data)=> {
         width:100%;
         display: flex; 
         align-items:center;
-        margin-top:.75rem;
+        
     }
     .paginacontainer{
         display:flex;
         align-items:center;
-        width:20%;
         justify-content:space-between; 
     }
     .pagibtn{
@@ -323,8 +319,117 @@ const injectShadow =(data)=> {
     font-weight: 700;
     font-size: 1.5rem;
     text-align:center;
+    }
+
+    .imglogo{
+        margin-right:.6rem; 
+    }
+   
+
+    @media screen and (min-width: 1024px) {
+
+        .contentbody{
+            width: 950px;
+            height: 700px;
+            background: white;
+            top: 1pc;
+            left: 2pc; 
+        }
+
+        .headerbtn{
+            width:20%;
+        }
+
+        .imglogo{
+            width:160px;
+        }
+        .detailsec{
+            width:75%;
+        }
+
+        .summcontainer{
+            padding:0.8rem;
+            width:16%;
+        }
+        .sumvalue {
+            font-size: .7rem;
+        }
+
+        .tableheadercon{
+            font-weight:550; 
+            font-size:10px;
+        }
+        .headercell{
+            padding:3.5px;
+        }
+
+        .footercon{
+            margin-top:1rem;
+        }
+        .paginacontainer{
+            width:27%; 
+        }
+
+        
 
     }
+
+    @media screen and (min-width: 1440px) {
+
+        .contentbody{
+            width: 1200px;
+            height: 760px;
+            background: white;
+            top: 2pc;
+            left: 7pc; 
+        }
+
+        .headerbtn{
+            width:15%;
+        }
+
+        .imglogo{
+            width:180px;
+        }
+        .detailsec{
+            width:60%;
+        }
+        .summcontainer{
+            padding:1rem;
+            width:15%;
+        }
+        .sumvalue {
+            font-size: .85rem;
+        }
+
+        .tableheadercon{
+            font-weight:600; 
+            font-size:12px;
+        }
+
+        .headercell{
+            padding:6px;
+        }
+
+        .footercon{
+            margin-top:.75rem;
+        }
+        .paginacontainer{
+            width:20%; 
+        }
+       
+    }
+
+    @media screen and (min-width: 2560px) {
+
+        .contentbody{
+            top: 10pc;
+            left: 42pc; 
+        }
+       
+    }
+
+
 
     `; 
     // creating container;
@@ -369,9 +474,23 @@ const injectShadow =(data)=> {
             const headingContainer = document.createElement('div');
             headingContainer.setAttribute('class', 'headercon'); 
             // logo section start here
-            const logo = document.createElement('a'); 
-            const logoLink = document.createTextNode('Shoplly Chrome Extension')
-            logo.append(logoLink); 
+            const logo = document.createElement('a');
+
+            const imglogo = document.createElement('img');
+
+            const imglogoattr = {
+                class:"imglogo",
+                src: "https://i.ibb.co/3F8F788/Rlogo.png",
+                alt:"img-logo"
+            }
+
+            setAttr(imglogo, imglogoattr);
+
+            const logoLink = document.createTextNode('Extension');
+
+            logo.append(imglogo)
+            logo.append(logoLink);
+
             const logoattr ={
                 "href": "#",
                 "class": "logo", 
@@ -796,7 +915,6 @@ const getKeyData = (pageNum) => {
         const keyData = JSON.parse(storeKey);
         const calcPage = pageNum + 1;
         const filtStore = keyData.filter(key => key.currentPage === calcPage);
-        console.log(filtStore);
         return filtStore; 
     }
     
