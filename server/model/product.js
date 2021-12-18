@@ -1,5 +1,8 @@
 const mongoose = require('mongoose');
 const mongoosePaginate = require('mongoose-paginate-v2');
+
+
+
 const { ObjectId } = mongoose.Schema;
 
 const productSchema = new mongoose.Schema({
@@ -49,7 +52,8 @@ const productSchema = new mongoose.Schema({
     postedBy:{
         type:ObjectId,
         ref:'User'
-    }
+    },
+    createdAt: {type:Date,default:Date.now}
 },
 {timestamp:true}
 );

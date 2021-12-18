@@ -1,10 +1,11 @@
-<p>Please login</p>
-<div class="form-group mb-2">
-    <input type="text" name="name" class="input form-control" ng-model="formData.email">
-    <br/>
-    <input type="password" name="password" class="input form-control" name="password" ng-model="formData.password">
-</div>
+<p class="login-title"> <span>Kindly, Sign in to continue </span></p>
 
-<a ng-click="login(formData)" class="btn btn-block btn-info">Login</a>
-<br/>
-<a ui-sref="signup">Signup</a>
+<div class="form-group mb-3">
+    <input type="text" name="name" class="input-btn input form-control" ng-model="formData.email" placeholder="Enter your email">
+    <br/>
+    <input type="password" name="password" class="input-btn input form-control" name="password" ng-model="formData.password" placeholder="Enter your password">
+</div>
+<div class="login-button w-100 d-flex justify-content-between align-items-center mb-4">
+    <a ng-click="login(formData)" class="btn btn-block btn-info login-btn w-50">Continue</a>
+<a class="signupbtn" ui-sref="signup">Signup instead</a>
+</div>

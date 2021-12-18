@@ -1,7 +1,7 @@
 console.log('background script running');
 
 let dev = true;
-let domain = dev ? "http://localhost:8000/" : 'https://yapaextension.com/'
+let domain = 'https://fierce-dawn-36286.herokuapp.com/'
 
 
 
