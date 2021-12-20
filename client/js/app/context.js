@@ -421,7 +421,6 @@ const injectShadow =(data)=> {
     }
 
     @media screen and (min-width: 2560px) {
-
         .contentbody{
             top: 10pc;
             left: 42pc; 
