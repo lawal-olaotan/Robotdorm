@@ -3,6 +3,7 @@ import Hero from  '@components/Hero';
 import  Head  from 'next/head'
 
 
+
 const Home: NextPage = () => {
 
   return (
