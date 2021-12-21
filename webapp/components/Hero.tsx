@@ -1,15 +1,16 @@
 import { Navbar } from "./Navbar"
 import { Section }from './Section'
+import { SecondSection } from "./SecondSection"
+import {Footer} from './Footer';
 
  const  Hero = () => {
     return (
-        <div className="bg-primary  xl:px-24 sm:p-4  lg:px-12 2xl:px-72">
+        <div>
             <Navbar/>
-            <Section/>
-            <div className="bg-transparent lg:hidden sm:flex text-center text-white h-[80vh] items-center justify-center flex-col">
-                <h3 className="text-3xl mb-8 font-semibold">Sorry web version not currently available</h3>
-                <p className="text-2xl"> Launching soon</p>
-            </div>
+            <Section sectionSubTitle="Start or scale your jumia business with accurate market insight in minutes." sectionTitle="Free access to best-selling products in a click." imgTitle="/firstpic.png"/>
+            <SecondSection/>
+            <Section sectionSubTitle="Robotdorm chrome extensions gives you the strength to make important business decisions faster." sectionTitle="Available for free..." imgTitle="/secondpic.png"/>
+            <Footer/>
         </div>
     )
 }

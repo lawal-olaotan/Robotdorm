@@ -10,7 +10,7 @@ export const Navbar = () => {
     }
     return (
         <>
-        <nav className="flex w-100 items-center justify-between bg-transparent xl:py-8 lg:py-4 2xl:py-16  sm:p-0">
+        <nav className="flex w-100 items-center justify-between xl:py-8 lg:py-4 2xl:py-16 bg-primary  xl:px-24 sm:p-4  lg:px-12 2xl:px-72">
             <Link  href="/">
                 <a className="inline-flex lg:w-52 sm:w-48"> 
                         <img className="w-100" src="/logo.png" alt="robotdorm-logo" />
