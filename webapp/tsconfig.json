@@ -16,9 +16,9 @@
     "incremental": true,
     "baseUrl":".",
     "paths":{
-      "@components/*":["components/*"],
+      "@components/*":["components/*.tsx"],
       "@styles/*":["styles/*"],
-      "@pages/*": ["pages/*"]
+      "@pages/*": ["pages/*.tsx"]
     }
     
   },
