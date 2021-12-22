@@ -22,7 +22,7 @@
     }
     
   },
-    "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "pages/_document.tsx", "node_modules/Navbar.tsx","pages/**/*.tsx",
+    "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "pages/_document.tsx", "node_modules/Navbar.tsx","pages/**/*",
       "src/**/*",],
     "exclude": ["node_modules"],
   
