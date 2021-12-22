@@ -1,6 +1,6 @@
 
 import { Section }from './Section'
-import { Secondsection } from "./Secondsection"
+import { Secondsection } from './Secondsection'
 
 
  const  Hero = () => {
