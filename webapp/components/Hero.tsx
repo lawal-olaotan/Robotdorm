@@ -1,13 +1,12 @@
 
 import { Section }from './Section'
-import { Secondsection } from './Secondsection'
+import { Second } from './Second'
 
-
- const  Hero = () => {
+const Hero = () => {
     return (
         <div>
             <Section sectionSubTitle="Start or scale your jumia business with accurate market insight in minutes." sectionTitle="Free access to best-selling products in a click." imgTitle="/firstpic.png"/>
-            <Secondsection/>
+            <Second/>
             <Section sectionSubTitle="Robotdorm chrome extensions gives you the strength to make important business decisions faster." sectionTitle="Available for free..." imgTitle="/secondpic.png"/>
         </div>
     )
