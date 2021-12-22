@@ -4,7 +4,7 @@ import {Footer} from 'components/Footer';
 
 
 
-export default function Layouts ({ children } : {children: React.ReactNode}) {
+export  function Layouts ({ children } : {children: React.ReactNode}) {
     return(
         < >
         <Navbar/>
