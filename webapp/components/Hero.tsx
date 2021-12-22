@@ -3,7 +3,7 @@ import { Section }from './Section'
 import { Secondsection } from './Secondsection'
 
 
-export const  Hero = () => {
+ const  Hero = () => {
     return (
         <div>
             <Section sectionSubTitle="Start or scale your jumia business with accurate market insight in minutes." sectionTitle="Free access to best-selling products in a click." imgTitle="/firstpic.png"/>
@@ -13,3 +13,4 @@ export const  Hero = () => {
     )
 }
 
+export default Hero;
