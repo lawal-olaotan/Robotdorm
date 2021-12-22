@@ -1,6 +1,4 @@
-
 export const Secondsection = () => {
-
     return (
         <div className="bg-white lg:py-16 lg:px-24 sm:p-4 flex items-center justify-center flex-col">
             <div className="text-center sm:mb-12 2xl:mb-20">
@@ -13,6 +11,4 @@ export const Secondsection = () => {
                 <span className="lg:hidden sm:flex bg-primary text-white mt-6 text-base p-4 rounded-xl">We're launching web version soon</span>
         </div>
     )
-
-
 }
