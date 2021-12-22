@@ -1,5 +1,5 @@
 
-export const SecondSection = () => {
+export const Secondsection = () => {
 
     return (
         <div className="bg-white lg:py-16 lg:px-24 sm:p-4 flex items-center justify-center flex-col">
