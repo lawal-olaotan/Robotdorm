@@ -4,7 +4,7 @@ import { Footer } from './Footer';
 
 
 
-export  function Layouts ({ children } : {children: React.ReactNode}) {
+ export const Layouts = ({ children } : {children: React.ReactNode}) => {
     return(
         < >
         <Navbar/>
