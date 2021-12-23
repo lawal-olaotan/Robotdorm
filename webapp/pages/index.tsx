@@ -1,5 +1,5 @@
 import type { NextPage } from 'next';
-import Hero from  '@components/Hero';
+import { Hero }from  '@components/Hero';
 import  Head  from 'next/head'
 
 
