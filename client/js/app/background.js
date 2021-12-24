@@ -5,6 +5,7 @@ let domain = 'https://fierce-dawn-36286.herokuapp.com/'
 
 
 
+
 chrome.runtime.onMessage.addListener(
 
   function(message,sender,sendResponse){
@@ -18,18 +19,20 @@ chrome.runtime.onMessage.addListener(
         return true;
         break;
       case "login":
-          console.log('login logic ran with FormData ', message.data)
-          let userInfo = message.data; 
+          let userInfo = message.data;
+          
           userInfo.username = message.data.email.split('@')[0];
           allAjax('POST',userInfo,'user/login','', function(response){
+
+            if(response.status !== 400){
+              setStorageItem('user',response)
+            }
             sendResponse(response);
-            setStorageItem('user',response)
             console.log('response from the server', response);
           }); 
           return true;
           break; 
       case "signup": 
-          console.log('signup logic ran with formData',message.data)
           let userCreds = message.data;
           userCreds.username = message.data.email.split('@')[0];
           allAjax('POST',userCreds,'user/signup','',function(response){

@@ -293,12 +293,14 @@ const injectShadow =(data)=> {
     }
 
     #loader{
-        align-items:center; 
+        align-items:center;
+        justify-content:center;
+        display:flex;
     }
 
     .animcontainer{
-        width :80%;
-        height:62%; 
+        padding:2rem;
+        width :200px;
         display:flex;
         align-items:center;
         justify-content:center;
@@ -309,14 +311,13 @@ const injectShadow =(data)=> {
     }
 
     .animtextcontainer{
-        height: 40%;
         width: 50%;
         display: flex;
         align-items: center;
         justify-content: center;
     }
     .animtext{
-    font-weight: 700;
+    font-weight:500;
     font-size: 1.5rem;
     text-align:center;
     }
@@ -468,7 +469,6 @@ const injectShadow =(data)=> {
             // insert logo to icon box container
             iconbox.appendChild(icon); 
 
-
             // logo and source btn section starts here
             const headingContainer = document.createElement('div');
             headingContainer.setAttribute('class', 'headercon'); 
@@ -491,7 +491,7 @@ const injectShadow =(data)=> {
             logo.append(logoLink);
 
             const logoattr ={
-                "href": "#",
+                "href": "https://www.robotdorm.com/",
                 "class": "logo", 
             }
 
@@ -508,20 +508,17 @@ const injectShadow =(data)=> {
                 "src": 'https://i.ibb.co/SdsmzSK/whatsapp.png',
                 "alt": 'whatsapp button',
                 "class": "wsicon",
-                
-
             }
+
             setAttr(wsLogo, wsattr);
             headerButton.appendChild(wsLogo);
-
             //  button text 
             const headerText = document.createElement('span');
             const spantext = document.createTextNode('Source Product')
             headerText.appendChild(spantext);
             headerButton.appendChild(headerText);
             headingContainer.appendChild(headerButton)
-
-
+            
             //  data
             const keytitle = productData[0].keyWord;
             localStorage.setItem('Keyword', keytitle); 
@@ -771,6 +768,11 @@ const injectShadow =(data)=> {
         const animContainer = document.createElement('div'); 
         animContainer.setAttribute('class', 'animcontainer');
 
+        let  animImg = document.createElement('img');
+        animImg.setAttribute('class', 'animImg');
+
+        
+
         let animTextContainer = document.createElement('div');
         animTextContainer.setAttribute('class','animtextcontainer');
 
@@ -785,14 +787,14 @@ const injectShadow =(data)=> {
             text = 'Opps error ,kindly refresh your browser'; 
 
         }else{
-            img = 'https://i.ibb.co/m6tC2MR/72785-searching.gif'
-            text = 'Kindly Be Patient, We are getting your Data';
+            img = 'https://i.ibb.co/DCdtrPB/9629-loading.gif'
+            text = 'Processing data ...';
         }
        
-        animContainer.style.background = ` url(${img}) no-repeat center center`; 
+        animImg.setAttribute('src', img);
         animText.textContent = text; 
-         
 
+        animContainer.appendChild(animImg); 
         animTextContainer.appendChild(animText);
         infoLoader.appendChild(animContainer); 
         infoLoader.appendChild(animTextContainer); 
