@@ -1,10 +1,10 @@
-<p class="login-title"> <span>Kindly, Sign up to join us </span></p>
+<p class="login-title" id="signupid"> <span>{{signupText}}</span></p>
 <div class="form-group mb-3">
     <input type="text" name="name" class="input-btn input form-control" ng-model="formData.email" placeholder="Enter your email">
     <br/>
     <input type="password" name="password" class="input-btn input form-control" name="password" ng-model="formData.password" placeholder="Enter your password">
 </div>
 <div class="login-button w-100 d-flex justify-content-between align-items-center mb-4">
-    <a ng-click="signup(formData)" class="btn btn-block btn-info login-btn w-50">Sign Up</a>
+    <button  id="signupbtn"ng-click="signup(formData)" class="btn btn-block btn-info login-btn w-50">Sign Up</button>
     <a class="signupbtn" ui-sref="login">Login instead</a>
 </div>

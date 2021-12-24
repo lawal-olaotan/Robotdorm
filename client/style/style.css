@@ -25,7 +25,10 @@ body{
 }
 
 .login-btn{
-    background: #307BD1 !important; 
+    background: #307BD1 !important;
+    display: flex;
+    align-items: center;
+    justify-content: center; 
 }
 
 .page-header{
@@ -100,9 +103,10 @@ body{
     padding: .8rem 1rem !important; 
     
 }
-.btn{
+
+/* .btn{
     box-shadow: rgba(0, 0, 0, 0.25) 0px 14px 28px, rgba(0, 0, 0, 0.22) 0px 10px 10px !important;
-}
+} */
 
 .visit-text{
     color: white;
@@ -119,4 +123,9 @@ body{
     color: white !important;
     text-decoration: none;
     font-size: 1rem;
+}
+
+.spinner-border{
+    height:1.5rem;
+    width:1.5rem;
 }
