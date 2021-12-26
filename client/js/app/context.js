@@ -379,7 +379,7 @@ const injectShadow =(data)=> {
 
         .contentbody{
             width: 1200px;
-            height: 760px;
+            height: 740px;
             background: white;
             top: 2pc;
             left: 7pc; 

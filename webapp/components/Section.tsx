@@ -22,7 +22,7 @@ export const Section:NextPage<Props> = (Props)=> {
 
            <p className="text-xl 2xl:text-4xl mb-12 2xl:mb-16"> {sectionSubTitle}</p>
 
-           <Link href="/">
+           <Link href="https://chrome.google.com/webstore/detail/robotdorm-chrome-extensio/iebnenlmoeolohhmbjilijlgpjbjljhm/related?hl=en-GB&authuser=0">
                <a className="px-8 py-4 bg-white text-primary rounded-lg">Add Chrome Extension</a>
            </Link>
         </div>
