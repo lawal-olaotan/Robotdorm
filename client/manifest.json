@@ -1,7 +1,7 @@
 {
     "manifest_version":2,
-    "name": "RobotDorm Chrome Extension",
-    "description": "Beta version analytic tool for jumia sellers in Nigeria",
+    "name": "Jumia Keyword Tool",
+    "description": "Product Research tool for jumia sellers in Nigeria",
     "version": "0.01", 
     "content_scripts":[
         {

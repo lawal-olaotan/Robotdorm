@@ -1,7 +1,8 @@
 console.log('background script running');
 
 let dev = true;
-let domain = 'https://fierce-dawn-36286.herokuapp.com/'
+// let domain = 'https://fierce-dawn-36286.herokuapp.com/'
+let domain = 'http://localhost:8000/'
 
 
 
@@ -78,16 +79,31 @@ chrome.runtime.onMessage.addListener(
         break;
 
         case"FetchData": 
-        console.log('fetch event event hit background');
-        message.data.querydata = getStorageItem('searchData').keyWord;
-        message.data.size = 10; 
+            console.log('fetch event event hit background');
+            message.data.querydata = getStorageItem('searchData').keyWord;
+            message.data.size = 10; 
 
-        allAjax('GET',message.data,'product/getProducts','',
-          function(response){
-            const scrappeddata = response;
-            // send requested data to context script
-            sendToContent("displayData",scrappeddata);  
-        });
+            allAjax('GET',message.data,'product/getProducts','',
+              function(response){
+                const scrappeddata = response;
+                // send requested data to context script
+                sendToContent("displayData",scrappeddata);  
+            });
+        return true;
+        break;
+
+        case"saveList": 
+
+          let listData = {
+              datapic: message.data
+          } 
+            allAjax('POST',listData,'product/list','',
+              function(response){
+                sendResponse('recieved');
+                console.log(response);
+            });
+
+             
         return true;
         break;
       default:
@@ -103,7 +119,8 @@ function allAjax(type,data,path,token,callback){
     type:type,
     data:data,
     headers:{
-      token:token
+      token:token,
+      contentType: "application/json",
     },
     success: function(response){
       callback(response)
