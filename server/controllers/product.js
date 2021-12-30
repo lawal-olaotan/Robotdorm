@@ -2,29 +2,43 @@ const { searchPage , getSummary } = require('../helpers/scrapper')
 
 const Product = require('../model/product');
 const Summary = require('../model/summary')
+const List = require('../model/product'); 
+
+
+exports.saveList = async(req,res)=> {
+    let list = req.body;
+    console.log(list); 
+    try{
+        
+       
+        
+        // saveToDb(new List(list));
+        res.status(200).send('data saved successfull');
+    }catch (err){
+        console.log(err.message);
+        res.status(500).send("data not saved")
+    }
+    
+}
 
 exports.saveData = async (req,res)=> {
     const data = req.body;
     try{ 
         const dbid = data._id
         const keyword = data.keyWord;
-
         const checkDb =  await Product.find({'keyWord':keyword},(err,mondata)=> {
             if(err){
                 console.log('cannot find product')
             }; 
             return mondata; 
         }); 
-
         if (checkDb.length === 0){
             console.log(true); 
             const dbData =  await searchPage(data);
             const summary = await getSummary(dbData);
             summary.keyWord = keyword;
             summary.postedBy = dbid;
-
             saveToDb(new Summary(summary));
-
             for( let y = 0; y < dbData.length; y++){
                 let newProduct = new Product; 
                 let newKeys = dbData[y]; 
@@ -33,7 +47,6 @@ exports.saveData = async (req,res)=> {
                 newProduct.keyWord = keyword;
                 saveToDb(newProduct)
             }
-
             res.status(200).send('data saved successfull');
 
         }else{
@@ -58,7 +71,6 @@ const calcPagination = (page,size) => {
 }
 
 exports.getData = async (req,res)=> {
-
     try{
         const {page,size,querydata} = req.query; 
         const {limit,offset} = calcPagination(page,size);
@@ -91,6 +103,8 @@ exports.getData = async (req,res)=> {
         res.status(500).send("data not saved")
     }
 }
+
+
 
 const saveToDb = (schema) => {
     

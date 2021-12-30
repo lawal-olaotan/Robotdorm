@@ -170,7 +170,7 @@ const injectShadow =(data)=> {
         font-weight: 500; 
     }
     .headerbtn{
-        display:flex;
+        display:none;
         align-items:center;
         width:15%;
         background:#307BD1;
@@ -178,9 +178,10 @@ const injectShadow =(data)=> {
         padding:.5rem;
         color:#fff;
         font-size:1rem;
-        border-radius:18px;
-        font-weight:600;
+        border-radius:6px;
+        font-weight:500;
         text-decoration:none;
+        border:none;
     }
     .wsicon{
         height:24px;
@@ -249,7 +250,7 @@ const injectShadow =(data)=> {
         margin-right:10px;
     }
 
-    #producttitle{
+    .producttitle{
         display:flex;
         align-items:center;
         text-decoration:none;
@@ -342,7 +343,7 @@ const injectShadow =(data)=> {
         }
 
         .imglogo{
-            width:160px;
+            width:40px;
         }
         .detailsec{
             width:75%;
@@ -381,17 +382,14 @@ const injectShadow =(data)=> {
             width: 1200px;
             height: 740px;
             background: white;
-            top: 2pc;
+            top: 1pc;
             left: 7pc; 
         }
 
         .headerbtn{
-            width:15%;
+            width:13%;
         }
 
-        .imglogo{
-            width:180px;
-        }
         .detailsec{
             width:60%;
         }
@@ -405,7 +403,7 @@ const injectShadow =(data)=> {
 
         .tableheadercon{
             font-weight:600; 
-            font-size:12px;
+            font-size:10.5px;
         }
 
         .headercell{
@@ -479,13 +477,13 @@ const injectShadow =(data)=> {
 
             const imglogoattr = {
                 class:"imglogo",
-                src: "https://i.ibb.co/3F8F788/Rlogo.png",
+                src: "https://i.ibb.co/3zr5pP7/logochr.png",
                 alt:"img-logo"
             }
 
             setAttr(imglogo, imglogoattr);
 
-            const logoLink = document.createTextNode('Extension');
+            const logoLink = document.createTextNode('Jumia Keyword Tool');
 
             logo.append(imglogo)
             logo.append(logoLink);
@@ -500,13 +498,12 @@ const injectShadow =(data)=> {
             // header button section starts here
             const headerButton = document.createElement('a');
             headerButton.setAttribute('class', 'headerbtn'); 
-            headerButton.setAttribute('href', 'https://wa.link/xpvur2');
-            headerButton.setAttribute("target", "_blank");
+
 
             const wsLogo = document.createElement('img');
             const wsattr = {
-                "src": 'https://i.ibb.co/SdsmzSK/whatsapp.png',
-                "alt": 'whatsapp button',
+                "src": 'https://i.ibb.co/Schg1wK/list.png',
+                "alt": 'list icon',
                 "class": "wsicon",
             }
 
@@ -514,7 +511,8 @@ const injectShadow =(data)=> {
             headerButton.appendChild(wsLogo);
             //  button text 
             const headerText = document.createElement('span');
-            const spantext = document.createTextNode('Source Product')
+            const spantext = document.createTextNode('Save to List')
+
             headerText.appendChild(spantext);
             headerButton.appendChild(headerText);
             headingContainer.appendChild(headerButton)
@@ -604,12 +602,36 @@ const injectShadow =(data)=> {
             // table body 
             const tablebody = document.createElement("div");
             tablebody.setAttribute('class', 'tablebody');
+
+            // create inputbtn array 
+            let inputbutton = []
             
             // table row
             productData.forEach(tabitem => {
 
+                let productName = tabitem.title; 
+
                 let bodyrow = document.createElement("div");
                 bodyrow.setAttribute("class", 'tableheadercon');
+
+                let selectprodContainer = document.createElement("div");
+                selectprodContainer.setAttribute('class','headercell');
+
+                let selectprodInput = document.createElement("input"); 
+                let inputAttr ={
+                    type:"checkbox",
+                    value: `${productName}`,
+                    name : `${productName}`
+                }
+                setAttr(selectprodInput, inputAttr);
+
+                inputbutton.push(selectprodInput);
+
+                let selectLabel = document.createElement("label"); 
+                selectLabel.setAttribute('for',`${productName}`)
+
+                selectprodContainer.appendChild(selectprodInput)
+                selectprodContainer.appendChild(selectLabel)
                 
                 // product details cell
                 let productDetails = document.createElement("div");
@@ -618,7 +640,7 @@ const injectShadow =(data)=> {
 
                 let prodinnercell = document.createElement("a");
                 const innerattr = {
-                    "id":"producttitle",
+                    "class":"producttitle",
                     "href": `${tabitem.link}`,
                     "target": '_blank'
                 }
@@ -671,8 +693,11 @@ const injectShadow =(data)=> {
                 bodyrow.appendChild(ratings); 
                 bodyrow.appendChild(mode); 
                 bodyrow.appendChild(shipping); 
+                bodyrow.appendChild(selectprodContainer); 
 
-                tablebody.appendChild(bodyrow); 
+                tablebody.appendChild(bodyrow);
+                
+                itemSelection(inputbutton,productData,headerButton); 
 
             })
 
@@ -755,6 +780,16 @@ const injectShadow =(data)=> {
             // close container 
             iconbox.addEventListener('click', function (){
                 clearLoader(); 
+            })
+
+            headerButton.addEventListener('click', function(){
+
+                console.log('all is well');
+ 
+                // chrome.runtime.sendMessage({type:'saveList',data:selected}, 
+                //     function(response){
+                //         console.log(response);
+                //     })
             })
 
             paginationElements(paginationContainer,data,root);
@@ -930,3 +965,35 @@ const clearLoader = () => {
             dom.remove(); 
         } 
 }
+
+const itemSelection = (eles,data,saveBtn) => {
+
+    let selectedListed = []
+
+
+    eles.forEach(ele => {
+        ele.addEventListener('change', function(){
+            let selproduct = ele.value; 
+            if(!ele.checked && selectedListed.length > 0){
+                selectedListed = selectedListed.filter(item => item.title !== selproduct);
+                saveBtn.style.display = 'flex'  
+            }else{
+             let result = data.find(({title}) => title === selproduct )
+             selectedListed.push(result); 
+             saveBtn.style.display = 'flex' 
+            }
+
+            if(selectedListed.length === 0){
+                saveBtn.style.display = 'none'  
+            }
+            console.log(selectedListed); 
+        })
+        
+    })
+
+    
+
+    
+}
+
+
