@@ -1,4 +1,4 @@
-# .env
-# node_modules
-# package-lock.json
-# helpers/mailer.js
+.env
+node_modules
+package-lock.json
+server/helpers/mailer.js
