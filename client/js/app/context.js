@@ -2,7 +2,7 @@ console.log('content script currently running');
 
 // current weppage location
 let url = window.location.href;
-
+localStorage.removeItem('list');
 
 // checking webpage and sending boolean response to popup js for view manipulation. 
     if(!url.includes('https://www.jumia.com.ng/')){
@@ -76,7 +76,7 @@ chrome.runtime.onMessage.addListener(
 })
 
 const injectShadow =(data)=> {
-
+    localStorage.removeItem('list');
     let root = document.createElement('div');
 
     const rootDiv = document.createElement('div');
@@ -496,7 +496,7 @@ const injectShadow =(data)=> {
             setAttr(logo, logoattr);
             headingContainer.appendChild(logo)
             // header button section starts here
-            const headerButton = document.createElement('a');
+            const headerButton = document.createElement('button');
             headerButton.setAttribute('class', 'headerbtn'); 
 
 
@@ -784,12 +784,12 @@ const injectShadow =(data)=> {
 
             headerButton.addEventListener('click', function(){
 
-                console.log('all is well');
+                let listData = JSON.parse(localStorage.getItem("list"));
  
-                // chrome.runtime.sendMessage({type:'saveList',data:selected}, 
-                //     function(response){
-                //         console.log(response);
-                //     })
+                chrome.runtime.sendMessage({type:'saveList',data:listData}, 
+                    function(response){
+                        console.log(response);
+                    })
             })
 
             paginationElements(paginationContainer,data,root);
@@ -968,26 +968,44 @@ const clearLoader = () => {
 
 const itemSelection = (eles,data,saveBtn) => {
 
-    let selectedListed = []
+    let selectedListed = JSON.parse(localStorage.getItem("list") || "[]" ) ; 
+    let permitted = 0; 
 
 
     eles.forEach(ele => {
+
         ele.addEventListener('change', function(){
             let selproduct = ele.value; 
             if(!ele.checked && selectedListed.length > 0){
                 selectedListed = selectedListed.filter(item => item.title !== selproduct);
-                saveBtn.style.display = 'flex'  
+                SaveToLocal('list', selectedListed)
+                saveBtn.style.display = 'flex'
+                permitted--;
             }else{
              let result = data.find(({title}) => title === selproduct )
              selectedListed.push(result); 
-             saveBtn.style.display = 'flex' 
+             SaveToLocal('list', selectedListed)
+             saveBtn.style.display = 'flex';
+             permitted++;
+             console.log(permitted); 
+              
             }
 
             if(selectedListed.length === 0){
-                saveBtn.style.display = 'none'  
+                saveBtn.style.display = 'none';
+                localStorage.removeItem('list');
+                permitted = 0; 
+                console.log(permitted); 
             }
-            console.log(selectedListed); 
+
+            if(permitted === 5){
+                console.log('reached');
+                console.log(permitted); 
+            }
+            
         })
+
+        
         
     })
 
@@ -997,3 +1015,6 @@ const itemSelection = (eles,data,saveBtn) => {
 }
 
 
+const SaveToLocal= (dataname, data)=> {
+    localStorage.setItem(dataname,JSON.stringify(data)); 
+}
