@@ -57,4 +57,5 @@ const productSchema = new mongoose.Schema({
 );
 productSchema.plugin(mongoosePaginate);
 module.exports = mongoose.model('Product',productSchema);
+module.exports = mongoose.model('List',productSchema);
 

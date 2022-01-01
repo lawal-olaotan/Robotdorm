@@ -172,7 +172,7 @@ const injectShadow =(data)=> {
     .headerbtn{
         display:none;
         align-items:center;
-        width:15%;
+        width:45%;
         background:#307BD1;
         justify-content:space-around;
         padding:.5rem;
@@ -182,6 +182,7 @@ const injectShadow =(data)=> {
         font-weight:500;
         text-decoration:none;
         border:none;
+        margin-right:1rem; 
     }
     .wsicon{
         height:24px;
@@ -263,6 +264,7 @@ const injectShadow =(data)=> {
         width:100%;
         display: flex; 
         align-items:center;
+        justify-content: space-between; 
         
     }
     .paginacontainer{
@@ -326,6 +328,20 @@ const injectShadow =(data)=> {
     .imglogo{
         margin-right:.6rem; 
     }
+
+    .buttoncontainer{
+        width: 27%;
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+    }
+
+    .eventText{
+        color:red;
+        font-weight: 500;
+    }
+
+
    
 
     @media screen and (min-width: 1024px) {
@@ -339,7 +355,7 @@ const injectShadow =(data)=> {
         }
 
         .headerbtn{
-            width:20%;
+            width:45%;
         }
 
         .imglogo{
@@ -387,7 +403,7 @@ const injectShadow =(data)=> {
         }
 
         .headerbtn{
-            width:13%;
+            width:45%;
         }
 
         .detailsec{
@@ -494,29 +510,21 @@ const injectShadow =(data)=> {
             }
 
             setAttr(logo, logoattr);
-            headingContainer.appendChild(logo)
-            // header button section starts here
-            const headerButton = document.createElement('button');
-            headerButton.setAttribute('class', 'headerbtn'); 
-
-
-            const wsLogo = document.createElement('img');
-            const wsattr = {
-                "src": 'https://i.ibb.co/Schg1wK/list.png',
-                "alt": 'list icon',
-                "class": "wsicon",
-            }
-
-            setAttr(wsLogo, wsattr);
-            headerButton.appendChild(wsLogo);
-            //  button text 
-            const headerText = document.createElement('span');
-            const spantext = document.createTextNode('Save to List')
-
-            headerText.appendChild(spantext);
-            headerButton.appendChild(headerText);
-            headingContainer.appendChild(headerButton)
             
+            // header button section starts here
+
+            const headButtonContainer = document.createElement('div');
+            headButtonContainer.setAttribute("class", 'buttoncontainer'); 
+
+            const headerButton = buttonCreation("https://i.ibb.co/Schg1wK/list.png",'Save to List')
+            const ViewListBtn = buttonCreation("https://i.ibb.co/1RrJg1p/shopping-bag.png", 'View List')
+
+            headButtonContainer.appendChild(headerButton); 
+            headButtonContainer.appendChild(ViewListBtn); 
+
+            headingContainer.appendChild(logo)
+            headingContainer.appendChild(headButtonContainer)
+
             //  data
             const keytitle = productData[0].keyWord;
             localStorage.setItem('Keyword', keytitle); 
@@ -704,6 +712,7 @@ const injectShadow =(data)=> {
             tableCon.appendChild(tablebody);
 
 
+        
             // footer section 
             const footercon = document.createElement("div"); 
             footercon.setAttribute("class", 'footercon'); 
@@ -748,7 +757,6 @@ const injectShadow =(data)=> {
                 iconlibrary.push(fastbackcon); 
             })
 
-        
             let pages = showPages(pagenumber,totalPage)
             pages.forEach( j => {
                 const number = document.createElement("button")
@@ -761,12 +769,16 @@ const injectShadow =(data)=> {
                 }
             });
 
-
             iconlibrary.forEach( l => {
                 paginationContainer.appendChild(l); 
             }); 
 
+            let instText = document.createElement("span");
+            instText.setAttribute("class","eventText"); 
+
+            
             footercon.appendChild(paginationContainer);
+            footercon.appendChild(instText); 
 
             // container with major components
             infoBody.appendChild(iconbox);
@@ -783,12 +795,22 @@ const injectShadow =(data)=> {
             })
 
             headerButton.addEventListener('click', function(){
-
                 let listData = JSON.parse(localStorage.getItem("list"));
  
                 chrome.runtime.sendMessage({type:'saveList',data:listData}, 
                     function(response){
-                        console.log(response);
+                        if(response === "recieved"){
+                            instText.innerHTML = 'Proceed to your list to source products'
+                            localStorage.removeItem('list');
+                            headerButton.style.display = 'none'; 
+                            ViewListBtn.style.display = 'flex';
+
+                            const inputBtns = infoBody.querySelectorAll("input[type='checkbox']")
+                            inputBtns.forEach(inputBtn => {
+                                inputBtn.style.display="none"
+                            } )
+                        }
+
                     })
             })
 
@@ -819,7 +841,7 @@ const injectShadow =(data)=> {
         let text
         if(data === 'error'){
             img = 'https://i.ibb.co/CVHJ4BZ/38213-error.gif';
-            text = 'Opps error ,kindly refresh your browser'; 
+            text = 'Kindly refresh your browser'; 
 
         }else{
             img = 'https://i.ibb.co/DCdtrPB/9629-loading.gif'
@@ -969,47 +991,31 @@ const clearLoader = () => {
 const itemSelection = (eles,data,saveBtn) => {
 
     let selectedListed = JSON.parse(localStorage.getItem("list") || "[]" ) ; 
-    let permitted = 0; 
 
-
-    eles.forEach(ele => {
-
+    eles.forEach(ele => {       
         ele.addEventListener('change', function(){
-            let selproduct = ele.value; 
-            if(!ele.checked && selectedListed.length > 0){
-                selectedListed = selectedListed.filter(item => item.title !== selproduct);
-                SaveToLocal('list', selectedListed)
-                saveBtn.style.display = 'flex'
-                permitted--;
-            }else{
-             let result = data.find(({title}) => title === selproduct )
-             selectedListed.push(result); 
-             SaveToLocal('list', selectedListed)
-             saveBtn.style.display = 'flex';
-             permitted++;
-             console.log(permitted); 
-              
-            }
 
-            if(selectedListed.length === 0){
-                saveBtn.style.display = 'none';
-                localStorage.removeItem('list');
-                permitted = 0; 
-                console.log(permitted); 
-            }
+                let selproduct = ele.value; 
+                saveBtn.style.display = 'flex'; 
 
-            if(permitted === 5){
-                console.log('reached');
-                console.log(permitted); 
-            }
+                if(!ele.checked && selectedListed.length > 0){
+                    selectedListed = selectedListed.filter(item => item.title !== selproduct);
+                    SaveToLocal('list', selectedListed)
+                }else{
+                    let result = data.find(({title}) => title === selproduct )
+                    selectedListed.push(result); 
+                    SaveToLocal('list', selectedListed)
+                }
             
-        })
+                if(selectedListed.length === 0){
+                    saveBtn.style.display = 'none';
+                    localStorage.removeItem('list');
+                }
 
-        
-        
+        })
+            
     })
 
-    
 
     
 }
@@ -1017,4 +1023,25 @@ const itemSelection = (eles,data,saveBtn) => {
 
 const SaveToLocal= (dataname, data)=> {
     localStorage.setItem(dataname,JSON.stringify(data)); 
+}
+
+const buttonCreation = (imgfile,btnText)=> {
+
+    let BtnCreated = document.createElement('button');
+     BtnCreated.setAttribute('class', 'headerbtn'); 
+            let imgCreated= document.createElement('img');
+            let wsattr = {
+                "src":imgfile ,
+                "alt": 'listicon',
+                "class": "wsicon",
+            }
+            setAttr(imgCreated, wsattr);
+
+            let headerText = document.createElement('span');
+            headerText.textContent = btnText; 
+
+            BtnCreated.appendChild(imgCreated);
+            BtnCreated.appendChild(headerText);
+
+        return BtnCreated; 
 }
