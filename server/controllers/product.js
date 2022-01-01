@@ -10,9 +10,7 @@ exports.saveList = async(req,res)=> {
     console.log(list); 
     try{
         
-       
-        
-        // saveToDb(new List(list));
+        saveToDb(new List(list));
         res.status(200).send('data saved successfull');
     }catch (err){
         console.log(err.message);

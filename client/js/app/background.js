@@ -94,9 +94,10 @@ chrome.runtime.onMessage.addListener(
 
         case"saveList": 
 
-          let listData = {
-              datapic: message.data
-          } 
+            let listData = {
+                datapic: message.data
+            } 
+            
             allAjax('POST',listData,'product/list','',
               function(response){
                 sendResponse('recieved');
