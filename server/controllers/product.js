@@ -2,15 +2,25 @@ const { searchPage , getSummary } = require('../helpers/scrapper')
 
 const Product = require('../model/product');
 const Summary = require('../model/summary')
-const List = require('../model/product'); 
+const List = require('../model/List'); 
+
+let ObjectId = require('mongoose').Types.ObjectId; 
 
 
 exports.saveList = async(req,res)=> {
-    let list = req.body;
-    console.log(list); 
+    let list = req.body.datapic;
+
+    
+    
     try{
-        
-        saveToDb(new List(list));
+        List.insertMany(list,{ordered:false})
+        .catch(
+        (err)=>{
+                if(err){
+                    console.log('this is the error',err)  
+                }
+        });
+
         res.status(200).send('data saved successfull');
     }catch (err){
         console.log(err.message);
@@ -24,12 +34,14 @@ exports.saveData = async (req,res)=> {
     try{ 
         const dbid = data._id
         const keyword = data.keyWord;
+
         const checkDb =  await Product.find({'keyWord':keyword},(err,mondata)=> {
             if(err){
                 console.log('cannot find product')
             }; 
             return mondata; 
         }); 
+        
         if (checkDb.length === 0){
             console.log(true); 
             const dbData =  await searchPage(data);
@@ -37,6 +49,7 @@ exports.saveData = async (req,res)=> {
             summary.keyWord = keyword;
             summary.postedBy = dbid;
             saveToDb(new Summary(summary));
+
             for( let y = 0; y < dbData.length; y++){
                 let newProduct = new Product; 
                 let newKeys = dbData[y]; 
@@ -70,7 +83,7 @@ const calcPagination = (page,size) => {
 
 exports.getData = async (req,res)=> {
     try{
-        const {page,size,querydata} = req.query; 
+        const {page,size,querydata,_id} = req.query; 
         const {limit,offset} = calcPagination(page,size);
 
        Product.paginate({'keyWord':querydata},{limit,offset},(err,data)=> {
@@ -92,7 +105,18 @@ exports.getData = async (req,res)=> {
                         console.log('cannot find product')
                     };
                     dbData['summaryData'] = sumdata
-                    res.send(dbData);
+
+                    let listQuery = {'postedBy': new ObjectId(_id)}
+                    const findlisting = List.find(listQuery); 
+
+                    if(findlisting.length === 0 ){
+                        dbData['list'] = false;
+                        res.send(dbData);
+                    }else{
+                        dbData['list'] = true;
+                        res.send(dbData);
+                    }
+                    
                 });
             }
         });
@@ -105,7 +129,6 @@ exports.getData = async (req,res)=> {
 
 
 const saveToDb = (schema) => {
-    
     schema.save((err)=>{
         if(err){
             console.log('this is the error',err)  

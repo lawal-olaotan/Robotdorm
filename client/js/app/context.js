@@ -457,13 +457,21 @@ const injectShadow =(data)=> {
     if ((typeof data) === 'object'){
 
         let productData = data.data;
+        console.log(data);
         let summarydata;
+        let listStatus; 
 
         if(data.currentPage === 1){
-            summarydata = getSummary(data.summaryData[0]); 
+            summarydata = getSummary(data.summaryData[0]);
+            listStatus = data.list; 
+            
+            localStorage.setItem('ListStatus', data.list) 
         }else{
             summarydata = JSON.parse(window.localStorage.getItem('summaryData'))
+            listStatus = (JSON.parse(window.localStorage.getItem('ListStatus')) === true); 
         }
+
+
         const infoBody = document.createElement('div');
         infoBody.setAttribute('class','contentbody'); 
         infoBody.setAttribute('id', 'content');
@@ -518,6 +526,10 @@ const injectShadow =(data)=> {
 
             const headerButton = buttonCreation("https://i.ibb.co/Schg1wK/list.png",'Save to List')
             const ViewListBtn = buttonCreation("https://i.ibb.co/1RrJg1p/shopping-bag.png", 'View List')
+
+           if(listStatus === true){
+                ViewListBtn.style.display = 'flex'; 
+           }
 
             headButtonContainer.appendChild(headerButton); 
             headButtonContainer.appendChild(ViewListBtn); 
@@ -777,6 +789,7 @@ const injectShadow =(data)=> {
             instText.setAttribute("class","eventText"); 
 
             
+            
             footercon.appendChild(paginationContainer);
             footercon.appendChild(instText); 
 
@@ -799,7 +812,7 @@ const injectShadow =(data)=> {
  
                 chrome.runtime.sendMessage({type:'saveList',data:listData}, 
                     function(response){
-                        if(response === "recieved"){
+                        if(response.stats === "recieved"){
                             instText.innerHTML = 'Proceed to your list to source products'
                             localStorage.removeItem('list');
                             headerButton.style.display = 'none'; 
@@ -812,6 +825,10 @@ const injectShadow =(data)=> {
                         }
 
                     })
+            })
+
+            ViewListBtn.addEventListener("click", function(){
+                sendToBackground('showList',''); 
             })
 
             paginationElements(paginationContainer,data,root);
@@ -863,8 +880,6 @@ const injectShadow =(data)=> {
         shadow.appendChild(container);
         container.appendChild(innerContainer); 
 
-    
-    
 }
 
 function setAttr(elem, attrs){
