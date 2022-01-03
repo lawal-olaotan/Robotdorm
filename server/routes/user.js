@@ -116,7 +116,6 @@ router.post(
 
    let  { email, password } = req.body;
       email =  email.toLowerCase();
-      console.log(email);
 
     try {
       let user = await User.findOne({
@@ -144,15 +143,13 @@ router.post(
         payload,
         "randomString",
         {
-          expiresIn: 3600
+          expiresIn: 7776000
         },
         (err, token) => {
           if (err) throw err;
           res.status(200).json({
             user,token
           });
-
-    
         }
       );
     } catch (e) {
@@ -170,14 +167,17 @@ router.post(
  * @param - /user/me
  */
 
+
 router.get("/me", auth, async (req, res) => {
+
   try {
     // request.user is getting fetched from Middleware after token authentication
-    const user = await User.findById(req.user.id);
+    const user = await User.findById(req.user._id);
     res.json(user);
   } catch (e) {
     res.send({ message: "Error in Fetching user" });
   }
+
 });
 
 module.exports = router;

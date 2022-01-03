@@ -110,7 +110,6 @@ jumiaScrapper.controller("popupCtrl", ['$scope', '$state', function($scope,$stat
         chrome.runtime.sendMessage({type:"signup",data:formData}, 
         function(response){
             console.log('response from background is:',response )
-
             if(response.token){
                 $scope.welcome = 'Kindly, Sign in to continue'
                 $state.go('login');

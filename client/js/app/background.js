@@ -15,14 +15,25 @@ chrome.runtime.onMessage.addListener(
     switch (message.type){
 
       case "onPopupInit":
-        console.log('onPopupInit login ran')
-        sendResponse(getStorageItem('user'));
+        const user = getStorageItem('user').user
+        const token = getStorageItem('user').token; 
+
+        allAjax('GET',user,'user/me',token,
+        function(response){
+          if(response == null){
+            sendResponse(getStorageItem('user'));
+          }else{
+            sendResponse(response.user);
+            setStorageItem('user',response)
+          }
+          
+      });
+
         return true;
         break;
       case "login":
           let userInfo = message.data;
-          
-          userInfo.username = message.data.email.split('@')[0];
+
           allAjax('POST',userInfo,'user/login','', function(response){
 
             if(response.status !== 400){
@@ -81,7 +92,8 @@ chrome.runtime.onMessage.addListener(
         case"FetchData": 
             console.log('fetch event event hit background');
             message.data.querydata = getStorageItem('searchData').keyWord;
-            message.data.size = 10; 
+            message.data.size = 10;
+            message.data._id = getStorageItem('user').user._id;
 
             allAjax('GET',message.data,'product/getProducts','',
               function(response){
@@ -91,20 +103,32 @@ chrome.runtime.onMessage.addListener(
             });
         return true;
         break;
-
         case"saveList": 
-
             let listData = {
                 datapic: message.data
             } 
             
             allAjax('POST',listData,'product/list','',
               function(response){
-                sendResponse('recieved');
+                let listres = {
+                  stats : 'recieved',
+                 
+                }
+                sendResponse(listres);
                 console.log(response);
             });
+        return true;
+        break;
+        case"showList": 
 
-             
+        let listuser = {
+          data : getStorageItem('user').token,
+          id: getStorageItem('user').user._id,
+        }
+        console.log(listuser); 
+            
+        chrome.tabs.create({url:'http://localhost:3000/List'});
+      
         return true;
         break;
       default:

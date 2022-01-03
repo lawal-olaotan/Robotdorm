@@ -3,7 +3,7 @@ const mongoosePaginate = require('mongoose-paginate-v2');
 
 const { ObjectId } = mongoose.Schema;
 
-const productSchema = new mongoose.Schema({
+const listSchema = new mongoose.Schema({
     keyWord:{
         type:String,
     },
@@ -55,7 +55,7 @@ const productSchema = new mongoose.Schema({
 },
 {timestamp:true}
 );
-productSchema.plugin(mongoosePaginate);
-module.exports = mongoose.model('Product',productSchema);
+listSchema.plugin(mongoosePaginate);
 
+module.exports = mongoose.model('List',listSchema);
 

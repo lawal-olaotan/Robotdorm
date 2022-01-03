@@ -8,7 +8,7 @@ export const Second = () => {
             <div className="xl:w-[55%] lg:w-3/5 2xl:w-2/5 md:w-[80%]">
                 <img className="drop-shadow-lg rounded-xl" src="/screens.png" alt="screenshot" />
             </div>
-                <span className="lg:hidden sm:flex bg-primary text-white mt-6 text-base p-4 rounded-xl">We&apos;re launching web version soon</span>
+                <span className="lg:hidden sm:flex bg-primary text-white mt-6 text-base p-4 rounded-xl">Not compactible for mobile phones</span>
         </div>
     )
 }
