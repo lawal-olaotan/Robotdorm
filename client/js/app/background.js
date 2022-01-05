@@ -3,7 +3,7 @@ console.log('background script running');
 let dev = true;
 // let domain = 'https://fierce-dawn-36286.herokuapp.com/'
 let domain = 'http://localhost:8000/'
-
+let myurl = 'http://localhost:3000/' || 'https://robotdorm.com/';
 
 
 
@@ -15,42 +15,46 @@ chrome.runtime.onMessage.addListener(
     switch (message.type){
 
       case "onPopupInit":
-        const user = getStorageItem('user').user
-        const token = getStorageItem('user').token; 
+        const usermine = getStorageItem('user');
+        sendResponse(usermine);
 
-        allAjax('GET',user,'user/me',token,
-        function(response){
-          if(response == null){
-            sendResponse(getStorageItem('user'));
-          }else{
-            sendResponse(response.user);
-            setStorageItem('user',response)
-          }
-          
-      });
+
+      //   allAjax('GET',usermine,'user/me',mytoken,
+      //   function(response){
+      //     sendResponse(response); 
+      // });
 
         return true;
         break;
       case "login":
-          let userInfo = message.data;
+          
+        chrome.tabs.create({url:myurl+'Login'});
+        sendResponse('redirected'); 
 
-          allAjax('POST',userInfo,'user/login','', function(response){
+          // allAjax('POST',userInfo,'user/login','', function(response){
 
-            if(response.status !== 400){
-              setStorageItem('user',response)
-            }
-            sendResponse(response);
-            console.log('response from the server', response);
-          }); 
+          //   if(response.status !== 400){
+          //     setStorageItem('user',response)
+          //   }
+          //   sendResponse(response);
+          //   console.log('response from the server', response);
+          // }); 
+
+
           return true;
           break; 
       case "signup": 
           let userCreds = message.data;
-          userCreds.username = message.data.email.split('@')[0];
-          allAjax('POST',userCreds,'user/signup','',function(response){
-            sendResponse(response)
-            console.log('response from the server',response)
-          })
+
+          
+
+
+          // userCreds.username = message.data.email.split('@')[0];
+          // allAjax('POST',userCreds,'user/signup','',function(response){
+          //   sendResponse(response)
+          //   console.log('response from the server',response)
+          // })
+
           return true;
           break;
       case "visitJumia":
@@ -112,30 +116,25 @@ chrome.runtime.onMessage.addListener(
               function(response){
                 let listres = {
                   stats : 'recieved',
-                 
+                  data : getStorageItem('user').token,
+                  id: getStorageItem('user').user._id,
                 }
                 sendResponse(listres);
                 console.log(response);
             });
         return true;
         break;
-        case"showList": 
-
-        let listuser = {
-          data : getStorageItem('user').token,
-          id: getStorageItem('user').user._id,
-        }
-        console.log(listuser); 
+        case"OpenList": 
+          
+          chrome.tabs.create({url:myurl+'List'});
             
-        chrome.tabs.create({url:'http://localhost:3000/List'});
-      
+            
         return true;
         break;
       default:
           console.log('no match found')
     }
 });
-
 
 
 function allAjax(type,data,path,token,callback){
@@ -162,7 +161,6 @@ function setStorageItem(varName,data){
 }
 
 function getStorageItem(varName){
-  console.log(JSON.parse(localStorage.getItem(varName))); 
   return JSON.parse(localStorage.getItem(varName))
 
 }

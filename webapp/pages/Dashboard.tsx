@@ -3,25 +3,23 @@ import  Head  from 'next/head'
 
 
 
-const List: NextPage = () => {
+const Dashboard: NextPage = () => {
 
     const extensionId: string = 'llneclmbomnmhcgbaacmjdloencbfahj'; 
 
-   const loadingEvent = () => {
-    chrome.runtime.sendMessage(extensionId,{type:'getInfo',data:'sendloginData'})
-   }
+  
 
   return (
         <div>
             <Head>
-                <title>Your List | RobotDorm</title>
+                <title> Login | RobotDorm</title>
                 <link rel="icon" href="/favicon.ico" />
             </Head>
             <main>
-                <h1>Hello</h1>
+                <h1>Login</h1>
             </main>
         </div>
   )
 }
 
-export default List
+export default Dashboard;
