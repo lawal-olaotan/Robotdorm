@@ -4,11 +4,9 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const router = express.Router();
 const auth = require("../middleware/auth");
-const { sendEmail } = require('../helpers/mailer'); 
-
-
-
+const { sendEmail } = require('../helpers/mailer');
 const User = require("../model/User");
+
 
 /**
  * @method - POST
@@ -143,13 +141,15 @@ router.post(
         payload,
         "randomString",
         {
-          expiresIn: 7776000
+          expiresIn:7776000
         },
         (err, token) => {
           if (err) throw err;
           res.status(200).json({
             user,token
-          });
+          }
+            
+          );
         }
       );
     } catch (e) {
@@ -169,11 +169,11 @@ router.post(
 
 
 router.get("/me", auth, async (req, res) => {
-
+  
   try {
     // request.user is getting fetched from Middleware after token authentication
-    const user = await User.findById(req.user._id);
-    res.json(user);
+    const user = await User.findById(req.user.id);
+    res.json({user});
   } catch (e) {
     res.send({ message: "Error in Fetching user" });
   }

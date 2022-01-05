@@ -34,8 +34,8 @@ jumiaScrapper.controller("popupCtrl", ['$scope', '$state', function($scope,$stat
         chrome.runtime.sendMessage({type:"onPopupInit"}, 
             function(response){
                 console.log('this is the response from the background page',response);
+                // loader
                 if(response === null){
-                    $scope.welcome = 'Kindly, Sign in to continue'
                     $state.go('login');
                 }else{
                     chrome.tabs.query({
@@ -65,65 +65,26 @@ jumiaScrapper.controller("popupCtrl", ['$scope', '$state', function($scope,$stat
 
     $scope.onPopupInit();
 
-    $scope.login = function(formData){
-        if(formData){
-            const loginId = document.querySelector("#loginid");
-            loginId.innerHTML = ''
-            const loginSpin = spinnEle();
-            loginId.appendChild(loginSpin); 
-
-            chrome.runtime.sendMessage({type:"login", data:formData}, 
+    $scope.login = function(){
+        chrome.runtime.sendMessage({type:"login", data:''}, 
             function(response){
                 console.log('response from background is:',response);
-                if(response.user){
-                    $scope.name = response.user.username;
-                    $state.go('welcome');
-                }else if(response.responseJSON.message === 'User Not Exist'){
-                    $scope.signupText = response.responseJSON.message
-                    $state.go('signup');
-                }else if(response.responseJSON.message === 'Incorrect Password !'){
-                    $scope.welcome = response.responseJSON.message
-                    loginId.innerHTML = '';
-                    loginId.innerHTML = 'Try Again'
-                }else{
-                    $scope.welcome = response.responseJSON.errors[0].msg
-
-                }
             })
-        }else{
-            $scope.welcome = 'Email and password is empty'
-            loginId.innerHtml='Login Here';
-        }
+        
     }
 
        
-
-    $scope.signup  = function(formData){
-
-        if(formData){
+    $scope.signup  = function(){
+        
         const signBtn = document.querySelector('#signupbtn');
         signBtn.innerHTML = ''
-
         const spinit = spinnEle(); 
         signBtn.appendChild(spinit);
         
-        chrome.runtime.sendMessage({type:"signup",data:formData}, 
+        chrome.runtime.sendMessage({type:"signup",data:''}, 
         function(response){
             console.log('response from background is:',response )
-            if(response.token){
-                $scope.welcome = 'Kindly, Sign in to continue'
-                $state.go('login');
-            }else if(response.responseJSON.msg){
-                $state.go('login');
-                $scope.welcome = response.responseJSON.msg
-            }else if(response.responseJSON.errors){
-                $scope.signupText = response.responseJSON.errors[0].msg
-                signBtn.innerHTML = 'Sign Up'
-            }
-        })
-        }else{
-            $scope.signupText = 'Email and password is empty';
-        }
+        }) 
     }
     
     $scope.messageContext = function(){

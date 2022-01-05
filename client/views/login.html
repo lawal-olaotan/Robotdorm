@@ -1,11 +1,15 @@
-<p class="login-title" > <span>{{welcome}}</span></p>
 
-<div class="form-group mb-3">
-    <input type="text" name="name" class="input-btn input form-control" ng-model="formData.email" placeholder="Enter your email">
-    <br/>
-    <input type="password" name="password" class="input-btn input form-control" name="password" ng-model="formData.password" placeholder="Enter your password">
+<div class="my-4">
+    <h5 class="login-title" >Welcome to the Jumia Keyword Tool</h5>
+    <p class="login-subtitle" ><span>Please log in to launch the extension tools.</span></p>
 </div>
-<div class="login-button w-100 d-flex justify-content-between align-items-center mb-4">
-    <button id="loginid" ng-click="login(formData)" class="btn btn-block btn-info login-btn w-50"> <span>Login Here</span></button>
-<a class="signupbtn" ui-sref="signup">Signup instead</a>
+
+<div class="login-button w-100 d-flex  justify-content-between align-items-center mb-4 flex-column">
+    <button id="loginid" ng-click="login()" class="btn btn-block btn-info login-btn w-100"> <span>Login into your Account</span></button>
+    <div class="d-flex align-items-center justify-content-center w-100"> 
+        <div class="line"></div>
+        <span class="mx-2 my-3">OR</span>
+        <div class="line"></div>
+    </div>
+    <button id="loginid" ng-click="signup()" class="btn btn-block btn-info login-btn w-100"> <span>Sign up For Free</span></button>
 </div>

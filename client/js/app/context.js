@@ -33,7 +33,7 @@ localStorage.removeItem('list');
             sendToBackground('search',''); 
         }
     }
-
+    
 // eventlisterners 
 chrome.runtime.onMessage.addListener(
 
@@ -828,7 +828,7 @@ const injectShadow =(data)=> {
             })
 
             ViewListBtn.addEventListener("click", function(){
-                sendToBackground('showList',''); 
+                sendToBackground("OpenList",''); 
             })
 
             paginationElements(paginationContainer,data,root);
