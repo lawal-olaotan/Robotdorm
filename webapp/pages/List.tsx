@@ -7,9 +7,9 @@ const List: NextPage = () => {
 
     const extensionId: string = 'llneclmbomnmhcgbaacmjdloencbfahj'; 
 
-   const loadingEvent = () => {
-    chrome.runtime.sendMessage(extensionId,{type:'getInfo',data:'sendloginData'})
-   }
+//    const loadingEvent = () => {
+//     chrome.runtime.sendMessage(extensionId,{type:'getInfo',data:'sendloginData'})
+//    }
 
   return (
         <div>
