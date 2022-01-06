@@ -4,12 +4,20 @@ import Link from 'next/link'
 import { Lheader } from '@components/Lheader';
 import { InputCom } from '@components/InputCom';
 import { FormFooters } from '@components/FormFooters';
+import  React from 'react'
 
 
 
 const Login: NextPage = () => {
 
     const extensionId: string = 'llneclmbomnmhcgbaacmjdloencbfahj'; 
+
+    const submitForm = (event: React.SyntheticEvent) => {
+        
+        event.preventDefault();
+        console.log('submited'); 
+
+    }
 
   
 
@@ -26,7 +34,7 @@ const Login: NextPage = () => {
 
                 <Lheader Title="Login In to RobotDorm"/>
 
-                <form>
+                <form onSubmit={submitForm}>
 
                     <InputCom labelName='Email' id="email" type="email" placeholder="Please enter your email"/>
 
