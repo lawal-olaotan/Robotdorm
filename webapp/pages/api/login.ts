@@ -21,7 +21,7 @@ export default handler.use(post(validator))
 
     try{
 
-        
+        console.log(email,password);
 
 
     }catch (e:any){
