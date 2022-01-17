@@ -15,15 +15,27 @@ const Login: NextPage = () => {
 
     useEffect(()=> {
         getSession()
-        .then((session) => {
+        .then(async (session) => {
             if(session){
-                router.replace('/Dashboard')
-                
+                const data = await getUserInfo()
+                if(data){
+                    router.push('/Dashboard'); 
+                }
             }else{
                 SetLoading(false)
             }
         })
     },[router])
+
+
+    const getUserInfo = async() => {
+        await fetch('/api/getInfo', {method: 'GET',headers:{'Content-Type': 'application/json;'} })
+        .then((response)=> response.json())
+        .then((data)=> {
+            localStorage.setItem('userInfo', JSON.stringify(data)); 
+        })
+        return true; 
+    }
 
     if(loading){
         return <p>Loading Page</p>

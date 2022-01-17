@@ -19,13 +19,11 @@ const Signup: NextPage = () => {
     // const extensionId: string = 'llneclmbomnmhcgbaacmjdloencbfahj';
 
    let email:string = '';
-
     getSession()
     .then((session)=> {
         if(session !== null){
             email = session.user.email
         }
-        
     }); 
     const nameInputRef = useRef<HTMLInputElement>(null);
 
@@ -34,21 +32,18 @@ const Signup: NextPage = () => {
         event.preventDefault();
         const name:string = nameInputRef.current.value;
         const userData = {name,email}
-        
-        const response = await fetch('/api/update', {
+        await fetch('/api/update', {
             method:'POST', 
             body:JSON.stringify(userData),
             headers: {
                 'Content-Type': 'application/json',
             }, 
         })
-
-        if(response.status === 201){
-            router.push('/Dashboard'); 
-        }
-
-
-       
+        .then((response)=> response.json())
+        .then((data)=> {
+            localStorage.setItem('userInfo', JSON.stringify(data)); 
+            router.push('/Dashboard');
+        })
     }
 
 
