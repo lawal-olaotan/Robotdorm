@@ -12,11 +12,11 @@ const Dashboard: NextPage = () => {
   return (
         <div>
             <Head>
-                <title> Login | RobotDorm</title>
+                <title>Dashboard | RobotDorm</title>
                 <link rel="icon" href="/favicon.ico" />
             </Head>
             <main>
-                <h1>Login</h1>
+                <h1>DashBoard</h1>
             </main>
         </div>
   )
