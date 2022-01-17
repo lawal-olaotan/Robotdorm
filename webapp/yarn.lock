@@ -2608,10 +2608,10 @@
   "resolved" "https://registry.npmjs.org/node-releases/-/node-releases-2.0.1.tgz"
   "version" "2.0.1"
 
-"node@^16.13.0":
-  "integrity" "sha512-bCUq6u/0rVHBvCpxLFTv5/kPjJGTltcyWQ2EtqlZ6WOqSpkTVBFtNoJ9tSVIGmadb0KoRsWd2CyNs9bU/drxXQ=="
-  "resolved" "https://registry.npmjs.org/node/-/node-16.13.0.tgz"
-  "version" "16.13.0"
+"node@^16.13.2":
+  "integrity" "sha512-6x0hohLASL0XaehYn1mrVw1UiiRjoxrujBxjqHGxGe/rFKKCJcDhoa5wNxxvBbyJm6mNgZYuzg0JTwvXmpeWWw=="
+  "resolved" "https://registry.npmjs.org/node/-/node-16.13.2.tgz"
+  "version" "16.13.2"
   dependencies:
     "node-bin-setup" "^1.0.0"
 
