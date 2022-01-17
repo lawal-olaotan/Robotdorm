@@ -11,7 +11,7 @@ interface IUsers {
 }
 
 
- const AuthForm = ()=> {
+const AuthForm = ()=> {
 
     const emailInputRef = useRef<HTMLInputElement>(null);
 
