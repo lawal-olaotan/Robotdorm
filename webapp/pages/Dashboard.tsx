@@ -6,7 +6,7 @@ import React,{useEffect} from 'react'
 
 const Dashboard: NextPage = () => {
 
-    // const extensionId: string = 'llneclmbomnmhcgbaacmjdloencbfahj'; 
+
     const myRoute = useRouter(); 
 
 
@@ -16,11 +16,20 @@ const Dashboard: NextPage = () => {
             if(!session){
                 myRoute.replace('/Login')
             }else{
+                const extensionId: string = 'llneclmbomnmhcgbaacmjdloencbfahj'; 
+                const userId:{} = JSON.parse(localStorage.getItem('userInfo'));
                 //send message to chrome extension
-                console.log(session); 
+                // sendtoExe(extensionId,userId)
             }
         })
     },[myRoute])
+
+    // const sendtoExe = (extension,data)=> {
+    //    chrome.runtime.sendMessage(extension, {type:'browser',message:data},function(response){
+    //        console.log(response); 
+    //    })
+
+    // }
     
     
   return (

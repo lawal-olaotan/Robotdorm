@@ -17,46 +17,16 @@ chrome.runtime.onMessage.addListener(
       case "onPopupInit":
         const usermine = getStorageItem('user');
         sendResponse(usermine);
-
-
-      //   allAjax('GET',usermine,'user/me',mytoken,
-      //   function(response){
-      //     sendResponse(response); 
-      // });
-
         return true;
         break;
       case "login":
-          
         chrome.tabs.create({url:myurl+'Login'});
         sendResponse('redirected'); 
-
-          // allAjax('POST',userInfo,'user/login','', function(response){
-
-          //   if(response.status !== 400){
-          //     setStorageItem('user',response)
-          //   }
-          //   sendResponse(response);
-          //   console.log('response from the server', response);
-          // }); 
-
+        // send message to your browser and get response to be stored in local storage
+        
 
           return true;
           break; 
-      case "signup": 
-          let userCreds = message.data;
-
-          
-
-
-          // userCreds.username = message.data.email.split('@')[0];
-          // allAjax('POST',userCreds,'user/signup','',function(response){
-          //   sendResponse(response)
-          //   console.log('response from the server',response)
-          // })
-
-          return true;
-          break;
       case "visitJumia":
           console.log('message:',message);
           chrome.tabs.create({url:'https://www.jumia.com.ng'});
@@ -125,10 +95,12 @@ chrome.runtime.onMessage.addListener(
         return true;
         break;
         case"OpenList": 
-          
           chrome.tabs.create({url:myurl+'List'});
-            
-            
+        return true;
+        break;
+        case"browser": 
+          console.log(message.data);
+          
         return true;
         break;
       default:
