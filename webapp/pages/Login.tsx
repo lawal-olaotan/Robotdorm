@@ -28,14 +28,18 @@ const Login: NextPage = () => {
         })
     },[router])
 
+    let myId : any;
 
     const getUserInfo = async() => {
+
         await fetch('/api/getInfo', {method: 'GET',headers:{'Content-Type': 'application/json;'} })
         .then((response)=> response.json())
         .then((data)=> {
-            // chrome.runtime.sendMessage(extensionId, {type:'browser',message:data})
-            localStorage.setItem('userInfo', JSON.stringify(data)); 
+            myId = data; 
         })
+
+        await chrome.runtime.sendMessage(extensionId, {type:'browser',message:myId})
+
         return true; 
     }
 
