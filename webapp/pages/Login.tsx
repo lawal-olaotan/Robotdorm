@@ -38,7 +38,7 @@ const Login: NextPage = () => {
             myId = data; 
         })
 
-        await chrome.runtime.sendMessage(extensionId, {type:'browser',message:myId})
+        await chrome.runtime.sendMessage(extensionId, {type:'browser',data:myId})
 
         return true; 
     }
