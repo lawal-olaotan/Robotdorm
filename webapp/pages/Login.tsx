@@ -19,6 +19,7 @@ const Login: NextPage = () => {
         .then(async (session) => {
             if(session){
                 const data = await getUserInfo()
+                console.log(data); 
                 if(data){
                     router.push('/Dashboard'); 
                 }
@@ -37,8 +38,7 @@ const Login: NextPage = () => {
         .then((data)=> {
             myId = data; 
         })
-
-        await chrome.runtime.sendMessage(extensionId, {type:'browser',data:myId})
+        chrome.runtime.sendMessage(extensionId, {type:'browser',data:myId})
 
         return true; 
     }
