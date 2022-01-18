@@ -9,7 +9,7 @@ import AuthForm from '@components/AuthForm'
 
 const Login: NextPage = () => {
 
-    const extensionId: string = 'llneclmbomnmhcgbaacmjdloencbfahj'; 
+    
 
     const [loading, SetLoading] = useState(true); 
     const router = useRouter(); 
@@ -20,9 +20,9 @@ const Login: NextPage = () => {
             if(session){
                 const data = await getUserInfo()
                 console.log(data); 
-                if(data){
-                    router.push('/Dashboard'); 
-                }
+                // if(data){
+                //     router.push('/Dashboard'); 
+                // }
             }else{
                 SetLoading(false)
             }
@@ -32,6 +32,8 @@ const Login: NextPage = () => {
     let myId : any;
 
     const getUserInfo = async() => {
+
+        const extensionId: string = 'llneclmbomnmhcgbaacmjdloencbfahj'; 
 
         await fetch('/api/getInfo', {method: 'GET',headers:{'Content-Type': 'application/json;'} })
         .then((response)=> response.json())
