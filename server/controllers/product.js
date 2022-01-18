@@ -10,8 +10,6 @@ let ObjectId = require('mongoose').Types.ObjectId;
 exports.saveList = async(req,res)=> {
     let list = req.body.datapic;
 
-    
-    
     try{
         List.insertMany(list,{ordered:false})
         .catch(
