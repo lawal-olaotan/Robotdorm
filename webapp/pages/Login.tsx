@@ -1,14 +1,15 @@
 import  React, {useEffect,useState} from 'react'
 import type { NextPage } from 'next';
-import { useRouter} from 'next/router';
+import { useRouter} from 'next/router'
 import { getSession } from 'next-auth/react'; 
 import AuthForm from '@components/AuthForm'
 
 
 
+
 const Login: NextPage = () => {
 
-    // const extensionId: string = 'llneclmbomnmhcgbaacmjdloencbfahj'; 
+    const extensionId: string = 'llneclmbomnmhcgbaacmjdloencbfahj'; 
 
     const [loading, SetLoading] = useState(true); 
     const router = useRouter(); 
@@ -32,6 +33,7 @@ const Login: NextPage = () => {
         await fetch('/api/getInfo', {method: 'GET',headers:{'Content-Type': 'application/json;'} })
         .then((response)=> response.json())
         .then((data)=> {
+            // chrome.runtime.sendMessage(extensionId, {type:'browser',message:data})
             localStorage.setItem('userInfo', JSON.stringify(data)); 
         })
         return true; 

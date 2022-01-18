@@ -24,7 +24,7 @@
         "128":"icon128.png"
     },
     "externally_connectable": {
-        "matches": ["http://localhost:3000/"]
+        "matches": ["http://localhost:3000/","https://www.robotdorm.com/"]
       }
     
 }
