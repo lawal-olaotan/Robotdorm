@@ -45,6 +45,31 @@ export default NextAuth({
    pages:{
       signIn:'/Login',
       newUser: '/Signup'
+   }, 
+   callbacks:{
+      async session ({session}){
+
+        let dbInstance = (await ClientPromise).db();
+
+        let userDetails = await dbInstance.collection('users').findOne({
+          email:session.user.email
+      });
+
+      type dbUser = {
+          name ?: string,
+          email ?: string
+      }
+
+      if(userDetails.name !== undefined){
+          let myUser:dbUser = {
+              name: userDetails.name,
+              email: userDetails.email
+          }
+          session.user = myUser;
+      }
+
+        return session
+      }
    }
    
 })
