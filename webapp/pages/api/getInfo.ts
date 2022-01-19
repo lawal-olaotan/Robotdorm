@@ -10,14 +10,10 @@ export default async function handler(req:NextApiRequest,res:NextApiResponse){
             const Db = (await ClientPromise).db(); 
             const session = await getSession({req})
             const user = session.user; 
-    
             let userDetails = await Db.collection('users').findOne({
                 email: user.email
             });
-
             res.status(200).send({data:userDetails._id});
-
-
         }catch (e:any){
             console.error(e);
             res.status(500).json({

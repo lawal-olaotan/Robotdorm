@@ -18,8 +18,12 @@ module.exports = {
         primary:'#0A2635',
         grey:'#808080',
         blue: '#0D67FF',
-        secondary:'#307BD1'
+        secondary:'#307BD1',
+        dashpop:'#EBF6FE'
       },
+      boxShadow:{
+        '5xl': 'rgb(0 0 0 / 8%) 0px 2px 12px 0px'
+      }
     },
   },
   plugins: [],
