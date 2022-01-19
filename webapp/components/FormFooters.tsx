@@ -11,8 +11,6 @@ interface Props {
 export const FormFooters: NextPage<Props> = (Props)=> {
     const{question,link,url} = Props
     return (
-
         <div className="flex"><p className="mr-1 mb-3">{question}</p><Link  href={url}><a className="text-secondary">{link}</a></Link></div>
-
     )
 }

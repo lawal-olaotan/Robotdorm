@@ -1,3 +1,4 @@
+import { ReturnDocument } from "mongodb";
 import type { NextApiResponse, NextApiRequest} from "next";
 import handler,{check,post,initiValidation} from '../../lib/middlehelper'
 import ClientPromise from '../../lib/mongoDb';
@@ -12,28 +13,29 @@ export default handler.use(post(validator))
 
 
 .post( async (req:NextApiRequest,res:NextApiResponse)=> {
-    const data = req.body; 
-    const {name,email} = data
-
+        const data = req.body; 
     try{
+        
+        const {name,email} = data
+        let myName:string = name
+        let myEmail:string = email
+
+        type Query = {
+            email:string
+        }
 
         const dbInstance = (await ClientPromise).db();
-
-        let userDetails = await dbInstance.collection('users').findOne({
-            email:email
+        const newValue = {$set:{name:myName}}; 
+        const query:Query = {email:myEmail}
+        await dbInstance.collection('users').findOneAndUpdate(query,newValue,function(err,document){
+            if(!err){
+                res.status(200).send({data:document.value});
+            }else{
+                console.log(err);
+            }
         });
-
-         if(userDetails){
-            const dbQuery = {userId:userDetails._id}; 
-            const newValue = {$set:{name:name}}; 
-            dbInstance.collection('sessions').updateOne(dbQuery,newValue, function(err){
-                if(!err){
-                    
-                    res.status(200).send({data:userDetails._id}); 
-                }
-            })
-
-         }
+    
+         
     
     }catch (e:any){
             console.error(e);

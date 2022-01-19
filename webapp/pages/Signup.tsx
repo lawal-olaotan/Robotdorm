@@ -7,16 +7,10 @@ import {useRef} from 'react';
 import { getSession } from 'next-auth/react'; 
 import { useRouter} from 'next/router';
 
-interface Users {
-    name:string,
-    email:string
-}
-
 
 const Signup: NextPage = () => {
     const router = useRouter(); 
-
-    // const extensionId: string = 'llneclmbomnmhcgbaacmjdloencbfahj';
+    const extensionId: string = 'llneclmbomnmhcgbaacmjdloencbfahj';
 
    let email:string = '';
     getSession()
@@ -30,6 +24,7 @@ const Signup: NextPage = () => {
     // event hook to update user information
     const submitName = async (event: React.SyntheticEvent) => {
         event.preventDefault();
+        let exeData;  
         const name:string = nameInputRef.current.value;
         const userData = {name,email}
         await fetch('/api/update', {
@@ -41,9 +36,11 @@ const Signup: NextPage = () => {
         })
         .then((response)=> response.json())
         .then((data)=> {
-            localStorage.setItem('userInfo', JSON.stringify(data)); 
-            router.push('/Dashboard');
+         exeData = data; 
+         console.log(data);
         })
+        chrome.runtime.sendMessage(extensionId, {type:'browser',data:exeData._id})
+        router.replace('/Dashboard');
     }
 
 
