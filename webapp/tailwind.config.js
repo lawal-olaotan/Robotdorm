@@ -19,10 +19,12 @@ module.exports = {
         grey:'#808080',
         blue: '#0D67FF',
         secondary:'#307BD1',
-        dashpop:'#EBF6FE'
+        dashpop:'#EBF6FE',
+        dashbg:'#F1F3F6'
       },
       boxShadow:{
-        '5xl': 'rgb(0 0 0 / 8%) 0px 2px 12px 0px'
+        '5xl': 'rgb(0 0 0 / 8%) 0px 2px 12px 0px',
+        '6xl': 'rgba(0, 0, 0, 0.15) 0px 2px 8px'
       }
     },
   },
