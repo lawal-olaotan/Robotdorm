@@ -79,7 +79,7 @@ export default function Dashboard(){
                         </div>
                         
 
-                        <p> <span>"Our Goal is to create equal market opportunities for everyone"</span></p>
+                        <p> <span>Our Goal is to create equal market opportunities for everyone</span></p>
                     </div>
                 </div>
 
