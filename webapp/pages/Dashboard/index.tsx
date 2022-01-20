@@ -75,7 +75,7 @@ export default function Dashboard(){
 
                     <div>
                         <div>
-                        <img src="/success.png" alt="welcomepic" />
+                                <img src="/Success.png" alt="welcomepic" />
                         </div>
                         
 
