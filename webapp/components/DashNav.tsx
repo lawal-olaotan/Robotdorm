@@ -33,7 +33,7 @@ export const DashNav = ()=> {
                         </div>
 
                         <div>
-                            <div className={ `${active ? 'flex' : 'hidden'} p-5 absolute top-[4.5pc] right-[3pc] w-[220px] h-[200px] z-[1] items-center bg-dashpop text-black flex-col rounded-sm`}>
+                            <div className={ `${active ? 'flex' : 'hidden'} p-5 absolute top-[4.5pc] right-[3pc] w-[220px] h-[200px] z-[1] items-center bg-dashpop shadow-6xl text-black flex-col rounded-sm`}>
 
                                 <div className="flex items-center justify-center bg-black rounded-full p-1 w-[40px] h-[40px] mb-4">
                                     <img src="/icons.png" alt="profile-pic" />
