@@ -446,6 +446,12 @@ Ensure the default browser behavior of the `hidden` attribute.
 .mt-6 {
   margin-top: 1.5rem;
 }
+.mb-8 {
+  margin-bottom: 2rem;
+}
+.mb-2 {
+  margin-bottom: 0.5rem;
+}
 .mt-4 {
   margin-top: 1rem;
 }
@@ -458,9 +464,6 @@ Ensure the default browser behavior of the `hidden` attribute.
 .mb-4 {
   margin-bottom: 1rem;
 }
-.mb-2 {
-  margin-bottom: 0.5rem;
-}
 .mr-1 {
   margin-right: 0.25rem;
 }
@@ -469,9 +472,6 @@ Ensure the default browser behavior of the `hidden` attribute.
 }
 .mt-2 {
   margin-top: 0.5rem;
-}
-.mb-8 {
-  margin-bottom: 2rem;
 }
 .mb-5 {
   margin-bottom: 1.25rem;
@@ -491,6 +491,9 @@ Ensure the default browser behavior of the `hidden` attribute.
 .hidden {
   display: none;
 }
+.h-3\/4 {
+  height: 75%;
+}
 .h-screen {
   height: 100vh;
 }
@@ -506,14 +509,17 @@ Ensure the default browser behavior of the `hidden` attribute.
 .h-\[40px\] {
   height: 40px;
 }
-.h-1\/2 {
-  height: 50%;
+.h-3\/5 {
+  height: 60%;
 }
 .w-\[28\%\] {
   width: 28%;
 }
 .w-full {
   width: 100%;
+}
+.w-\[90\%\] {
+  width: 90%;
 }
 .w-\[24px\] {
   width: 24px;
@@ -544,18 +550,6 @@ Ensure the default browser behavior of the `hidden` attribute.
 }
 .w-\[33\%\] {
   width: 33%;
-}
-.w-10\/12 {
-  width: 83.333333%;
-}
-.w-11\/12 {
-  width: 91.666667%;
-}
-.w-\[90\%\] {
-  width: 90%;
-}
-.w-1\/2 {
-  width: 50%;
 }
 .flex-col {
   flex-direction: column;
@@ -604,13 +598,13 @@ Ensure the default browser behavior of the `hidden` attribute.
   --tw-bg-opacity: 1;
   background-color: rgb(48 123 209 / var(--tw-bg-opacity));
 }
-.bg-dashbg {
-  --tw-bg-opacity: 1;
-  background-color: rgb(241 243 246 / var(--tw-bg-opacity));
-}
 .bg-white {
   --tw-bg-opacity: 1;
   background-color: rgb(255 255 255 / var(--tw-bg-opacity));
+}
+.bg-dashbg {
+  --tw-bg-opacity: 1;
+  background-color: rgb(241 243 246 / var(--tw-bg-opacity));
 }
 .bg-black {
   --tw-bg-opacity: 1;
@@ -630,6 +624,9 @@ Ensure the default browser behavior of the `hidden` attribute.
 .p-3 {
   padding: 0.75rem;
 }
+.p-8 {
+  padding: 2rem;
+}
 .p-1 {
   padding: 0.25rem;
 }
@@ -638,9 +635,6 @@ Ensure the default browser behavior of the `hidden` attribute.
 }
 .p-4 {
   padding: 1rem;
-}
-.p-8 {
-  padding: 2rem;
 }
 .py-20 {
   padding-top: 5rem;
@@ -678,6 +672,10 @@ Ensure the default browser behavior of the `hidden` attribute.
   font-size: 1.5rem;
   line-height: 2rem;
 }
+.text-xl {
+  font-size: 1.25rem;
+  line-height: 1.75rem;
+}
 .text-sm {
   font-size: 0.875rem;
   line-height: 1.25rem;
@@ -689,10 +687,6 @@ Ensure the default browser behavior of the `hidden` attribute.
 .text-base {
   font-size: 1rem;
   line-height: 1.5rem;
-}
-.text-xl {
-  font-size: 1.25rem;
-  line-height: 1.75rem;
 }
 .font-semibold {
   font-weight: 600;
@@ -720,14 +714,14 @@ Ensure the default browser behavior of the `hidden` attribute.
   --tw-text-opacity: 1;
   color: rgb(10 38 53 / var(--tw-text-opacity));
 }
-.shadow-5xl {
-  --tw-shadow: rgb(0 0 0 / 8%) 0px 2px 12px 0px;
-  --tw-shadow-colored: 0px 2px 12px 0px var(--tw-shadow-color);
-  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
-}
 .shadow-6xl {
   --tw-shadow: rgba(0, 0, 0, 0.15) 0px 2px 8px;
   --tw-shadow-colored: 0px 2px 8px var(--tw-shadow-color);
+  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
+}
+.shadow-5xl {
+  --tw-shadow: rgb(0 0 0 / 8%) 0px 2px 12px 0px;
+  --tw-shadow-colored: 0px 2px 12px 0px var(--tw-shadow-color);
   box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
 }
 .outline-none {
@@ -755,11 +749,6 @@ Ensure the default browser behavior of the `hidden` attribute.
 .hover\:text-primary:hover {
   --tw-text-opacity: 1;
   color: rgb(10 38 53 / var(--tw-text-opacity));
-}
-.hover\:shadow-6xl:hover {
-  --tw-shadow: rgba(0, 0, 0, 0.15) 0px 2px 8px;
-  --tw-shadow-colored: 0px 2px 8px var(--tw-shadow-color);
-  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
 }
 .hover\:transition-\[width\]:hover {
   transition-property: width;
