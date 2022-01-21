@@ -42,6 +42,7 @@ const Login: NextPage = () => {
             myId = data; 
         })
         chrome.runtime.sendMessage(extensionId, {type:'browser',data:myId})
+
         return true; 
     }
 
