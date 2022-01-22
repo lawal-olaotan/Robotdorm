@@ -19,13 +19,15 @@ const Signup: NextPage = () => {
         email = session.user.email;
      }
 
-     let exeData;  
+    let exeData;  
 
      useEffect(()=> {
         getSession()
         .then(async (session) => {
             if(session){
-                const sesCMD = sendMessage();
+                const sesCMD = ()=>{
+                    
+                }
                 if(sesCMD){
                     router.replace('/Dashboard');
                 }
@@ -34,10 +36,9 @@ const Signup: NextPage = () => {
         })
     },[router])
 
-
-
     // event hook to update user information
     const submitName = async (event: React.SyntheticEvent) => {
+
         event.preventDefault();
         
         const name:string = nameInputRef.current.value;
@@ -55,12 +56,11 @@ const Signup: NextPage = () => {
         let userData = data.data
          exeData = userData;
         })
+        await chrome.runtime.sendMessage(extensionId, {type:'browser',data:exeData._id});
+        router.replace('/Dashboard');
     }
 
-    const sendMessage = ()=> {
-        chrome.runtime.sendMessage(extensionId, {type:'browser',data:exeData._id})
-        return true; 
-    }
+  
 
 
   return (
