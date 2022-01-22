@@ -38,7 +38,6 @@ const Signup: NextPage = () => {
         let userData = data.data
          exeData = userData;
         })
-        
         chrome.runtime.sendMessage(extensionId, {type:'browser',data:exeData._id})
         router.replace('/Dashboard');
     }
