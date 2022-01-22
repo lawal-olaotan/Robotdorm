@@ -1,44 +1,30 @@
 
-import  Head  from 'next/head';
-import { useRouter} from 'next/router';
-import { getSession} from 'next-auth/react'; 
-import React,{useEffect,useState} from 'react';
+import { useSession} from 'next-auth/react'; 
+import React from 'react';
 import {faSearch,faPager,faDownload,faSave,faStoreAlt} from '@fortawesome/free-solid-svg-icons';
 
-
 // components 
-import { Todo } from '@components/Todo';
+import { Todo } from '@components/dashboard/Todo';
+import {DashHead} from '@components/dashboard/DashHead'; 
+import { DashTitle } from './DashTitle';
 
 
 export const DashPage =() => {
 
-    const myRoute = useRouter();  
-    const [userInfo, setUserInfo] = useState<string>(); 
+    const {data:session,status} = useSession(); 
 
-    useEffect(()=> {
-        getSession()
-        .then((session) => {
-            if(!session){
-                myRoute.replace('/Login')
-            }else{
-                const userName:any= session.user.name.split(' '); 
-                setUserInfo(userName[0]);
-            }
-        })
-    },[myRoute])
-
-
+   function cutName(myName:string):string{
+       let newName = myName.split(' ')[0]
+     return newName
+   }
+    
     return (
         <>
-            { userInfo !== undefined ? 
-            
+            { status === "authenticated" ? 
             <>
-                <Head>
-                    <title>Dashboard | RobotDorm</title>
-                    <link rel="icon" href="/favicon.ico" />
-                </Head>
+                <DashHead PageName="Dashboard"/>
                 <div>
-                     <h1 className="text-2xl font-semibold text-secondary">Welcome {userInfo}</h1>
+                    <DashTitle DashTitle={`Welcome ${cutName(session.user.name)}`} />
                     <div className="mt-8 flex justify-between shadow-6xl bg-white w-[90%] rounded-lg p-8">
                         <div>
                             <div className="mb-8">
@@ -53,20 +39,17 @@ export const DashPage =() => {
                                     <Todo iconTypes={faSave} iconText="Save your desired products to your list" />
                                     <Todo iconTypes={faStoreAlt} iconText="Download products to csv or let us source for you" />
                             </ul>
-                            
                         </div>
-    
                         <div>
                     <div className='flex items-center justify-center'>
                             <img src="/Success.png" alt="welcomepic" />
                     </div>
                         </div>
                     </div>
-    
                 </div>
             </>
 
-        : <div>loading</div>}  
+        : <div></div>}  
         </>
         
     )
