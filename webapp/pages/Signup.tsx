@@ -3,31 +3,28 @@ import  Head  from 'next/head';
 import { Lheader } from '@components/Lheader';
 import { InputCom } from '@components/InputCom';
 import { FormFooters } from '@components/FormFooters';
-import {useRef,useContext} from 'react'; 
-import { getSession } from 'next-auth/react'; 
+import {useRef} from 'react'; 
+import { getSession,useSession } from 'next-auth/react'; 
 import { useRouter} from 'next/router';
-import {MyContext} from '../lib/UserContext'; 
 
 
 const Signup: NextPage = () => {
+    const{data: session,status} = useSession(); 
     const router = useRouter();
-    const {SetMyId}  = useContext(MyContext); 
     const extensionId: string = 'llneclmbomnmhcgbaacmjdloencbfahj';
-
-   let email:string = '';
-    getSession()
-    .then((session)=> {
-        if(session !== null){
-            email = session.user.email
-        }
-    }); 
     const nameInputRef = useRef<HTMLInputElement>(null);
+   let email:string = '';
+
+   if(status === 'authenticated'){
+        email = session.user.email;
+     }
 
     // event hook to update user information
     const submitName = async (event: React.SyntheticEvent) => {
         event.preventDefault();
         let exeData;  
         const name:string = nameInputRef.current.value;
+        session.user.name = name;
         const userData = {name,email}
         await fetch('/api/update', {
             method:'POST', 
@@ -40,8 +37,8 @@ const Signup: NextPage = () => {
         .then((data)=> {
         let userData = data.data
          exeData = userData;
-        SetMyId(userData)
         })
+        
         chrome.runtime.sendMessage(extensionId, {type:'browser',data:exeData._id})
         router.replace('/Dashboard');
     }
