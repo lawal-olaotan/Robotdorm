@@ -3,8 +3,6 @@ import type { NextPage } from 'next';
 import { useRouter} from 'next/router'
 import { getSession} from 'next-auth/react'; 
 import AuthForm from '@components/AuthForm';
-import {MyContext} from '../lib/UserContext'
-
 
 
 
@@ -19,14 +17,18 @@ const Login: NextPage = () => {
         getSession()
         .then(async (session) => {
             if(session){
-                console.log(session.user.id);
-                chrome.runtime.sendMessage(extensionId, {type:'browser',data:session.user.id})
-                router.replace('/Dashboard'); 
+                const userId = session.user.id; 
+                if(userId !== undefined){
+                    chrome.runtime.sendMessage(extensionId, {type:'browser',data:session.user.id})
+                    router.replace('/Dashboard'); 
+                }
+                
             }else{
                 SetLoading(false)
             }
         })
     },[router])
+
 
     if(loading){
         return <p>Loading Page</p>
