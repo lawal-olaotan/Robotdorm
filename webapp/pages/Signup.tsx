@@ -3,13 +3,15 @@ import  Head  from 'next/head';
 import { Lheader } from '@components/Lheader';
 import { InputCom } from '@components/InputCom';
 import { FormFooters } from '@components/FormFooters';
-import {useRef} from 'react'; 
+import {useRef,useContext} from 'react'; 
 import { getSession } from 'next-auth/react'; 
 import { useRouter} from 'next/router';
+import {MyContext} from '../lib/UserContext'; 
 
 
 const Signup: NextPage = () => {
-    const router = useRouter(); 
+    const router = useRouter();
+    const {SetMyId}  = useContext(MyContext); 
     const extensionId: string = 'llneclmbomnmhcgbaacmjdloencbfahj';
 
    let email:string = '';
@@ -36,8 +38,9 @@ const Signup: NextPage = () => {
         })
         .then((response)=> response.json())
         .then((data)=> {
-         exeData = data; 
-         console.log(data);
+        let userData = data.data
+         exeData = userData;
+        SetMyId(userData)
         })
         chrome.runtime.sendMessage(extensionId, {type:'browser',data:exeData._id})
         router.replace('/Dashboard');

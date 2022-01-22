@@ -2,7 +2,8 @@ import '../styles/globals.css'
 import type { AppProps } from 'next/app';
 import type {ReactElement, ReactNode} from 'react';
 import type {NextPage} from 'next'; 
-import {SessionProvider} from 'next-auth/react'; 
+import {SessionProvider} from 'next-auth/react';
+import {ContextProvider} from '../lib/UserContext';
 
 
 
@@ -15,16 +16,15 @@ type AppPropsWithLayout = AppProps & {
 }
 
 export default function MyApp({Component, pageProps: {session, ...pageProps} }: AppPropsWithLayout) {
-  
   const getLayout = Component.getLayout ?? ((page) => page )
-
   return (
-    
-    getLayout(
-    <SessionProvider session={session}>
-      <Component {...pageProps} />
-    </SessionProvider>
-  ))
+    <ContextProvider>
+      <SessionProvider session={session}>
+        {getLayout(<Component {...pageProps} />)}
+      </SessionProvider>
+    </ContextProvider>)
 }
+
+
 
 

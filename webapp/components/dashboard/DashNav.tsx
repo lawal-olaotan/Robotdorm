@@ -1,22 +1,16 @@
 
 import Link from 'next/link'; 
-import {useState,useEffect,useRef} from 'react'; 
+import {useState,useEffect} from 'react'; 
 import { Navitems } from '@components/Navitems';
-import { DashIcons } from '@components/DashIcons';
-import {getSession} from 'next-auth/react'; 
-import {userInfo} from '../interface/userSes'
+import { DashIcons } from '@components/dashboard/DashIcons';
+import {useSession} from 'next-auth/react';
+
 
 export const DashNav = ()=> {
     const [active,setActive] = useState(false);
-    const [userDetails, setUserDetails] = useState<userInfo>()
+    const {data:session,status} = useSession(); 
 
     useEffect(()=> {
-        getSession()
-        .then((session) => {
-            if(session){
-                setUserDetails(session.user)
-            }
-        })
         if(active){
             window.addEventListener('click', function(){
                 setActive(false);
@@ -54,9 +48,9 @@ export const DashNav = ()=> {
                             <div className="flex items-center justify-center bg-black rounded-full p-1 w-[40px] h-[40px] mb-4">
                                 <img src="/icons.png" alt="profile-pic" />
                             </div>
-                            { userDetails !==  undefined ? <div className='text-center'>
-                                <p className="text-sm font-medium mb-2"><span>{userDetails.email}</span></p>
-                                <p className="text-sm mb-2"><span>{userDetails.name}</span></p>
+                            { status ===  'authenticated' ? <div className='text-center'>
+                                <p className="text-sm font-medium mb-2"><span>{session.user.email}</span></p>
+                                <p className="text-sm mb-2"><span>{session.user.name}</span></p>
                                 <Link href="/"><a className="text-sm font-semibold text-blue">Settings</a>
                                 </Link>
                             </div>: <div>loading</div> } 

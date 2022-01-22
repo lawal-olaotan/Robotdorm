@@ -1,15 +1,16 @@
-import  React, {useEffect,useState} from 'react'
+import  React, {useEffect,useState,useContext} from 'react'
 import type { NextPage } from 'next';
 import { useRouter} from 'next/router'
 import { getSession } from 'next-auth/react'; 
-import AuthForm from '@components/AuthForm'
+import AuthForm from '@components/AuthForm';
+import {MyContext} from '../lib/UserContext'
 
 
 
 
 const Login: NextPage = () => {
 
-    
+    const {SetMyId} = useContext(MyContext); 
 
     const [loading, SetLoading] = useState(true); 
     const router = useRouter(); 
@@ -19,18 +20,16 @@ const Login: NextPage = () => {
         .then(async (session) => {
             if(session){
                 const data = await getUserInfo()
-                console.log(data);
                 if(data){
                     router.replace('/Dashboard'); 
                 }
-                
             }else{
                 SetLoading(false)
             }
         })
     },[router])
 
-    let myId : any;
+    let myIdData : any;
 
     const getUserInfo = async() => {
 
@@ -38,11 +37,14 @@ const Login: NextPage = () => {
 
         await fetch('/api/getInfo', {method: 'GET',headers:{'Content-Type': 'application/json;'} })
         .then((response)=> response.json())
-        .then((data)=> {
-            myId = data; 
+        .then((mydata)=> {
+            let {id, ...newData} = mydata.data; 
+            myIdData = newData; 
+            SetMyId(newData);
         })
-        chrome.runtime.sendMessage(extensionId, {type:'browser',data:myId})
 
+        chrome.runtime.sendMessage(extensionId, {type:'browser',data:myIdData.id})
+         
         return true; 
     }
 
