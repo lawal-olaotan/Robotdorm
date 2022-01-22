@@ -6,9 +6,9 @@ import {createTransport} from 'nodemailer';
 import {ObjectId } from 'mongoose'; 
 
 interface userInfo {
-  name:string,
+  name?:string,
   email:string,
-  id:ObjectId,
+  id:string,
   emailVerified:string
 }
 
