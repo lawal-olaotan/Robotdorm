@@ -1,25 +1,34 @@
 import  React, {useEffect,useState,useContext} from 'react'
 import type { NextPage } from 'next';
 import { useRouter} from 'next/router'
-import { useSession } from 'next-auth/react'; 
+import { getSession,useSession } from 'next-auth/react'; 
 import AuthForm from '@components/AuthForm';
+import {MyContext} from '../lib/UserContext'
+
+
 
 
 const Login: NextPage = () => {
 
-    const {data:session,status} = useSession()
+    const {SetMyId} = useContext(MyContext); 
     const [loading, SetLoading] = useState(true); 
     const router = useRouter();
     
-    const extensionId: string = 'llneclmbomnmhcgbaacmjdloencbfahj';
-    
-    if(status === 'authenticated'){
-       chrome.runtime.sendMessage(extensionId, {type:'browser',data:session.user.id})
-        router.replace('/Dashboard');
-    }else{
-        SetLoading(false)
-    }
-    // let myIdData : any;
+    const extensionId: string = 'llneclmbomnmhcgbaacmjdloencbfahj'; 
+
+    useEffect(()=> {
+        getSession()
+        .then(async (session) => {
+            if(session){
+                await chrome.runtime.sendMessage(extensionId, {type:'browser',data:session.user.id})
+                router.replace('/Dashboard'); 
+            }else{
+                SetLoading(false)
+            }
+        })
+    },[router])
+
+    let myIdData : any;
     // const getUserInfo = async() => {
 
     //     await fetch('/api/getInfo', {method: 'GET',headers:{'Content-Type': 'application/json;'} })
