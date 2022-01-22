@@ -1,6 +1,8 @@
+
 import type { NextApiResponse, NextApiRequest} from "next";
+import {ObjectId } from 'mongoose'; 
+
 import ClientPromise from '../../lib/mongoDb';
-import { getSession } from 'next-auth/react'
 
 export default async function handler(req:NextApiRequest,res:NextApiResponse){
 
@@ -8,12 +10,14 @@ export default async function handler(req:NextApiRequest,res:NextApiResponse){
 
         try{
             const Db = (await ClientPromise).db(); 
-            const session = await getSession({req})
-            const user = session.user; 
-            let userDetails = await Db.collection('users').findOne({
-                email: user.email
-            });
-            res.status(200).send({data:userDetails});
+            const pageNum = 6;
+            const {query} = req.query;
+            let userDetails = await Db.collection('summaries').find({'postedBy': query});
+
+            console.log(userDetails);
+
+            res.status(200).json({data:userDetails});
+
         }catch (e:any){
             console.error(e);
             res.status(500).json({

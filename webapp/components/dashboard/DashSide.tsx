@@ -1,4 +1,4 @@
-import { DashItems } from '@components/DashItems';
+import { DashItems } from '@components/dashboard/DashItems';
 import {useState} from 'react'; 
 
 

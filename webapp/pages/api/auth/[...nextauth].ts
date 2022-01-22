@@ -4,6 +4,13 @@ import ClientPromise from '../../../lib/mongoDb';
 import  EmailProvider from 'next-auth/providers/email';
 import {createTransport} from 'nodemailer'; 
 
+interface userInfo {
+  name:string,
+  email:string,
+  id:string,
+  emailVerified:string
+}
+
 export default NextAuth({
    secret: process.env.SECRET,
 
@@ -55,17 +62,16 @@ export default NextAuth({
           email:session.user.email
       });
 
-      type dbUser = {
-          name ?: string,
-          email ?: string
-      }
+      
 
       if(userDetails.name !== undefined){
-          let myUser:dbUser = {
+          let myUser = {
               name: userDetails.name,
-              email: userDetails.email
+              email: userDetails.email,
+              id:userDetails._id,
+              emailVerified:userDetails.emailVerified
           }
-          session.user = myUser;
+          session.user= myUser;
       }
 
         return session
@@ -174,25 +180,4 @@ function html({url,email}: Record<"url" | "email", string>) {
    </div>`
 
 }
-
-
-// async function getInfo(email){
-
-//   const dbInstance = (await ClientPromise).db();
-
-//   let userName:string; 
-
-//   const sessionInfo = await dbInstance.collection('sessions').findOne({
-//     email:email
-//   })
-
-//   if(!sessionInfo){
-//     userName = 'User'
-//   }else{
-//     userName = sessionInfo.name
-//   }
-
-//   return userName
-
-// }
 
