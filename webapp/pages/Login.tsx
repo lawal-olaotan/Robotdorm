@@ -10,7 +10,6 @@ import {MyContext} from '../lib/UserContext'
 
 const Login: NextPage = () => {
 
-    const {SetMyId} = useContext(MyContext); 
     const [loading, SetLoading] = useState(true); 
     const router = useRouter();
     
@@ -21,7 +20,7 @@ const Login: NextPage = () => {
         .then(async (session) => {
             if(session){
                 console.log(session.user.id);
-                await chrome.runtime.sendMessage(extensionId, {type:'browser',data:session.user.id})
+                chrome.runtime.sendMessage(extensionId, {type:'browser',data:session.user.id})
                 router.replace('/Dashboard'); 
             }else{
                 SetLoading(false)
