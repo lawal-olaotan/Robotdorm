@@ -1,7 +1,7 @@
 import  React, {useEffect,useState,useContext} from 'react'
 import type { NextPage } from 'next';
 import { useRouter} from 'next/router'
-import { getSession,useSession } from 'next-auth/react'; 
+import { getSession} from 'next-auth/react'; 
 import AuthForm from '@components/AuthForm';
 import {MyContext} from '../lib/UserContext'
 
@@ -20,6 +20,7 @@ const Login: NextPage = () => {
         getSession()
         .then(async (session) => {
             if(session){
+                console.log(session.user.id);
                 await chrome.runtime.sendMessage(extensionId, {type:'browser',data:session.user.id})
                 router.replace('/Dashboard'); 
             }else{
@@ -27,22 +28,6 @@ const Login: NextPage = () => {
             }
         })
     },[router])
-
-    let myIdData : any;
-    // const getUserInfo = async() => {
-
-    //     await fetch('/api/getInfo', {method: 'GET',headers:{'Content-Type': 'application/json;'} })
-    //     .then((response)=> response.json())
-    //     .then((mydata)=> {
-    //         let {id, ...newData} = mydata.data; 
-    //         myIdData = newData; 
-    //         SetMyId(newData);
-    //     })
-
-    //     chrome.runtime.sendMessage(extensionId, {type:'browser',data:myIdData.id})
-         
-    //     return true; 
-    // }
 
     if(loading){
         return <p>Loading Page</p>
