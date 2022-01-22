@@ -22,7 +22,6 @@ const Login: NextPage = () => {
                     chrome.runtime.sendMessage(extensionId, {type:'browser',data:session.user.id})
                     router.replace('/Dashboard'); 
                 }
-                
             }else{
                 SetLoading(false)
             }

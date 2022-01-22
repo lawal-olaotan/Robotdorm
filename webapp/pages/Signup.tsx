@@ -3,7 +3,7 @@ import  Head  from 'next/head';
 import { Lheader } from '@components/Lheader';
 import { InputCom } from '@components/InputCom';
 import { FormFooters } from '@components/FormFooters';
-import {useRef} from 'react'; 
+import {useRef,useEffect} from 'react'; 
 import { getSession,useSession } from 'next-auth/react'; 
 import { useRouter} from 'next/router';
 
@@ -19,10 +19,27 @@ const Signup: NextPage = () => {
         email = session.user.email;
      }
 
+     let exeData;  
+
+     useEffect(()=> {
+        getSession()
+        .then(async (session) => {
+            if(session){
+                const sesCMD = sendMessage();
+                if(sesCMD){
+                    router.replace('/Dashboard');
+                }
+                
+            }
+        })
+    },[router])
+
+
+
     // event hook to update user information
     const submitName = async (event: React.SyntheticEvent) => {
         event.preventDefault();
-        let exeData;  
+        
         const name:string = nameInputRef.current.value;
         session.user.name = name;
         const userData = {name,email}
@@ -37,10 +54,12 @@ const Signup: NextPage = () => {
         .then((data)=> {
         let userData = data.data
          exeData = userData;
-         chrome.runtime.sendMessage(extensionId, {type:'browser',data:exeData._id})
-         router.replace('/Dashboard');
         })
-        
+    }
+
+    const sendMessage = ()=> {
+        chrome.runtime.sendMessage(extensionId, {type:'browser',data:exeData._id})
+        return true; 
     }
 
 
