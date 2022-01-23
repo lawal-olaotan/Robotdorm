@@ -34,7 +34,6 @@ jumiaScrapper.controller("popupCtrl", ['$scope', '$state', function($scope,$stat
         chrome.runtime.sendMessage({type:"onPopupInit"}, 
             function(response){
                 console.log('this is the response from the background page',response);
-                // loader
                 if(response === null){
                     $state.go('login');
                 }else{
@@ -47,7 +46,6 @@ jumiaScrapper.controller("popupCtrl", ['$scope', '$state', function($scope,$stat
                             tabs[0].id,
                             {type:'mypage'}
                         ,function (data){
-                            $scope.name = response.user.username;
                             if(data === true){
                                 $state.go('welcome')
                                 $scope.search = 'disabled'
