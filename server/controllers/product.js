@@ -105,13 +105,13 @@ exports.getData = async (req,res)=> {
                     dbData['summaryData'] = sumdata
 
                     let listQuery = {'postedBy': new ObjectId(_id)}
-                    const findlisting = List.find(listQuery); 
+                    const findlisting = List.find(listQuery);
 
-                    if(findlisting.length === 0 ){
-                        dbData['list'] = false;
+                    if(findlisting.length !== 0 ){
+                        dbData['list'] = true;
                         res.send(dbData);
                     }else{
-                        dbData['list'] = true;
+                        dbData['list'] = false;
                         res.send(dbData);
                     }
                     

@@ -3,7 +3,7 @@ console.log('background script running');
 let dev = true;
 // let domain = 'https://fierce-dawn-36286.herokuapp.com/'
 let domain = 'http://localhost:8000/'
-let myurl = 'http://localhost:3000/' || 'https://robotdorm.com/';
+let myurl =  'https://robotdorm.com/';
 
 
 
@@ -15,16 +15,13 @@ chrome.runtime.onMessage.addListener(
     switch (message.type){
 
       case "onPopupInit":
-        const usermine = getStorageItem('user');
+        const usermine = localStorage.getItem('user');
         sendResponse(usermine);
         return true;
         break;
       case "login":
         chrome.tabs.create({url:myurl+'Login'});
         sendResponse('redirected'); 
-        // send message to your browser and get response to be stored in local storage
-        
-
           return true;
           break; 
       case "visitJumia":
@@ -35,7 +32,7 @@ chrome.runtime.onMessage.addListener(
         break;
         case"searchData":
           console.log('search data event hit in background', message.data);
-          message.data._id = getStorageItem('user').user._id;
+          message.data._id = localStorage.getItem('user');
           setStorageItem(message.type,message.data);
           sendResponse('data succesffully recieved in background');
         return true; 
@@ -67,7 +64,7 @@ chrome.runtime.onMessage.addListener(
             console.log('fetch event event hit background');
             message.data.querydata = getStorageItem('searchData').keyWord;
             message.data.size = 10;
-            message.data._id = getStorageItem('user').user._id;
+            message.data._id = localStorage.getItem('user');
 
             allAjax('GET',message.data,'product/getProducts','',
               function(response){
@@ -85,10 +82,7 @@ chrome.runtime.onMessage.addListener(
             allAjax('POST',listData,'product/list','',
               function(response){
                 let listres = {
-                  stats : 'recieved',
-                  data : getStorageItem('user').token,
-                  id: getStorageItem('user').user._id,
-                }
+                  stats : 'recieved',}
                 sendResponse(listres);
                 console.log(response);
             });
@@ -98,15 +92,25 @@ chrome.runtime.onMessage.addListener(
           chrome.tabs.create({url:myurl+'List'});
         return true;
         break;
-        case"browser": 
-          console.log(message.data);
-          
-        return true;
-        break;
       default:
           console.log('no match found')
     }
 });
+
+chrome.runtime.onMessageExternal.addListener(
+  function(message,sender,sendResponse){
+
+    if(sender.url === 'https://www.robotdorm.com/Login'){
+
+      if(message.type === 'browser'){
+        const user_id = message.data;
+        localStorage.setItem('user', user_id);
+      }
+    }
+
+    
+  }
+)
 
 
 function allAjax(type,data,path,token,callback){
