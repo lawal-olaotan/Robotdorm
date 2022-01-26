@@ -92,7 +92,6 @@ function html({url,email}: Record<"url" | "email", string>) {
 
    const btnBackgroundColor = '#307BD1'
 
-
    return `<div><head>
      <style>
        table, td, div, h1, p {

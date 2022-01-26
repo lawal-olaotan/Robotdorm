@@ -4,7 +4,7 @@ import { Lheader } from '@components/Lheader';
 import { InputCom } from '@components/InputCom';
 import { FormFooters } from '@components/FormFooters';
 import {useRef,useContext} from 'react'; 
-import {useSession,signIn} from 'next-auth/react'; 
+import {useSession} from 'next-auth/react'; 
 import { useRouter} from 'next/router';
 import {MyContext} from '../lib/UserContext'
 
