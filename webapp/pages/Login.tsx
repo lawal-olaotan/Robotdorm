@@ -16,7 +16,7 @@ const Login: NextPage = () => {
 
     useEffect(()=> {
         getSession()
-        .then(async (session) => {
+        .then((session) => {
             if(session){
                 const userId = session; 
                 if(userId){
