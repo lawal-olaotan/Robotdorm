@@ -55,10 +55,9 @@ const Signup: NextPage = () => {
         chrome.runtime.sendMessage(extensionId, {type:'browser',data:exeData._id});
         SetMyId(exeData); 
         
-        // set information
-        router.replace('/Login');
+            // set information
+            router.replace('/Login');
         
-          
         
         }
     }
