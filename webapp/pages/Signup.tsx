@@ -49,15 +49,13 @@ const Signup: NextPage = () => {
     }
 
 
-    const SendMessage = (userData:any) => {
+    const SendMessage = async (userData:any) => {
         if(userData){
-
             console.log(userData)
             const extensionId: string = 'llneclmbomnmhcgbaacmjdloencbfahj';
-            
-            chrome.runtime.sendMessage(extensionId, {type:'browser',data:userData._id});
+            await chrome.runtime.sendMessage(extensionId, {type:'browser',data:userData._id});
             SetMyId(userData);
-            router.replace('/Login');
+            router.replace('/Dashboard');
 
         }
     }
