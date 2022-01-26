@@ -78,11 +78,12 @@ export default NextAuth({
       }, 
       async signIn({email}){
 
-        if(email.verificationRequest !== true){
+        if(email.verificationRequest === null ){
           return '/Dashboard'
-        }else{
-          return true
         }
+        
+        return true
+        
       }
    }
    
