@@ -3,14 +3,17 @@ import Link from 'next/link';
 import {useState,useEffect} from 'react'; 
 import { Navitems } from '@components/Navitems';
 import { DashIcons } from '@components/dashboard/DashIcons';
-import {useSession} from 'next-auth/react';
+import {getSession, useSession} from 'next-auth/react';
+import {userInfo} from '../../interface/userSes'
 
 
 export const DashNav = ()=> {
     const [active,setActive] = useState(false);
     const {data:session,status} = useSession(); 
+    const [contactInfo,SetContactInfo] = useState<userInfo>(); 
 
     useEffect(()=> {
+
         if(active){
             window.addEventListener('click', function(){
                 setActive(false);
@@ -18,6 +21,9 @@ export const DashNav = ()=> {
         }else{
             window.removeEventListener('click', function(){setActive(false);});
         }
+
+
+
         return ()=> window.removeEventListener('click', function(){setActive(false);});
     }, [active])
 

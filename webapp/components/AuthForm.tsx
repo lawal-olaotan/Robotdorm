@@ -28,6 +28,7 @@ const AuthForm = ()=> {
             email: InputEmail
         };
         setUserInfo(userdetails)
+    
 
         const result = await signIn('email', {
             redirect:false,
@@ -61,11 +62,6 @@ const AuthForm = ()=> {
                 <form onSubmit={submitForm}>
 
                     <InputCom labelName='Email' id="email" type="email" placeholder="Please enter your email" refName={emailInputRef} />
-
-                    {/* <div>
-                        <InputCom labelName='Password' id="password" type="password" placeholder="Please enter your password"/>
-                        <div className="mt-4"> <Link href="/"><a className="text-blue flex justify-end">Forget Password?</a></Link> </div>
-                    </div> */}
 
                     <button className="rounded-lg mt-8 bg-secondary p-3.5 w-full text-white">Send Verification Link</button>
                 </form>

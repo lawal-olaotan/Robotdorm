@@ -3,12 +3,13 @@ import { MongoDBAdapter } from '@next-auth/mongodb-adapter'
 import ClientPromise from '../../../lib/mongoDb'; 
 import  EmailProvider from 'next-auth/providers/email';
 import {createTransport} from 'nodemailer'; 
-import {ObjectId } from 'mongoose'; 
+import { ObjectId } from 'mongodb';
+
 
 interface userInfo {
   name:string,
   email:string,
-  id:string,
+  id:ObjectId,
   emailVerified:string
 }
 
@@ -65,7 +66,8 @@ export default NextAuth({
 
       
 
-      if(userDetails.name !== undefined){
+      if(userDetails){
+
           let myUser:userInfo = {
               id:userDetails.id,
               emailVerified:userDetails.emailVerified,
