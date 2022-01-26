@@ -18,24 +18,7 @@ const AuthForm = ()=> {
     const [Emailsent,setEmailSent] = useState(false);
     const [userInfo, setUserInfo] = useState<IUsers>({email:""}); 
 
-    // useEffect(()=> {
-    //     getSession()
-    //     .then((session) => {
-    //         if(session){
-    //             console.log(session);
-    //             chrome.runtime.sendMessage(extensionId, {type:'browser',data:session.user.id})
-    //             router.push('/Dashboard'); 
-    //         }else{
-    //             SetLoading(false)
-    //         }
-    //     })
-    // },[router])
-
-
-
-
     
-
     const submitForm = async (event: React.SyntheticEvent) => {
         event.preventDefault();
 
