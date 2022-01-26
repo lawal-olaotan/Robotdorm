@@ -22,7 +22,6 @@ export const DashPage =() => {
     useEffect(()=>{
         getSession()
         .then((session)=>{
-
             if(session){
                 if(session.user.name === undefined){
                     cutName(myId.name)
