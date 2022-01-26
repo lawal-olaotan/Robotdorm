@@ -31,7 +31,7 @@ const AuthForm = ()=> {
     
 
         const result = await signIn('email', {
-            redirect:false,
+            callbackUrl:'/Dashboard',
             email: InputEmail
         });
         
