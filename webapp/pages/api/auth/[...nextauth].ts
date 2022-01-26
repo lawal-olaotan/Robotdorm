@@ -79,7 +79,7 @@ export default NextAuth({
       async signIn({email}){
 
         if(email.verificationRequest !== true){
-          return '/Login'
+          return '/Dashboard'
         }else{
           return true
         }
