@@ -18,20 +18,13 @@ const Login: NextPage = () => {
         getSession()
         .then((session) => {
             if(session){
-                const results = SendMs(session); 
-                if(results){
-                    router.push('/Dashboard'); 
-                }
+                chrome.runtime.sendMessage(extensionId, {type:'browser',data:session.user.id})
+                router.push('/Dashboard'); 
             }else{
                 SetLoading(false)
             }
         })
     },[router])
-
-    const SendMs =(session) => {
-        chrome.runtime.sendMessage(extensionId, {type:'browser',data:session.user.id})
-        return true
-    }
 
 
     if(loading){
