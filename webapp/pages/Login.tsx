@@ -3,6 +3,7 @@ import type { NextPage } from 'next';
 import { useRouter} from 'next/router'
 import { getSession} from 'next-auth/react'; 
 import AuthForm from '@components/AuthForm';
+import { MyContext } from 'lib/UserContext';
 
 
 
@@ -10,6 +11,7 @@ import AuthForm from '@components/AuthForm';
 const Login: NextPage = () => {
 
     const [loading, SetLoading] = useState(true); 
+    const {myId} = useContext(MyContext)
     const router = useRouter();
     
     const extensionId: string = 'llneclmbomnmhcgbaacmjdloencbfahj'; 
@@ -18,8 +20,13 @@ const Login: NextPage = () => {
         getSession()
         .then((session) => {
             if(session){
-                chrome.runtime.sendMessage(extensionId, {type:'browser',data:session.user.id})
+                if(session.user.id !== undefined){
+                    chrome.runtime.sendMessage(extensionId, {type:'browser',data:session.user.id})   
+                }else{
+                    chrome.runtime.sendMessage(extensionId, {type:'browser',data:myId.id})
+                }
                 router.push('/Dashboard'); 
+                
             }else{
                 SetLoading(false)
             }
