@@ -16,12 +16,11 @@ const Login: NextPage = () => {
 
     useEffect(()=> {
         getSession()
-        .then((session) => {
+        .then(async (session) => {
             if(session){
+                await chrome.runtime.sendMessage(extensionId, {type:'browser',data:session.user.id})
+                // router.push('/Dashboard'); 
                 console.log(session);
-                chrome.runtime.sendMessage(extensionId, {type:'browser',data:session.user.id})
-                router.replace('/Dashboard'); 
-
             }else{
                 SetLoading(false)
             }
