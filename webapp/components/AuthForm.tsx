@@ -1,5 +1,5 @@
-import {useState,useRef} from 'react';
-import {signIn} from 'next-auth/react'
+import {useState,useRef,useEffect} from 'react';
+import {signIn,getSession} from 'next-auth/react'
 import  Head  from 'next/head'
 import { Lheader } from '@components/Lheader';
 import { InputCom } from '@components/InputCom';
@@ -17,6 +17,23 @@ const AuthForm = ()=> {
 
     const [Emailsent,setEmailSent] = useState(false);
     const [userInfo, setUserInfo] = useState<IUsers>({email:""}); 
+
+    // useEffect(()=> {
+    //     getSession()
+    //     .then((session) => {
+    //         if(session){
+    //             console.log(session);
+    //             chrome.runtime.sendMessage(extensionId, {type:'browser',data:session.user.id})
+    //             router.push('/Dashboard'); 
+    //         }else{
+    //             SetLoading(false)
+    //         }
+    //     })
+    // },[router])
+
+
+
+
     
 
     const submitForm = async (event: React.SyntheticEvent) => {
@@ -41,6 +58,8 @@ const AuthForm = ()=> {
         }
 
     }
+
+    
 
        
     return (
