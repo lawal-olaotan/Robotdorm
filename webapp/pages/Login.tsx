@@ -18,7 +18,7 @@ const Login: NextPage = () => {
         getSession()
         .then(async (session) => {
             if(session){
-                // await chrome.runtime.sendMessage(extensionId, {type:'browser',data:session.user.id})
+                await chrome.runtime.sendMessage(extensionId, {type:'browser',data:session.user.id})
                 router.push('/Dashboard'); 
                 console.log(session);
             }else{
