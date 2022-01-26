@@ -49,9 +49,9 @@ const Signup: NextPage = () => {
     }
 
 
-    const SendMessage = () => {
+    const SendMessage = async () => {
         if(exeData !== ''){
-        chrome.runtime.sendMessage(extensionId, {type:'browser',data:exeData._id});
+        await chrome.runtime.sendMessage(extensionId, {type:'browser',data:exeData._id});
         SetMyId(exeData); 
         router.replace('/Login');
         }

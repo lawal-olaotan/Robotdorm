@@ -76,15 +76,6 @@ export default NextAuth({
 
         return session
       }, 
-      async signIn({email}){
-
-        if(email.verificationRequest === null ){
-          return '/Dashboard'
-        }
-        
-        return true
-        
-      }
    }
    
 })
