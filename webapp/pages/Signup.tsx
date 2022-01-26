@@ -46,7 +46,6 @@ const Signup: NextPage = () => {
 
         .then((data)=> {
              let userData = data.data
-            chrome.runtime.sendMessage(extensionId, {type:'browser',data:userData._id});
              SendMessage(userData); 
         })
     }
@@ -54,7 +53,7 @@ const Signup: NextPage = () => {
         if(userData){
             console.log(userData);
             SetMyId(userData);
-            router.replace('/Dashboard');
+            router.replace('/Login');
         }
     }
 
