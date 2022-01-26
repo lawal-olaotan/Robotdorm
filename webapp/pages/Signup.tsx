@@ -44,14 +44,14 @@ const Signup: NextPage = () => {
         .then((data)=> {
         let userData = data.data
          exeData = userData;
-        SendMessage(); 
+        SendMessage(userData); 
         })
     }
 
 
-    const SendMessage = async () => {
-        if(exeData !== ''){
-        await chrome.runtime.sendMessage(extensionId, {type:'browser',data:exeData._id});
+    const SendMessage = (userData:any) => {
+        if(userData){
+         chrome.runtime.sendMessage(extensionId, {type:'browser',data:userData._id});
         SetMyId(exeData); 
         router.replace('/Login');
         }

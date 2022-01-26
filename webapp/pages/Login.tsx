@@ -16,9 +16,9 @@ const Login: NextPage = () => {
 
     useEffect(()=> {
         getSession()
-        .then((session) => {
+        .then(async (session) => {
             if(session){
-                const results = SendMs(session)
+                const results = await SendMs(session); 
                 if(results){
                     router.push('/Dashboard'); 
                 }
