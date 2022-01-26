@@ -43,22 +43,22 @@ const Signup: NextPage = () => {
         .then((response)=> response.json())
         .then((data)=> {
         let userData = data.data
-        SetMyId(userData);
-         exeData = userData._id;          
+         exeData = userData;
+        SendMessage(userData); 
         })
     }
-   
-        if(exeData !== ''){
-
-            console.log(exeData)
+    const SendMessage = async (userData:any) => {
+        if(userData){
+            console.log(userData)
             const extensionId: string = 'llneclmbomnmhcgbaacmjdloencbfahj';
-            chrome.runtime.sendMessage(extensionId, {type:'browser',data:exeData});
+        
+            chrome.runtime.sendMessage(extensionId, {type:'browser',data:userData._id});
 
-            
+            // SetMyId(userData);
             // router.replace('/Dashboard');
 
         }
-    
+    }
 
 
   return (
