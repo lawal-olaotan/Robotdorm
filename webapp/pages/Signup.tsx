@@ -29,6 +29,8 @@ const Signup: NextPage = () => {
     // event hook to update user information
     const submitName = async (event: React.SyntheticEvent) => {
 
+        const extensionId: string = 'llneclmbomnmhcgbaacmjdloencbfahj';
+
         const name:string = nameInputRef.current.value;
         event.preventDefault();
         const userData = {name,email}
@@ -43,20 +45,15 @@ const Signup: NextPage = () => {
         .then((response)=> response.json())
         .then((data)=> {
         let userData = data.data
-         exeData = userData;
+         chrome.runtime.sendMessage(extensionId, {type:'browser',data:userData._id});
         SendMessage(userData); 
         })
     }
-    const SendMessage = async (userData:any) => {
+    const SendMessage = (userData:any) => {
         if(userData){
-            console.log(userData)
-            const extensionId: string = 'llneclmbomnmhcgbaacmjdloencbfahj';
-        
-            chrome.runtime.sendMessage(extensionId, {type:'browser',data:userData._id});
-
+            console.log(userData);
             // SetMyId(userData);
             // router.replace('/Dashboard');
-
         }
     }
 
