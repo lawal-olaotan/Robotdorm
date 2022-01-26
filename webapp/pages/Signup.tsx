@@ -14,7 +14,7 @@ const Signup: NextPage = () => {
     const{data: session,status} = useSession(); 
     const{SetMyId} = useContext(MyContext)
     const router = useRouter();
-    const extensionId: string = 'llneclmbomnmhcgbaacmjdloencbfahj';
+ 
 
     const nameInputRef = useRef<HTMLInputElement>(null);
 
@@ -51,9 +51,14 @@ const Signup: NextPage = () => {
 
     const SendMessage = (userData:any) => {
         if(userData){
-         chrome.runtime.sendMessage(extensionId, {type:'browser',data:userData._id});
-        SetMyId(exeData); 
-        router.replace('/Login');
+
+            console.log(userData)
+            const extensionId: string = 'llneclmbomnmhcgbaacmjdloencbfahj';
+            
+            chrome.runtime.sendMessage(extensionId, {type:'browser',data:userData._id});
+            SetMyId(userData);
+            router.replace('/Login');
+
         }
     }
 
