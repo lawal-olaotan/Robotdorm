@@ -53,7 +53,7 @@ export default NextAuth({
    ], 
    pages:{
       signIn:'/Login',
-      newUser: '/Signup'
+      newUser: '/Signup',
    }, 
    callbacks:{
       async session ({session}){
@@ -64,10 +64,7 @@ export default NextAuth({
           email:session.user.email
       });
 
-      
-
       if(userDetails){
-
           let myUser:userInfo = {
               id:userDetails.id,
               emailVerified:userDetails.emailVerified,
@@ -78,6 +75,14 @@ export default NextAuth({
       }
 
         return session
+      }, 
+      async signIn({email}){
+        
+        if(email.verificationRequest !== true){
+          return '/dashboard'
+        }else{
+          return true
+        }
       }
    }
    
