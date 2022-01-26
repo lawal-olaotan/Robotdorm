@@ -1,25 +1,41 @@
 
-import React, {useState,useEffect} from 'react'; 
+import React, {useState,useEffect,useContext} from 'react'; 
 import { DashLayout } from '@components/dashboard/DashLayout';
 import { DashHead } from '@components/dashboard/DashHead';
 import { DashTitle } from '@components/dashboard/DashTitle';
-import {useSession} from 'next-auth/react'
+import {useSession,getSession} from 'next-auth/react'
 import useSWR from 'swr'; 
+import { MyContext } from 'lib/UserContext';
 
 
-const fetcher = (myvalue:any) => {fetch(myvalue).then((res)=> res.json() )}
+
+  const fetcher = (myvalue:any) => {fetch(myvalue).then((res)=> res.json() )}
+ 
 
 
 
 export default function Insights(){
 
-    const {data:session,status} = useSession(); 
+    const {data:session,status} = useSession();
+    const [myname,SetName] = useState<string>(); 
 
-    const userId = session.user.id;
-    const url = `/api/getSummary?query=${userId}`; 
 
-    const {data:result,error} = useSWR(url,fetcher)
-    console.log(result); 
+    useEffect(() => {
+        getSession()
+        .then((session)=>{
+            console.log(session)
+        })
+    },[session]);
+
+
+    
+
+//    const url = `/api/getSummary?query=${myname}`; 
+
+//     const {data:result,error} = useSWR(url,fetcher); 
+
+    // console.log(result); 
+   
 
     return (
     <>

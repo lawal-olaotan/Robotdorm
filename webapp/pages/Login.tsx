@@ -6,6 +6,7 @@ import AuthForm from '@components/AuthForm';
 
 
 
+
 const Login: NextPage = () => {
 
     const [loading, SetLoading] = useState(true); 
@@ -17,8 +18,8 @@ const Login: NextPage = () => {
         getSession()
         .then(async (session) => {
             if(session){
-                const userId = session.user.id; 
-                if(userId !== undefined){
+                const userId = session; 
+                if(userId){
                     chrome.runtime.sendMessage(extensionId, {type:'browser',data:session.user.id})
                     router.replace('/Dashboard'); 
                 }
