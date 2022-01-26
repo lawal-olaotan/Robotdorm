@@ -1,4 +1,5 @@
 import NextAuth from 'next-auth'; 
+import {ObjectId} from 'mongodb'
 
 declare module 'next-auth' {
 
@@ -6,7 +7,7 @@ declare module 'next-auth' {
         user:{
             email:string,
             name:string,
-            id:string,
+            id:ObjectId,
             emailVerified:string
         }
     }
