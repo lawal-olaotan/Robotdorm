@@ -14,6 +14,7 @@ const Signup: NextPage = () => {
     const{data: session,status} = useSession(); 
     const{SetMyId} = useContext(MyContext)
     const router = useRouter();
+    const EXE_ID:string = process.env.EXTENT_ID
  
 
     const nameInputRef = useRef<HTMLInputElement>(null);
@@ -43,7 +44,7 @@ const Signup: NextPage = () => {
 
         .then((data)=> {
              let userData = data.data
-             chrome.runtime.sendMessage(process.env.EXTENSION_ID, {type:'browser',data:userData._id}) 
+             chrome.runtime.sendMessage(EXE_ID, {type:'browser',data:userData._id}) 
             SendMessage(userData); 
         })
     }
