@@ -30,8 +30,6 @@ const Signup: NextPage = () => {
      },[myId])
 
 
-
-    
     // event hook to update user information
     const submitName = async (event: React.SyntheticEvent) => {
 
@@ -50,6 +48,7 @@ const Signup: NextPage = () => {
 
         .then((data)=> {
              let userData = data.data
+             console.log(userData); 
              chrome.runtime.sendMessage(EXE_ID, {type:'browser',data:userData._id})
              SetMyId(userData); 
         })
