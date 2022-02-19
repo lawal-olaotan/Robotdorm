@@ -44,6 +44,7 @@ const Signup: NextPage = () => {
 
         .then((data)=> {
              let userData = data.data
+             console.log(EXE_ID); 
              chrome.runtime.sendMessage(EXE_ID, {type:'browser',data:userData._id}) 
             SendMessage(userData); 
         })
@@ -54,7 +55,7 @@ const Signup: NextPage = () => {
         if(userData){
             console.log(userData);
             SetMyId(userData);
-            router.replace('/Login');
+            router.replace('/Dashboard');
         }
     }
 
