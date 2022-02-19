@@ -24,7 +24,7 @@ const Signup: NextPage = () => {
    if(status === 'authenticated'){
         email = session.user.email;
      }
-     
+
     // event hook to update user information
     const submitName = async (event: React.SyntheticEvent) => {
 
@@ -42,12 +42,9 @@ const Signup: NextPage = () => {
         .then((response)=> response.json())
 
         .then((data)=> {
-             let userData = data.data
-             console.log(userData); 
-             if(userData._id !== undefined ){
-                chrome.runtime.sendMessage(EXE_ID, {type:'browser',data:userData._id})
-             }
-             SetMyId(userData); 
+             let userInfo = data.data
+            chrome.runtime.sendMessage(EXE_ID, {type:'browser',userInfo._id})
+            SetMyId(userInfo);
         })
     }
 
