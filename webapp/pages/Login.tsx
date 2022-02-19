@@ -17,13 +17,9 @@ const Login: NextPage = () => {
         .then((session) => {
             if(session){
                 if(session.user.id !== undefined){
-
                     chrome.runtime.sendMessage(process.env.EXTENSION_ID, {type:'browser',data:session.user.id})   
-                }else{
-                    chrome.runtime.sendMessage(process.env.EXTENSION_ID, {type:'browser',data:myId._id})
                 }
                 router.push('/Dashboard'); 
-                
             }else{
                 SetLoading(false)
             }
