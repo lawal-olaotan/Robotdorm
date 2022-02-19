@@ -11,13 +11,14 @@ const Login: NextPage = () => {
     const [loading, SetLoading] = useState(true); 
     const {myId} = useContext(MyContext)
     const router = useRouter();
+    const EXE_ID = 'llneclmbomnmhcgbaacmjdloencbfahj'
 
     useEffect(()=> {
         getSession()
         .then((session) => {
             if(session){
                 if(session.user.id !== undefined){
-                    chrome.runtime.sendMessage(process.env.EXTENSION_ID, {type:'browser',data:session.user.id})   
+                    chrome.runtime.sendMessage(EXE_ID, {type:'browser',data:session.user.id}) 
                 }
                 router.push('/Dashboard'); 
             }else{
