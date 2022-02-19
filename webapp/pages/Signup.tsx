@@ -24,12 +24,9 @@ const Signup: NextPage = () => {
         email = session.user.email;
      }
 
-    let exeData; 
-
+    
     // event hook to update user information
     const submitName = async (event: React.SyntheticEvent) => {
-
-        const extensionId: string = 'llneclmbomnmhcgbaacmjdloencbfahj';
 
         const name:string = nameInputRef.current.value;
         event.preventDefault();
@@ -46,9 +43,12 @@ const Signup: NextPage = () => {
 
         .then((data)=> {
              let userData = data.data
-             SendMessage(userData); 
+             chrome.runtime.sendMessage(process.env.EXTENSION_ID, {type:'browser',data:userData._id}) 
+            SendMessage(userData); 
         })
     }
+
+
     const SendMessage = (userData:any) => {
         if(userData){
             console.log(userData);
