@@ -15,7 +15,7 @@ const Signup: NextPage = () => {
     const{SetMyId,myId} = useContext(MyContext)
     const router = useRouter();
     const EXE_ID = 'llneclmbomnmhcgbaacmjdloencbfahj'
- 
+    
 
     const nameInputRef = useRef<HTMLInputElement>(null);
 
@@ -24,12 +24,7 @@ const Signup: NextPage = () => {
    if(status === 'authenticated'){
         email = session.user.email;
      }
-
-     useEffect(()=>{
-        router.push('/Dashboard'); 
-     },[myId])
-
-
+     
     // event hook to update user information
     const submitName = async (event: React.SyntheticEvent) => {
 
@@ -49,7 +44,9 @@ const Signup: NextPage = () => {
         .then((data)=> {
              let userData = data.data
              console.log(userData); 
-             chrome.runtime.sendMessage(EXE_ID, {type:'browser',data:userData._id})
+             if(userData._id !== undefined ){
+                chrome.runtime.sendMessage(EXE_ID, {type:'browser',data:userData._id})
+             }
              SetMyId(userData); 
         })
     }
