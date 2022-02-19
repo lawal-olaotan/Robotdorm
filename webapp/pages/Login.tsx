@@ -6,24 +6,21 @@ import AuthForm from '@components/AuthForm';
 import { MyContext } from 'lib/UserContext';
 
 
-
-
 const Login: NextPage = () => {
 
     const [loading, SetLoading] = useState(true); 
     const {myId} = useContext(MyContext)
     const router = useRouter();
-    
-    const extensionId: string = 'llneclmbomnmhcgbaacmjdloencbfahj'; 
 
     useEffect(()=> {
         getSession()
         .then((session) => {
             if(session){
                 if(session.user.id !== undefined){
-                    chrome.runtime.sendMessage(extensionId, {type:'browser',data:session.user.id})   
+
+                    chrome.runtime.sendMessage(process.env.EXTENSION_ID, {type:'browser',data:session.user.id})   
                 }else{
-                    chrome.runtime.sendMessage(extensionId, {type:'browser',data:myId._id})
+                    chrome.runtime.sendMessage(process.env.EXTENSION_ID, {type:'browser',data:myId._id})
                 }
                 router.push('/Dashboard'); 
                 
@@ -31,7 +28,9 @@ const Login: NextPage = () => {
                 SetLoading(false)
             }
         })
-    },[router])
+    },[router]); 
+
+
 
 
     if(loading){
