@@ -9,7 +9,7 @@ interface userInfo {
 
 
 interface UserId {
-    myId:any;
+    myId:userInfo;
     SetMyId: (value: React.SetStateAction<userInfo>) => void,
 
 }
