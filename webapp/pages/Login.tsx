@@ -19,8 +19,9 @@ const Login: NextPage = () => {
             if(session){
                 if(session.user.id !== undefined){
                     chrome.runtime.sendMessage(EXE_ID, {type:'browser',data:session.user.id}) 
+                    router.push('/Dashboard');
                 }
-                router.push('/Dashboard'); 
+                 
             }else{
                 SetLoading(false)
             }
