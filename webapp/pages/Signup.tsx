@@ -3,7 +3,7 @@ import  Head  from 'next/head';
 import { Lheader } from '@components/Lheader';
 import { InputCom } from '@components/InputCom';
 import { FormFooters } from '@components/FormFooters';
-import {useRef,useContext} from 'react'; 
+import {useRef,useContext,useEffect} from 'react'; 
 import {useSession} from 'next-auth/react'; 
 import { useRouter} from 'next/router';
 import {MyContext} from '../lib/UserContext'
@@ -12,7 +12,7 @@ import {MyContext} from '../lib/UserContext'
 const Signup: NextPage = () => {
 
     const{data: session,status} = useSession(); 
-    const{SetMyId} = useContext(MyContext)
+    const{SetMyId,myId} = useContext(MyContext)
     const router = useRouter();
     const EXE_ID = 'llneclmbomnmhcgbaacmjdloencbfahj'
  
@@ -24,6 +24,12 @@ const Signup: NextPage = () => {
    if(status === 'authenticated'){
         email = session.user.email;
      }
+
+     useEffect(()=>{
+        router.push('/Dashboard'); 
+     },[myId])
+
+
 
     
     // event hook to update user information
@@ -44,8 +50,8 @@ const Signup: NextPage = () => {
 
         .then((data)=> {
              let userData = data.data
-             chrome.runtime.sendMessage(EXE_ID, {type:'browser',data:userData._id}) 
-            router.replace('/Dashboard');
+             chrome.runtime.sendMessage(EXE_ID, {type:'browser',data:userData._id})
+             SetMyId(userData); 
         })
     }
 
