@@ -9,16 +9,16 @@ import { useRouter} from 'next/router';
 import {MyContext} from '../lib/UserContext'
 
 
+
+
+
 const Signup: NextPage = () => {
 
     const{data: session,status} = useSession(); 
     const{SetMyId,myId} = useContext(MyContext)
     const router = useRouter();
     const EXE_ID = 'llneclmbomnmhcgbaacmjdloencbfahj'
-    
-
     const nameInputRef = useRef<HTMLInputElement>(null);
-
    let email:string = '';
 
    if(status === 'authenticated'){
@@ -27,11 +27,11 @@ const Signup: NextPage = () => {
 
     // event hook to update user information
     const submitName = async (event: React.SyntheticEvent) => {
-
         const name:string = nameInputRef.current.value;
         event.preventDefault();
         const userData = {name,email}
         
+
         await fetch('/api/update', {
             method:'POST', 
             body:JSON.stringify(userData),
@@ -39,19 +39,26 @@ const Signup: NextPage = () => {
                 'Content-Type': 'application/json',
             }, 
         })
+
         .then((response)=> response.json())
 
         .then((data)=> {
              let userInfo = data.data
-            chrome.runtime.sendMessage(EXE_ID, {type:'browser',userInfo._id})
+             console.log(userInfo); 
+            
             SetMyId(userInfo);
         })
+
+       return true; 
     }
 
+    if(submitName){
+        chrome.runtime.sendMessage(EXE_ID, {type:'browser',data:myId._id}); 
+    }
 
    
 
-
+    
   return (
         <div>
             <Head>
@@ -67,7 +74,6 @@ const Signup: NextPage = () => {
                     <form onSubmit={submitName}>
 
                         <InputCom labelName='Full Name' id="name" type="name" placeholder="Please enter your Full Name" refName={nameInputRef} />
-
                         <button className="rounded-lg mt-8 bg-secondary p-3.5 w-full text-white">Update Details</button>
                     </form>
 

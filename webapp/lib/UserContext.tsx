@@ -1,10 +1,10 @@
 import React, {FC,useState} from 'react';
 
-interface userInfo {
+ interface userInfo {
     name:string,
     email:string,
-    id:string,
-    emailVerified:string
+    _id?:string,
+    emailVerified?:string
 }
 
 
