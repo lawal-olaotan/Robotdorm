@@ -19,16 +19,25 @@ const Login: NextPage = () => {
             if(session){
                 if(session.user.id !== undefined){
                     chrome.runtime.sendMessage(EXE_ID, {type:'browser',data:session.user.id}) 
+                    router.push('/Dashboard');
                 }else{
                     let extensionKey = localStorage.getItem('userkey'); 
-                    chrome.runtime.sendMessage(EXE_ID, {type:'browser',data:extensionKey}) 
+                    const auth = sendMessage(extensionKey)
+                    if(auth){
+                        router.push('/Dashboard');
+                    }
                 }
-                router.push('/Dashboard');
             }else{
                 SetLoading(false)
             }
         })
     },[router]); 
+
+
+    const sendMessage = (data:string)=>{
+        chrome.runtime.sendMessage(EXE_ID, {type:'browser',data:data})
+        return true; 
+    }
 
 
 
