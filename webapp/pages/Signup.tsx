@@ -35,7 +35,9 @@ const Signup: NextPage = () => {
         let dbResponse = await fetchData(userData); 
 
         if(dbResponse && myId !== undefined){
-            chrome.runtime.sendMessage(EXE_ID, {type:'browser',data:'userid'}); 
+            console.log(myId); 
+
+            // chrome.runtime.sendMessage(EXE_ID, {type:'browser',data:'userid'}); 
         }
        
     }
