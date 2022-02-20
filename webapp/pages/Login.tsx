@@ -17,7 +17,7 @@ const Login: NextPage = () => {
         getSession()
         .then((session) => {
             if(session){
-                if(session.user !== undefined){
+                if(session.user.id !== undefined){
                     chrome.runtime.sendMessage(EXE_ID, {type:'browser',data:session.user.id}) 
                 }else{
                     let extensionKey = localStorage.getItem('userkey'); 
