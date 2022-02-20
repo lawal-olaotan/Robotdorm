@@ -45,7 +45,6 @@ const Signup: NextPage = () => {
         .then((data)=> {
              let userInfo = data.data
             SetMyId(userInfo);
-
             return true; 
         })
 
@@ -54,7 +53,7 @@ const Signup: NextPage = () => {
 
     if(submitName){
         console.log(myId._id)
-        chrome.runtime.sendMessage(EXE_ID, {type:'browser',data:myId._id}); 
+        // chrome.runtime.sendMessage(EXE_ID, {type:'browser',data:myId._id}); 
     }
 
    
