@@ -33,7 +33,7 @@ const Signup: NextPage = () => {
         const userData:userInfo = {name,email}
         let dbResponse = await fetchData(userData); 
         if(dbResponse){
-            router.replace('/Dashboard')
+            router.replace('/Login')
         }
        
     }

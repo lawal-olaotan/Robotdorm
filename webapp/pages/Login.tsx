@@ -23,7 +23,7 @@ const Login: NextPage = () => {
                     let extensionKey = localStorage.getItem('userkey'); 
                     chrome.runtime.sendMessage(EXE_ID, {type:'browser',data:extensionKey}) 
                 }
-                router.push('/Login');
+                router.push('/Dashboard');
             }else{
                 SetLoading(false)
             }
