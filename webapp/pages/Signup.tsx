@@ -34,10 +34,10 @@ const Signup: NextPage = () => {
 
         let dbResponse = await fetchData(userData); 
 
-        if(dbResponse && myId !== undefined){
-            console.log(myId); 
-
-            // chrome.runtime.sendMessage(EXE_ID, {type:'browser',data:'userid'}); 
+        if(dbResponse === true ){
+            const userCookie = myId._id
+            chrome.runtime.sendMessage(EXE_ID, {type:'browser',data:userCookie});
+            router.replace('/Dashboard')
         }
        
     }
@@ -53,6 +53,7 @@ const Signup: NextPage = () => {
        .then((response)=> response.json())
        .then((data)=> {
             let userInfo:userDetails = data.data
+            chrome.runtime.sendMessage(EXE_ID, {type:'browser',data:userInfo._id});
            SetMyId(userInfo);
        })
 
