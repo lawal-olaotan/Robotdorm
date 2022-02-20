@@ -44,12 +44,12 @@ const Signup: NextPage = () => {
 
         .then((data)=> {
              let userInfo = data.data
-             console.log(userInfo); 
-            
             SetMyId(userInfo);
+            
+            return true; 
         })
 
-       return true; 
+       
     }
 
     if(submitName){
