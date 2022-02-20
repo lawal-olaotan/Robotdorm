@@ -53,9 +53,9 @@ const Signup: NextPage = () => {
        
     }
 
-    if(submitName){
-        console.log(myId)
-        // chrome.runtime.sendMessage(EXE_ID, {type:'browser',data:myId._id}); 
+    if(submitName && myId !== undefined){
+        console.log(myId._id)
+        chrome.runtime.sendMessage(EXE_ID, {type:'browser',data:'userid'}); 
     }
 
    
