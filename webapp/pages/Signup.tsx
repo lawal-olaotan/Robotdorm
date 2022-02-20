@@ -31,8 +31,11 @@ const Signup: NextPage = () => {
         const name:string = nameInputRef.current.value;
         event.preventDefault();
         const userData:userInfo = {name,email}
-        let dbResponse = await fetchData(userData); 
+        let dbResponse = await fetchData(userData);
+         
         if(dbResponse){
+            let extensionKey = localStorage.getItem('userkey'); 
+            chrome.runtime.sendMessage(EXE_ID, {type:'browser',data:extensionKey}) 
             router.replace('/Login')
         }
        
