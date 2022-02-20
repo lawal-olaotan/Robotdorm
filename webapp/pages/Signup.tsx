@@ -7,6 +7,7 @@ import {useRef,useContext,useEffect} from 'react';
 import {useSession} from 'next-auth/react'; 
 import { useRouter} from 'next/router';
 import {MyContext} from '../lib/UserContext'
+import {userDetails, userInfo} from '../interface/userSes'
 
 
 
@@ -29,38 +30,34 @@ const Signup: NextPage = () => {
     const submitName = async (event: React.SyntheticEvent) => {
         const name:string = nameInputRef.current.value;
         event.preventDefault();
-        const userData = {name,email}
-        
+        const userData:userInfo = {name,email}
 
-        await fetch('/api/update', {
-            method:'POST', 
-            body:JSON.stringify(userData),
-            headers: {
-                'Content-Type': 'application/json',
-            }, 
-        })
+        let dbResponse = await fetchData(userData); 
 
-        .then((response)=> response.json())
-
-        .then((data)=> {
-             let userInfo = data.data
-            SetMyId(userInfo);
-            
-        })
-
-        return true; 
-
+        if(dbResponse && myId !== undefined){
+            chrome.runtime.sendMessage(EXE_ID, {type:'browser',data:'userid'}); 
+        }
        
     }
 
-    if(submitName && myId !== undefined){
-        console.log(myId._id)
-        chrome.runtime.sendMessage(EXE_ID, {type:'browser',data:'userid'}); 
-    }
+    const fetchData = (userData:userInfo) => {
+        fetch('/api/update', {
+           method:'POST', 
+           body:JSON.stringify(userData),
+           headers: {
+               'Content-Type': 'application/json',
+           }, 
+       })
+       .then((response)=> response.json())
+       .then((data)=> {
+            let userInfo:userDetails = data.data
+           SetMyId(userInfo);
+       })
+
+       return true; 
+   }
 
    
-
-    
   return (
         <div>
             <Head>
