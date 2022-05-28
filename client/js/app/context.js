@@ -76,6 +76,8 @@ chrome.runtime.onMessage.addListener(
 })
 
 const injectShadow =(data)=> {
+    console.log(data); 
+
     localStorage.removeItem('list');
     let root = document.createElement('div');
 
@@ -461,7 +463,7 @@ const injectShadow =(data)=> {
         if(data.currentPage === 1){
             summarydata = getSummary(data.summaryData[0]);
             listStatus = data.list; 
-            
+
             localStorage.setItem('ListStatus', data.list) 
         }else{
             summarydata = JSON.parse(window.localStorage.getItem('summaryData'))
@@ -582,13 +584,14 @@ const injectShadow =(data)=> {
 
             let summarySection = document.createElement('div');
             summarySection.setAttribute('class', 'summarysection');
+
             for(const prop in summData){
                 let summcontainer = document.createElement('div');
                 summcontainer.setAttribute('class', 'summcontainer'); 
 
                 let sumtitle = document.createElement('p');
                 sumtitle.setAttribute('class', 'sumtitle');
-                sumtitle.innerHTML = `${prop}`; 
+                sumtitle.innerHTML = `${prop.replace(/([a-z0-9])([A-Z])/g, '$1 $2')}`; 
                 summcontainer.appendChild(sumtitle)
 
                 let sumValue = document.createElement('p');
@@ -872,7 +875,6 @@ const injectShadow =(data)=> {
         innerContainer.appendChild(infoLoader);
     }
 
-   
         shadow.appendChild(linkEle);
         shadow.appendChild(container);
         container.appendChild(innerContainer); 

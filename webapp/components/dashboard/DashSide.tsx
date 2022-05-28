@@ -10,7 +10,6 @@ export const DashSide = () => {
                     <DashItems dashLink="/Dashboard" dashSrc="/home.svg" dashText="Home"/>
                     <DashItems dashLink="/Dashboard/Insights" dashSrc="/analytics.png" dashText="Market Insights" />
                     <DashItems dashLink="/" dashSrc="/search.png" dashText="Products Vault" />
-                    <DashItems dashLink="/" dashSrc="/status.png" dashText="Sourcing Status" />
                     <DashItems dashLink="/" dashSrc="/settings.png" dashText="Account Settings" />
         </div>
          )

@@ -1,7 +1,7 @@
 const bluebird = require('bluebird'); 
 const {withBrowser,withPage} = require('../helpers/product'); 
 
-
+// scrape page 
 exports.searchPage = async(data) => {
     const urls = data.searchLink; 
     let searchProducts = [];
@@ -39,8 +39,10 @@ exports.searchPage = async(data) => {
 
     let  searchedProducts  = Array.prototype.concat.apply([],searchProducts);
     let topProd = searchedProducts.sort((a,b)=> b.customer - a.customer ); 
-    const valueSet = new Set(); 
-        const noDup = topProd.filter( (obj) => {
+
+    const valueSet = new Set();
+
+            const noDup = topProd.filter( (obj) => {
             const dupValue = valueSet.has(obj.title); 
             valueSet.add(obj.title); 
             return !dupValue; 
@@ -49,6 +51,7 @@ exports.searchPage = async(data) => {
 };
 
 
+// get scrapped products 
 const getProducts = async(page) => {
     const data = await page.evaluate(()=> {
         const products = document.querySelectorAll('article.prd._fb.col.c-prd');
@@ -125,7 +128,7 @@ const getProducts = async(page) => {
     
 }; 
 
-
+// get summary of scrapped data
 exports.getSummary = async(data)=> {
 
     try {
@@ -149,11 +152,12 @@ exports.getSummary = async(data)=> {
 
 
     const summaryData= {
-        "Est Total Revenue" :'₦'+' '+totalfig, 
-        "Est Total Units sold" : totalsell,
-        "Est Average Revenue" : '₦'+' '+avgRev,
-        "Average Price":'₦'+' '+avgPrice,
-        "Average Rating": avgRatings
+        "EstTotalRevenue" :'₦'+' '+totalfig, 
+        "EstTotalUnitsSold" : totalsell,
+        "EstAverageRevenue" : '₦'+' '+avgRev,
+        "AveragePrice":'₦'+' '+avgPrice,
+        "AverageRating": avgRatings, 
+        
     }
 
     return summaryData; 
