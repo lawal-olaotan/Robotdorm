@@ -2,27 +2,26 @@ const mongoose = require('mongoose');
 const { ObjectId } = mongoose.Schema;
 
 const summarySchema = new mongoose.Schema({
-    'Est Total Revenue':{
+    EstTotalRevenue:{
         type:String,
     },
-    'Est Total Units sold': {
+    EstTotalUnitsSold: {
         type:String,
     },
-    'Est Average Revenue':{
+    EstAverageRevenue:{
         type:String,
     }, 
-    'Average Price':{
+    AveragePrice:{
         type:String,
     }, 
-    'Average Rating': {
+    AverageRating: {
         type:String
     },
     keyWord:{
         type:String
     },
     postedBy:{
-        type:ObjectId,
-        ref:'User'
+        type:String,
     },
     createdAt: {type:Date,default:Date.now}
 },

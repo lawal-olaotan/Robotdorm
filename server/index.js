@@ -3,7 +3,6 @@ const express = require ('express'),
     bodyParser = require('body-parser'),
     mongoose = require('mongoose'),
     cors = require ('cors');
-    const user = require("./routes/user");
     const product = require("./routes/product")
 
 
@@ -24,7 +23,6 @@ const express = require ('express'),
 
     app.use(cors({origin:"*"}));
 
-    app.use("/user", user);
     app.use("/product", product);
 
 

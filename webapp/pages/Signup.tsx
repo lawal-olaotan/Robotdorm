@@ -35,7 +35,7 @@ const Signup: NextPage = () => {
          
         if(dbResponse){
             let extensionKey = localStorage.getItem('userkey'); 
-            chrome.runtime.sendMessage(EXE_ID, {type:'browser',data:extensionKey}) 
+            // chrome.runtime.sendMessage(EXE_ID, {type:'browser',data:extensionKey}) 
             router.replace('/Login')
         }
        

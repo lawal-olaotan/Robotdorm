@@ -85,9 +85,11 @@ exports.getData = async (req,res)=> {
         const {limit,offset} = calcPagination(page,size);
 
        Product.paginate({'keyWord':querydata},{limit,offset},(err,data)=> {
+
             if(err){
                 console.log('cannot find product')
             }
+            
             let dbData = {
                 totalProducts: data.totalDocs,
                 data : data.docs, 
@@ -99,12 +101,16 @@ exports.getData = async (req,res)=> {
                 res.send(dbData);
             }else{
                 Summary.find({'keyWord':querydata},(err,sumdata)=> {
+
+                    console.log(sumdata);
+
                     if(err){
                         console.log('cannot find product')
                     };
+
                     dbData['summaryData'] = sumdata
 
-                    let listQuery = {'postedBy': new ObjectId(_id)}
+                    let listQuery = {'postedBy': _id}
                     const findlisting = List.find(listQuery);
 
                     if(findlisting.length !== 0 ){
@@ -125,7 +131,6 @@ exports.getData = async (req,res)=> {
 }
 
 
-
 const saveToDb = (schema) => {
     schema.save((err)=>{
         if(err){
@@ -133,5 +138,3 @@ const saveToDb = (schema) => {
         }
     })
 }
-
-
