@@ -9,33 +9,36 @@ import { MyContext } from 'lib/UserContext';
 
 
 
-  const fetcher = (myvalue:any) => {fetch(myvalue).then((res)=> res.json() )}
- 
-
 
 
 export default function Insights(){
-
+    const fetcher = (url) => fetch(url).then((res)=> res.json() ); 
     const {data:session,status} = useSession();
-    const [myname,SetName] = useState<string>(); 
+     const [myname,SetName] = useState<string>(); 
+     const [pageNumber,SetPageNumber] = useState(0); 
+     const [itemCount, setItemCount] = useState(0)
 
 
-    useEffect(() => {
+
+     useEffect(() => {
         getSession()
         .then((session)=>{
-            console.log(session)
+            SetName(session.user.id)
         })
     },[session]);
 
+    const url = `/api/getSummary?query=${myname}&page=${pageNumber}`;
+    const { data, error } = useSWR(url, fetcher);  
+    if(data === undefined){
+        return <span>loading</span>
+    }else if(data.count !== undefined){
+            setItemCount(data.count)
+        }
 
-    
+    const nextBtnHandler = ()=>{
+        SetPageNumber(pageNumber + 1)  
+    }
 
-//    const url = `/api/getSummary?query=${myname}`; 
-
-//     const {data:result,error} = useSWR(url,fetcher); 
-
-    // console.log(result); 
-   
 
     return (
     <>
@@ -44,147 +47,44 @@ export default function Insights(){
           <DashTitle DashTitle="Search Insights"/>
 
           <div className="flex flex-wrap mt-8">
-            <div className="flex flex-col p-8 bg-white mr-8 rounded-lg mb-8 shadow-6xl">
-                <p className="mb-6 font-semibold"> <span>Keyword:</span> <span className="text-secondary">mens sneakers</span> </p>
+            {
+                data.data.map((summary:any)=> (
+                    <div className="flex flex-col p-8 bg-white mr-8 rounded-lg mb-8 shadow-6xl">
+                <p className="mb-6 font-semibold"> <span>Keyword:</span> <span className="text-secondary">{summary.keyWord}</span> </p>
                 <div className="flex">
                     <p className="flex flex-col text-center mr-6">
                         <span className="text-xs mb-2 text-gray-600">Est. Total Revenue</span>
-                        <span className="text-secondary font-semibold">₦30M+</span>
+                        <span className="text-secondary font-semibold">{summary.EstTotalRevenue}</span>
                     </p>
                     <p className="flex flex-col text-center mr-6">
                         <span className="text-xs mb-2 text-gray-600">Est. Avg Revenue</span>
-                        <span className="text-secondary font-semibold">₦2M+</span>
+                        <span className="text-secondary font-semibold">{summary.EstAverageRevenue}</span>
                     </p>
                     <p className="flex flex-col text-center mr-6">
                         <span className="text-xs mb-2 text-gray-600">Est. Total Units Sold</span>
-                        <span className="text-secondary font-semibold">367K+</span>
+                        <span className="text-secondary font-semibold">{summary.EstTotalUnitsSold}</span>
                     </p>
                     <p className="flex flex-col text-center mr-6">
                         <span className="text-xs mb-2 text-gray-600">Average Price</span>
-                        <span className="text-secondary font-semibold">3k</span>
+                        <span className="text-secondary font-semibold">{summary.AveragePrice}</span>
                     </p>
                 </div>
             </div>
 
-            <div className="flex flex-col p-8 bg-white mr-8 rounded-lg mb-8">
-                <p className="mb-6 font-semibold"> <span>Keyword:</span> <span className="text-secondary">mens sneakers</span> </p>
-                <div className="flex">
-                    <p className="flex flex-col text-center mr-6">
-                        <span className="text-xs mb-2 text-gray-600">Est. Total Revenue</span>
-                        <span className="text-secondary font-semibold">₦30M+</span>
-                    </p>
-                    <p className="flex flex-col text-center mr-6">
-                        <span className="text-xs mb-2 text-gray-600">Est. Avg Revenue</span>
-                        <span className="text-secondary font-semibold">₦2M+</span>
-                    </p>
-                    <p className="flex flex-col text-center mr-6">
-                        <span className="text-xs mb-2 text-gray-600">Est. Total Units Sold</span>
-                        <span className="text-secondary font-semibold">367K+</span>
-                    </p>
-                    <p className="flex flex-col text-center mr-6">
-                        <span className="text-xs mb-2 text-gray-600">Average Price</span>
-                        <span className="text-secondary font-semibold">3k</span>
-                    </p>
-                </div>
-            </div>
-
-            <div className="flex flex-col p-8 bg-white mr-8 rounded-lg mb-8">
-                <p className="mb-6 font-semibold"> <span>Keyword:</span> <span className="text-secondary">mens sneakers</span> </p>
-                <div className="flex">
-                    <p className="flex flex-col text-center mr-6">
-                        <span className="text-xs mb-2 text-gray-600">Est. Total Revenue</span>
-                        <span className="text-secondary font-semibold">₦30M+</span>
-                    </p>
-                    <p className="flex flex-col text-center mr-6">
-                        <span className="text-xs mb-2 text-gray-600">Est. Avg Revenue</span>
-                        <span className="text-secondary font-semibold">₦2M+</span>
-                    </p>
-                    <p className="flex flex-col text-center mr-6">
-                        <span className="text-xs mb-2 text-gray-600">Est. Total Units Sold</span>
-                        <span className="text-secondary font-semibold">367K+</span>
-                    </p>
-                    <p className="flex flex-col text-center mr-6">
-                        <span className="text-xs mb-2 text-gray-600">Average Price</span>
-                        <span className="text-secondary font-semibold">3k</span>
-                    </p>
-                </div>
-            </div>
-
-            <div className="flex flex-col p-8 bg-white mr-8 rounded-lg mb-8">
-                <p className="mb-6 font-semibold"> <span>Keyword:</span> <span className="text-secondary">mens sneakers</span> </p>
-                <div className="flex">
-                    <p className="flex flex-col text-center mr-6">
-                        <span className="text-xs mb-2 text-gray-600">Est. Total Revenue</span>
-                        <span className="text-secondary font-semibold">₦30M+</span>
-                    </p>
-                    <p className="flex flex-col text-center mr-6">
-                        <span className="text-xs mb-2 text-gray-600">Est. Avg Revenue</span>
-                        <span className="text-secondary font-semibold">₦2M+</span>
-                    </p>
-                    <p className="flex flex-col text-center mr-6">
-                        <span className="text-xs mb-2 text-gray-600">Est. Total Units Sold</span>
-                        <span className="text-secondary font-semibold">367K+</span>
-                    </p>
-                    <p className="flex flex-col text-center mr-6">
-                        <span className="text-xs mb-2 text-gray-600">Average Price</span>
-                        <span className="text-secondary font-semibold">3k</span>
-                    </p>
-                </div>
-            </div>
-
-            <div className="flex flex-col p-8 bg-white mr-8 rounded-lg mb-8">
-                <p className="mb-6 font-semibold"> <span>Keyword:</span> <span className="text-secondary">mens sneakers</span> </p>
-                <div className="flex">
-                    <p className="flex flex-col text-center mr-6">
-                        <span className="text-xs mb-2 text-gray-600">Est. Total Revenue</span>
-                        <span className="text-secondary font-semibold">₦30M+</span>
-                    </p>
-                    <p className="flex flex-col text-center mr-6">
-                        <span className="text-xs mb-2 text-gray-600">Est. Avg Revenue</span>
-                        <span className="text-secondary font-semibold">₦2M+</span>
-                    </p>
-                    <p className="flex flex-col text-center mr-6">
-                        <span className="text-xs mb-2 text-gray-600">Est. Total Units Sold</span>
-                        <span className="text-secondary font-semibold">367K+</span>
-                    </p>
-                    <p className="flex flex-col text-center mr-6">
-                        <span className="text-xs mb-2 text-gray-600">Average Price</span>
-                        <span className="text-secondary font-semibold">3k</span>
-                    </p>
-                </div>
-            </div>
-            <div className="flex flex-col p-8 bg-white mr-8 rounded-lg mb-8">
-                <p className="mb-6 font-semibold"> <span>Keyword:</span> <span className="text-secondary">mens sneakers</span> </p>
-                <div className="flex">
-                    <p className="flex flex-col text-center mr-6">
-                        <span className="text-xs mb-2 text-gray-600">Est. Total Revenue</span>
-                        <span className="text-secondary font-semibold">₦30M+</span>
-                    </p>
-                    <p className="flex flex-col text-center mr-6">
-                        <span className="text-xs mb-2 text-gray-600">Est. Avg Revenue</span>
-                        <span className="text-secondary font-semibold">₦2M+</span>
-                    </p>
-                    <p className="flex flex-col text-center mr-6">
-                        <span className="text-xs mb-2 text-gray-600">Est. Total Units Sold</span>
-                        <span className="text-secondary font-semibold">367K+</span>
-                    </p>
-                    <p className="flex flex-col text-center mr-6">
-                        <span className="text-xs mb-2 text-gray-600">Average Price</span>
-                        <span className="text-secondary font-semibold">3k</span>
-                    </p>
-                </div>
-            </div>
-
+                ))
+            }
+            
           </div>
 
           <div className="mt-8 flex ">
-              <button className="mr-4 px-8 py-2 bg-primary text-white rounded-md">Prev</button>
-              <button className="mr-4 px-8 py-2 bg-primary text-white rounded-md">Next</button>
+              <button onClick={()=> SetPageNumber(pageNumber - 1)} className={`mr-4 px-8 py-2  text-white rounded-md ${pageNumber === 0 ? 'bg-disabledprimary' : 'bg-primary'}`} disabled={pageNumber === 0 ? true : false} >Prev</button>
+              <button disabled={((pageNumber*6) > itemCount) ? true  : false} onClick={nextBtnHandler} className={`mr-4 px-8 py-2 bg-primary text-white rounded-md ${((pageNumber*6) > itemCount) ? 'bg-disabledprimary'  : 'bg-primary'}`}>Next</button>
           </div>
 
       </div>         
     </>)
 }
+
 Insights.getLayout = function getLayout(page:React.ReactElement){
     return(
         <DashLayout>
