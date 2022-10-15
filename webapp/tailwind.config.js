@@ -8,7 +8,7 @@ module.exports = {
       'md':"768px",
       'lg':'1024px',
       'xl':'1440px',
-      '2xl':'2560px',
+      '2xl':'1920px',
     },
     extend: {
       fontFamily:{
@@ -20,7 +20,8 @@ module.exports = {
         blue: '#0D67FF',
         secondary:'#307BD1',
         dashpop:'#EBF6FE',
-        dashbg:'#F1F3F6'
+        dashbg:'#F1F3F6',
+        disabledprimary:'#0A263556',
       },
       boxShadow:{
         '5xl': 'rgb(0 0 0 / 8%) 0px 2px 12px 0px',

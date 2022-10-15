@@ -17,8 +17,6 @@ export const DashPage =() => {
     const router = useRouter(); 
     const {myId} = useContext(MyContext); 
     const [userName, setUserName] = useState<string>()
-
-    
     useEffect(()=>{
         getSession()
         .then((session)=>{
@@ -35,16 +33,11 @@ export const DashPage =() => {
         })
 
     },[myId,router])
-
-
+    
    function cutName(myName:string):void{
        let newName = myName.split(' ')[0]
        setUserName(newName)
    }
-   
-
-
-   
     return (
         <>
             { userName !== undefined ? 
@@ -52,7 +45,7 @@ export const DashPage =() => {
                 <DashHead PageName="Dashboard"/>
                 <div>
                     <DashTitle DashTitle={` Welcome ${userName}`} />
-                    <div className="mt-8 flex justify-between shadow-6xl bg-white w-[90%] rounded-lg p-8">
+                    <div className="mt-8 flex justify-between shadow-6xl bg-white w-[90%] 2xl:w-9/12 rounded-lg p-8">
                         <div>
                             <div className="mb-8">
                                 <h2 className="mb-2 text-xl font-semibold ">Getting started with RobotDorm Jumia Tools</h2>
