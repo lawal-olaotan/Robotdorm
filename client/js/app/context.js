@@ -416,7 +416,7 @@ const injectShadow =(data)=> {
 
         .tableheadercon{
             font-weight:600; 
-            font-size:11px;
+            font-size:12px;
         }
 
         .headercell{
@@ -432,10 +432,10 @@ const injectShadow =(data)=> {
        
     }
 
-    @media screen and (min-width: 2560px) {
+    @media screen and (min-width: 1920px) {
         .contentbody{
-            top: 10pc;
-            left: 42pc; 
+            top: 3pc;
+            left: 22pc;
         }
        
     }
