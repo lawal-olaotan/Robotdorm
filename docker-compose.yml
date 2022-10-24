@@ -1,0 +1,14 @@
+version: '3.4'
+
+services:
+  webscrapper:
+    image: webscrapper
+    build:
+      context: server
+      dockerfile: ./Dockerfile
+    environment:
+      - NODE_ENV=production
+      - DEV_DB=${DEV_DB}
+
+    ports:
+      - 3000:3000

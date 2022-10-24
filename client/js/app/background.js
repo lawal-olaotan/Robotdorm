@@ -1,7 +1,7 @@
-console.log('background script running');
+
 
 let dev = true;
-// let domain = 'https://fierce-dawn-36286.herokuapp.com/'
+
 let domain = 'http://localhost:8000/'
 // let myurl =  'http://localhost:3000/';
 let myurl =  'https://www.robotdorm.com/';
@@ -12,11 +12,11 @@ chrome.runtime.onMessage.addListener(
 
   function(message,sender,sendResponse){
 
-    // switch statement used to find cases based on the user current state
+    // switch statement used to find cases based on the keyword_id current state
     switch (message.type){
 
       case "onPopupInit":
-        const usermine = localStorage.getItem('user');
+        const usermine = localStorage.getItem('keyword_id');
         sendResponse(usermine);
         return true;
         break;
@@ -33,7 +33,8 @@ chrome.runtime.onMessage.addListener(
         break;
         case"searchData":
           console.log('search data event hit in background', message.data);
-          message.data._id = localStorage.getItem('user');
+          // use jquery to store data
+          message.data._id = localStorage.getItem('keyword_id');
           setStorageItem(message.type,message.data);
           sendResponse('data succesffully recieved in background');
         return true; 
@@ -51,22 +52,19 @@ chrome.runtime.onMessage.addListener(
           function(response){
               if(response.status === 500){
                 sendToContent('error', ''); 
-              }else{
-                sendToContent('success',''); 
-              } 
-              console.log(response.data) 
+              }else {
+                sendToContent('success',response); 
+              }
         });
 
         sendResponse('data sent'); 
         return true; 
         break;
-
         case"FetchData": 
             console.log('fetch event event hit background');
             message.data.querydata = getStorageItem('searchData').keyWord;
             message.data.size = 10;
-            message.data._id = localStorage.getItem('user');
-
+            message.data._id = localStorage.getItem('keyword_id');
             allAjax('GET',message.data,'product/getProducts','',
               function(response){
                 const scrappeddata = response;
@@ -79,7 +77,6 @@ chrome.runtime.onMessage.addListener(
             let listData = {
                 datapic: message.data
             } 
-            
             allAjax('POST',listData,'product/list','',
               function(response){
                 let listres = {
@@ -105,7 +102,7 @@ chrome.runtime.onMessageExternal.addListener(
 
       if(message.type === 'browser'){
         const user_id = message.data;
-        localStorage.setItem('user', user_id);
+        localStorage.setItem('keyword_id', user_id);
       }
     }
 

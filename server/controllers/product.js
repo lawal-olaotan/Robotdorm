@@ -1,10 +1,7 @@
 const { searchPage , getSummary } = require('../helpers/scrapper')
-
 const Product = require('../model/product');
 const Summary = require('../model/summary')
 const List = require('../model/List'); 
-
-let ObjectId = require('mongoose').Types.ObjectId; 
 
 
 exports.saveList = async(req,res)=> {
@@ -41,13 +38,15 @@ exports.saveData = async (req,res)=> {
         }); 
         
         if (checkDb.length === 0){
-            console.log(true); 
+            console.log('scrapping data'); 
             const dbData =  await searchPage(data);
             const summary = await getSummary(dbData);
             summary.keyWord = keyword;
             summary.postedBy = dbid;
             saveToDb(new Summary(summary));
 
+            // send first page data
+            
             for( let y = 0; y < dbData.length; y++){
                 let newProduct = new Product; 
                 let newKeys = dbData[y]; 
@@ -56,10 +55,20 @@ exports.saveData = async (req,res)=> {
                 newProduct.keyWord = keyword;
                 saveToDb(newProduct)
             }
-            res.status(200).send('data saved successfull');
 
+            let dataResponse = {
+                currentPage:1,
+                data:dbData.splice(0,10), 
+                list:true,
+                summaryData:summary,
+                totalPage: Math.ceil((dbData.length/10)),
+                totalProduct: dbData.length
+            }
+
+            res.status(200).send(dataResponse);
+            
         }else{
-
+            // get the data here
             res.status(200).send('data found') 
         }
 
@@ -101,14 +110,11 @@ exports.getData = async (req,res)=> {
                 res.send(dbData);
             }else{
                 Summary.find({'keyWord':querydata},(err,sumdata)=> {
-
-                    console.log(sumdata);
-
                     if(err){
                         console.log('cannot find product')
                     };
 
-                    dbData['summaryData'] = sumdata
+                    dbData['summaryData'] = sumdata[0]
 
                     let listQuery = {'postedBy': _id}
                     const findlisting = List.find(listQuery);

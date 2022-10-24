@@ -5,7 +5,7 @@
     "version": "0.01", 
     "content_scripts":[
         {
-            "js": ["js/app/context.js"],
+            "js": ["js/lib/jquery-3.6.0.min.js","js/app/context-util.js","js/app/context.js"],
             "matches":["<all_urls>"]
         }
     ],
