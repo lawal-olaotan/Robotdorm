@@ -7,12 +7,10 @@ const {withBrowser,withPage} = require('../helpers/product');
 exports.searchPage = async(data) => {
     const urls = data.searchLink; 
     let searchProducts = [];
+
         await withBrowser(async(browser)=> {
-
             await bluebird.map(urls,async (url) => {
-
                 await withPage (browser)(async (page) => {
-
                     await page.setRequestInterception(true);
                         // initializing request interceptor 
                     await page.on('request', request=> {
@@ -38,6 +36,8 @@ exports.searchPage = async(data) => {
 
             },{concurrency:6});  
         });
+
+        
 
     let  searchedProducts  = Array.prototype.concat.apply([],searchProducts);
     let topProd = searchedProducts.sort((a,b)=> b.customer - a.customer ); 
