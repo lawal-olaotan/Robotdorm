@@ -13,7 +13,7 @@ puppeteer.use(
 
 exports.withBrowser = async ( fn )=> {
     const browser = await puppeteer.launch({headless:true, args:['--no-sandbox',
-    '--disable-setuid-sandbox','--disable-gpu','--disable-dev-shm-usage']});
+    '--disable-setuid-sandbox','--disable-gpu','--disable-dev-shm-usage'], executablePath: process.env.CHROMIUM_PATH});
     try{
         return await fn(browser)
     }catch (err){
