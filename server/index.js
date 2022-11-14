@@ -9,9 +9,10 @@ const express = require ('express'),
     
     require('dotenv').config(); 
     const app = express(); 
+    const db = require('./config/db.config')
 
     mongoose
-            .connect(process.env.DEV_DB, {useUnifiedTopology: true ,useCreateIndex:true,useFindAndModify:false,useNewUrlParser: true})
+            .connect(db.url, {useUnifiedTopology: true ,useCreateIndex:true,useFindAndModify:false,useNewUrlParser: true})
             .then(()=> console.log("DB Connected"))
             .catch(err=> {
                 console.log(err)
@@ -27,7 +28,7 @@ const express = require ('express'),
 
 
     
-    const port = process.env.PORT || 8000;
+    const port = process.env.NODE_DOCKER_PORT || 8000;
     
     app.listen(port,()=> {
         console.log(`server listening at port ${port}`)
