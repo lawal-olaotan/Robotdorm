@@ -16,7 +16,7 @@ if(!url.includes('https://www.jumia.com.ng/')){
         const urlArray = []
         let searchLink = url;
         urlArray.push(searchLink);
-        for(let i =2; i <= 30; i++){
+        for(let i =2; i <= 40; i++){
             let searchlinks = `${url}&page=${[i]}#catalog-listing`;
             urlArray.push(searchlinks);
         }

@@ -3,22 +3,16 @@ import  Head  from 'next/head';
 import { Lheader } from '@components/Lheader';
 import { InputCom } from '@components/InputCom';
 import { FormFooters } from '@components/FormFooters';
-import {useRef,useContext,useEffect} from 'react'; 
+import {useRef} from 'react'; 
 import {useSession} from 'next-auth/react'; 
 import { useRouter} from 'next/router';
-import {MyContext} from '../lib/UserContext'
 import {userDetails, userInfo} from '../interface/userSes'
-
-
-
 
 
 const Signup: NextPage = () => {
 
     const{data: session,status} = useSession(); 
-    const{SetMyId,myId} = useContext(MyContext)
     const router = useRouter();
-    const EXE_ID = 'llneclmbomnmhcgbaacmjdloencbfahj'
     const nameInputRef = useRef<HTMLInputElement>(null);
    let email:string = '';
 
@@ -34,8 +28,6 @@ const Signup: NextPage = () => {
         let dbResponse = await fetchData(userData);
          
         if(dbResponse){
-            let extensionKey = localStorage.getItem('userkey'); 
-            // chrome.runtime.sendMessage(EXE_ID, {type:'browser',data:extensionKey}) 
             router.replace('/Login')
         }
        

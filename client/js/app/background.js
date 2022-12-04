@@ -1,9 +1,7 @@
 
 
 let dev = true;
-
-let domain = 'http://localhost:8000/'
-// let myurl =  'http://localhost:3000/';
+let domain =  'http://localhost:8000/';
 let myurl =  'https://www.robotdorm.com/';
 
 

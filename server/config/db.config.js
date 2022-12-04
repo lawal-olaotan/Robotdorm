@@ -1,8 +1,6 @@
 require('dotenv').config(); 
 
 const {
-    DB_PORT,
-    DB_HOST, 
     DB_USER,
     DB_PASSWORD,
     DB_NAME,
@@ -10,7 +8,7 @@ const {
   
 
 module.exports = {
-  url: `mongodb://${DB_USER}:${DB_PASSWORD}@${DB_HOST}:${DB_PORT}/${DB_NAME}?authSource=admin`
+  url: `mongodb+srv://${DB_USER}:${DB_PASSWORD}@extension.8cnx3.mongodb.net/${DB_NAME}?retryWrites=true&w=majority`
 };
 
 

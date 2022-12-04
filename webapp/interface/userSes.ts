@@ -10,3 +10,4 @@ export type userDetails ={
     _id:string,
     emailVerified:string
 }
+
