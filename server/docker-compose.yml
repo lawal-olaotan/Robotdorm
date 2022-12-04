@@ -1,0 +1,40 @@
+version: '3.8'
+services:
+  web:
+    container_name: webscrapper
+    restart: always
+    build:
+      context: .
+      dockerfile: Dockerfile
+    env_file:
+      - ./.env
+    ports:
+      - 8000:8000
+    links:
+      - mongodb
+    environment:
+      WAIT_HOSTS: mongodb:27017
+    networks:
+      - webapp-network
+    depends_on:
+      - mongodb
+  mongodb:
+    container_name: mongo
+    image: mongo:latest
+    volumes:
+      - ~/db/mongo:/data/db
+    restart: always
+    command: [--auth]
+    env_file:
+      - ./.env
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=$DB_USER
+      - MONGO_INITDB_ROOT_PASSWORD=$DB_PASSWORD
+      - MONGO_INITDB_DATABASE_NAME=$DB_NAME
+    ports:
+      - 27017:27017
+    networks:
+      - webapp-network  
+networks:
+  webapp-network:
+    driver: bridge

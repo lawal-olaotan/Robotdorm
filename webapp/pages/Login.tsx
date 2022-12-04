@@ -9,14 +9,12 @@ const Login: NextPage = () => {
 
     const [loading, SetLoading] = useState(true); 
     const router = useRouter();
-    const EXE_ID = 'llneclmbomnmhcgbaacmjdloencbfahj'
 
     useEffect(()=> {
         getSession()
         .then((session) => {
             if(session){
                 if(session.user.id !== undefined){
-                    // chrome.runtime.sendMessage(EXE_ID, {type:'browser',data:session.user.id}) 
                     router.push('/Dashboard');
                 }else{
                     let extensionKey = localStorage.getItem('userkey'); 
@@ -33,7 +31,6 @@ const Login: NextPage = () => {
 
 
     const sendMessage = (data:string)=>{
-        // chrome.runtime.sendMessage(EXE_ID, {type:'browser',data:data})
         return true; 
     }
 
