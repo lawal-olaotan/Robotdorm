@@ -3,18 +3,18 @@ import { MongoDBAdapter } from '@next-auth/mongodb-adapter'
 import ClientPromise from '../../../lib/mongoDb'; 
 import  EmailProvider from 'next-auth/providers/email';
 import {createTransport} from 'nodemailer'; 
-import { ObjectId } from 'mongodb';
+
 
 
 interface userInfo {
   name:string,
   email:string,
-  id:ObjectId,
+  id:string,
   emailVerified:string
 }
 
 export default NextAuth({
-   secret: process.env.SECRET,
+   secret: process.env.NEXTAUTH_URL,
 
    adapter:MongoDBAdapter(ClientPromise),
    session:{
