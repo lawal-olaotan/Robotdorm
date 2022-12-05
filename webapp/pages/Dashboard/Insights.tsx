@@ -25,7 +25,7 @@ export default function Insights(){
     const { data, error } = useSWR(url, fetcher);  
     if(data === undefined){
         return <span>loading</span>
-    }else if(data.count !== undefined){setItemCount(data.count)}
+    }else if(data.count !== undefined){setItemCount(data.data.length)}
 
 
 
@@ -69,9 +69,9 @@ export default function Insights(){
             
           </div>
 
-          <div className="mt-32 flex ">
+          <div className="absolute bottom-[2pc] flex ">
               <button onClick={()=> SetPageNumber(pageNumber - 1)} className={`mr-4 px-8 py-2  text-white rounded-md ${pageNumber === 0 ? 'bg-disabledprimary' : 'bg-primary'}`} disabled={pageNumber === 0 ? true : false} >Prev</button>
-              <button disabled={((pageNumber*6) > itemCount) ? true  : false} onClick={nextBtnHandler} className={`mr-4 px-8 py-2 bg-primary text-white rounded-md ${((pageNumber*6) > itemCount) ? 'bg-disabledprimary'  : 'bg-primary'}`}>Next</button>
+              <button disabled={((pageNumber*6) > itemCount || itemCount < 6) ? true  : false} onClick={nextBtnHandler} className={`mr-4 px-8 py-2  text-white rounded-md ${((pageNumber*6) > itemCount || itemCount < 6) ? 'bg-disabledprimary'  : 'bg-primary'}`}>Next</button>
           </div>
 
       </div>         
