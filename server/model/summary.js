@@ -1,5 +1,4 @@
 const mongoose = require('mongoose');
-const { ObjectId } = mongoose.Schema;
 
 const summarySchema = new mongoose.Schema({
     EstTotalRevenue:{
@@ -21,7 +20,7 @@ const summarySchema = new mongoose.Schema({
         type:String
     },
     postedBy:{
-        type:String,
+        type:String
     },
     createdAt: {type:Date,default:Date.now}
 },
