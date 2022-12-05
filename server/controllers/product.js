@@ -5,8 +5,7 @@ const List = require('../model/List');
 
 
 exports.saveList = async(req,res)=> {
-    let list = req.body.datapic;
-
+    let list = req.body.list;
     try{
         List.insertMany(list,{ordered:false})
         .catch(

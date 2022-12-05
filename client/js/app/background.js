@@ -72,10 +72,10 @@ chrome.runtime.onMessage.addListener(
         return true;
         break;
         case"saveList": 
-            let listData = {
-                datapic: message.data
-            } 
-            allAjax('POST',listData,'product/list','',
+            const userId = localStorage.getItem('keyword_id');
+            let listData = message.data
+            listData.postedBy = userId; 
+            allAjax('POST',{list:listData},'product/list','',
               function(response){
                 let listres = {
                   stats : 'recieved',}

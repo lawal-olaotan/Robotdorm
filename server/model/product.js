@@ -1,7 +1,6 @@
 const mongoose = require('mongoose');
 const mongoosePaginate = require('mongoose-paginate-v2');
 
-const { ObjectId } = mongoose.Schema;
 
 const productSchema = new mongoose.Schema({
     keyWord:{
@@ -48,8 +47,7 @@ const productSchema = new mongoose.Schema({
         type:String,
     },
     postedBy:{
-        type:ObjectId,
-        ref:'User'
+        type:String
     },
     createdAt: {type:Date,default:Date.now}
 },
