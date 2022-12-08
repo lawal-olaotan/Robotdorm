@@ -1,4 +1,3 @@
-
 import React, {useState,useEffect} from 'react'; 
 import { DashLayout } from '@components/dashboard/DashLayout';
 import { DashHead } from '@components/dashboard/DashHead';
@@ -6,22 +5,21 @@ import { DashTitle } from '@components/dashboard/DashTitle';
 import {useSession,getSession} from 'next-auth/react'
 import useSWR from 'swr'; 
 
-
-export default function Insights(){
+export default function Lists(){
     const fetcher = (url) => fetch(url).then((res)=> res.json() ); 
     const {data:session,status} = useSession();
-     const [myname,SetName] = useState<string>(); 
+     const [postById,SetpostId] = useState<string>(); 
      const [pageNumber,SetPageNumber] = useState(0); 
      const [itemCount, setItemCount] = useState(0)
 
      useEffect(() => {
         getSession()
         .then((session)=>{
-            SetName(session.user.id)
+            SetpostId(session.user.id)
         })
     },[session]);
 
-    const url = `/api/getSummary?query=${myname}&page=${pageNumber}`;
+    const url = `/api/product/lists?query=${postById}&page=${pageNumber}`;
     const { data, error } = useSWR(url, fetcher);  
     if(data === undefined){
         return <span>loading</span>
@@ -36,9 +34,9 @@ export default function Insights(){
 
     return (
     <>
-      <DashHead PageName="Market Insights"/> 
+      <DashHead PageName="Saved Search"/> 
       <div>
-          <DashTitle DashTitle="Search Insights"/>
+          <DashTitle DashTitle="Saved Search"/>
 
           <div className="flex flex-wrap mt-8">
             {
@@ -78,7 +76,7 @@ export default function Insights(){
     </>)
 }
 
-Insights.getLayout = function getLayout(page:React.ReactElement){
+Lists.getLayout = function getLayout(page:React.ReactElement){
     return(
         <DashLayout>
             {page}

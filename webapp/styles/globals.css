@@ -398,6 +398,9 @@ Ensure the default browser behavior of the `hidden` attribute.
 .absolute {
   position: absolute;
 }
+.bottom-\[2pc\] {
+  bottom: 2pc;
+}
 .top-6 {
   top: 1.5rem;
 }
@@ -480,9 +483,6 @@ Ensure the default browser behavior of the `hidden` attribute.
 .ml-4 {
   margin-left: 1rem;
 }
-.mt-32 {
-  margin-top: 8rem;
-}
 .flex {
   display: flex;
 }
@@ -516,8 +516,8 @@ Ensure the default browser behavior of the `hidden` attribute.
 .w-full {
   width: 100%;
 }
-.w-\[30\.9\%\] {
-  width: 30.9%;
+.w-\[32\%\] {
+  width: 32%;
 }
 .w-\[33\%\] {
   width: 33%;
@@ -551,9 +551,6 @@ Ensure the default browser behavior of the `hidden` attribute.
 }
 .w-\[5\.5\%\] {
   width: 5.5%;
-}
-.w-\[32\%\] {
-  width: 32%;
 }
 .flex-col {
   flex-direction: column;
