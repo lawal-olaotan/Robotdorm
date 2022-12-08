@@ -21,7 +21,7 @@ export default function Insights(){
         })
     },[session]);
 
-    const url = `/api/getSummary?query=${myname}&page=${pageNumber}`;
+    const url = `/api/getSummary?query=${myname}&page=${pageNumber}&collection=summaries`;
     const { data, error } = useSWR(url, fetcher);  
     if(data === undefined){
         return <span>loading</span>
