@@ -1,7 +1,7 @@
 import  {MongoClient} from 'mongodb'; 
 
 const URI= process.env.MONGO_URI;
-const PORT = process.env.NEXTAUTH_URL
+const PORT = process.env.NEXTAUTH_SECRET
 
 
  const options:any = {}
