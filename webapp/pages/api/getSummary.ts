@@ -7,14 +7,14 @@ export default async function handler(req:NextApiRequest,res:NextApiResponse){
         try{
             const Db = (await ClientPromise).db(); 
             const {query,page,collection} = req.query;
-            const collectionName = collection
             const pageNumber:any = page ? req.query.page : 1;
             let summaryCount; 
             
             if(pageNumber === 0){
-                summaryCount = await Db.collection(`${collectionName}`).find({'postedBy': query}).count()
+                summaryCount = await Db.collection(`${collection}`).find({'postedBy': query}).count()
             }
-            const userDetails = Db.collection(`${collectionName}`).find({'postedBy': query}).skip(pageNumber * 6).limit(6).toArray();
+            const userDetails = await Db.collection(`${collection}`).find({'postedBy': query}).skip(pageNumber * 6).limit(6).toArray();
+            console.log(userDetails)
             res.status(200).json({data:userDetails,count:summaryCount});
             
         }catch (e:any){
@@ -27,6 +27,11 @@ export default async function handler(req:NextApiRequest,res:NextApiResponse){
     }else{
         return null 
     }
+
+}
+
+const getDbData =(dnName:string,)=>
+{
 
 }
 

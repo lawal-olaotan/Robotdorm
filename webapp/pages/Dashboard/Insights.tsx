@@ -17,7 +17,11 @@ export default function Insights(){
      useEffect(() => {
         getSession()
         .then((session)=>{
-            SetName(session.user.id)
+            if(session){
+                SetName(session.user.id)
+                console.log(status)
+            }
+            
         })
     },[session]);
 
@@ -25,7 +29,9 @@ export default function Insights(){
     const { data, error } = useSWR(url, fetcher);  
     if(data === undefined){
         return <span>loading</span>
-    }else if(data.count !== undefined){setItemCount(data.data.length)}
+    }else if(data.count !== undefined){
+        setItemCount(data.data.length)
+    }
 
 
 
@@ -41,8 +47,8 @@ export default function Insights(){
           <DashTitle DashTitle="Search Insights"/>
 
           <div className="flex flex-wrap mt-8">
-            {
-                data.data.map((summary:any)=> (
+            { data.data.length !== 0 ?
+                data.data.map((summary:any)=> ( 
                     <div key={summary._id} className="flex flex-col p-8 bg-white mr-8 rounded-lg mb-8 shadow-6xl w-[32%]">
                         <p className="mb-6 font-semibold"> <span>Keyword:</span> <span className="text-secondary">{summary.keyWord}</span> </p>
                         <div className="flex">
@@ -64,9 +70,8 @@ export default function Insights(){
                             </p>
                         </div>
                     </div>
-                ))
+                )): <div> Error page </div>
             }
-            
           </div>
 
           <div className="absolute bottom-[2pc] flex ">

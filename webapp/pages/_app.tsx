@@ -18,11 +18,12 @@ type AppPropsWithLayout = AppProps & {
 export default function MyApp({Component, pageProps: {session, ...pageProps} }: AppPropsWithLayout) {
   const getLayout = Component.getLayout ?? ((page) => page )
   return (
-    <ContextProvider>
+    
       <SessionProvider session={session}>
+        <ContextProvider>
         {getLayout(<Component {...pageProps} />)}
-      </SessionProvider>
-    </ContextProvider>)
+        </ContextProvider>
+      </SessionProvider>)
 }
 
 

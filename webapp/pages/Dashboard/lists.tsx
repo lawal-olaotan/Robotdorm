@@ -19,7 +19,7 @@ export default function Lists(){
         })
     },[session]);
 
-    const url = `/api/product/lists?query=${postById}&page=${pageNumber}`;
+    const url = `/api/getSummary?query=${postById}&page=${pageNumber}&collection=lists`;
     const { data, error } = useSWR(url, fetcher);  
     if(data === undefined){
         return <span>loading</span>
