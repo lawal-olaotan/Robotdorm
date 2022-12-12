@@ -1,4 +1,3 @@
-
 import type { NextApiResponse, NextApiRequest} from "next";
 import handler,{check,post,initiValidation} from '../../lib/middlehelper'
 import ClientPromise from '../../lib/mongoDb';
@@ -47,5 +46,3 @@ export default handler.use(post(validator))
             })
         }
 });
-
-
