@@ -13,12 +13,9 @@ const Login: NextPage = () => {
     useEffect(()=> {
         getSession()
         .then((session) => {
+            SetLoading(false) 
             if(session){
-                if(session.user.id !== undefined){
-                    router.push('/Dashboard');
-                }else{
-                SetLoading(false)
-                }   
+                router.push('/Dashboard');
             }
         })
     },[router]); 
@@ -28,6 +25,7 @@ const Login: NextPage = () => {
     }
 
     return <AuthForm/>
+
 }
 
 export default Login;
