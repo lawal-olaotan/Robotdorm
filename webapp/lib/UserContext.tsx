@@ -2,15 +2,12 @@ import React, {FC,useState} from 'react';
 
  interface userInfo {
     name:string,
-    email:string,
-    _id?:string,
-    emailVerified?:string
 }
 
 
 interface UserId {
     myId:userInfo;
-    SetMyId: (value: React.SetStateAction<userInfo>) => void,
+    setMyId: (value: React.SetStateAction<userInfo>) => void,
 
 }
 
@@ -19,12 +16,12 @@ const MyContext = React.createContext<Partial<UserId>>({});
 
 const ContextProvider:FC = ({children})=> {
 
-    const [myId,SetMyId] = useState<userInfo>(); 
+    const [myId,setMyId] = useState<userInfo>(); 
 
     return(
     <MyContext.Provider value={{
         myId,
-        SetMyId
+        setMyId
         }}>
         {children}
     </MyContext.Provider>); 
