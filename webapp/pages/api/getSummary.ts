@@ -14,7 +14,6 @@ export default async function handler(req:NextApiRequest,res:NextApiResponse){
                 summaryCount = await Db.collection(`${collection}`).find({'postedBy': query}).count()
             }
             const userDetails = await Db.collection(`${collection}`).find({'postedBy': query}).skip(pageNumber * 6).limit(6).toArray();
-            console.log(userDetails)
             res.status(200).json({data:userDetails,count:summaryCount});
             
         }catch (e:any){
