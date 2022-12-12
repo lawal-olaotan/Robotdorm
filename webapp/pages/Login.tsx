@@ -17,25 +17,11 @@ const Login: NextPage = () => {
                 if(session.user.id !== undefined){
                     router.push('/Dashboard');
                 }else{
-                    let extensionKey = localStorage.getItem('userkey'); 
-                    const auth = sendMessage(extensionKey)
-                    if(auth){
-                        router.push('/Dashboard');
-                    }
-                }
-            }else{
                 SetLoading(false)
+                }   
             }
         })
     },[router]); 
-
-
-    const sendMessage = (data:string)=>{
-        return true; 
-    }
-
-
-
 
     if(loading){
         return <p>Loading Page</p>

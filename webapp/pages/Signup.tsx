@@ -3,29 +3,33 @@ import  Head  from 'next/head';
 import { Lheader } from '@components/Lheader';
 import { InputCom } from '@components/InputCom';
 import { FormFooters } from '@components/FormFooters';
-import {useRef} from 'react'; 
+import {useRef,useState, useContext} from 'react'; 
 import {useSession} from 'next-auth/react'; 
 import { useRouter} from 'next/router';
 import {userDetails, userInfo} from '../interface/userSes'
+import { MyContext } from 'lib/UserContext';
 
 
 const Signup: NextPage = () => {
 
     const{data: session,status} = useSession(); 
+    const {SetMyId} = useContext(MyContext); 
+    const [email, setEmail]= useState<string>('')
     const router = useRouter();
     const nameInputRef = useRef<HTMLInputElement>(null);
-   let email:string = '';
+   
 
    if(status === 'authenticated'){
-        email = session.user.email;
+         setEmail(session.user.email);
+         
      }
 
     // event hook to update user information
-    const submitName = async (event: React.SyntheticEvent) => {
+    const submitName = (event: React.SyntheticEvent) => {
         const name:string = nameInputRef.current.value;
         event.preventDefault();
         const userData:userInfo = {name,email}
-        let dbResponse = await fetchData(userData);
+        let dbResponse = fetchData(userData);
          
         if(dbResponse){
             router.replace('/Login')
@@ -44,8 +48,7 @@ const Signup: NextPage = () => {
        .then((response)=> response.json())
        .then((data)=> {
             let userInfo:userDetails = data.data
-            localStorage.setItem('userkey', userInfo._id); 
-            
+            SetMyId(userInfo);
        })
 
        return true; 
