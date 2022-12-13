@@ -14,7 +14,7 @@ interface userInfo {
 }
 
 export default NextAuth({
-   secret: process.env.NEXTAUTH_URL,
+   secret: process.env.SECRET,
 
    adapter:MongoDBAdapter(ClientPromise),
    session:{
