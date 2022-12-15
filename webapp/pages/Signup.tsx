@@ -3,7 +3,7 @@ import  Head  from 'next/head';
 import { Lheader } from '@components/Lheader';
 import { InputCom } from '@components/InputCom';
 import { FormFooters } from '@components/FormFooters';
-import {useRef,useState, useContext, useEffect} from 'react'; 
+import {useRef, useContext} from 'react'; 
 import {useSession} from 'next-auth/react'; 
 import { useRouter} from 'next/router';
 import {userDetails, userInfo} from '../interface/userSes'
