@@ -1,25 +1,26 @@
 
-import React, {useState,useEffect} from 'react'; 
+import React, {useState,useEffect, useContext} from 'react'; 
 import { DashLayout } from '@components/dashboard/DashLayout';
 import { DashHead } from '@components/dashboard/DashHead';
 import { DashTitle } from '@components/dashboard/DashTitle';
+import { DashPagination } from '@components/dashboard/DashPagination';
 import {useSession,getSession} from 'next-auth/react'
+import { PageContext } from 'lib/PageProvider';
 import useSWR from 'swr'; 
 
 
 export default function Insights(){
     const fetcher = (url) => fetch(url).then((res)=> res.json() ); 
     const {data:session,status} = useSession();
-     const [myname,SetName] = useState<string>(); 
-     const [pageNumber,SetPageNumber] = useState(0); 
-     const [itemCount, setItemCount] = useState(0)
+    const [myname,SetName] = useState<string>(); 
+    const [itemCount, setItemCount] = useState(0);
+    const {pageNumber} = useContext(PageContext); 
 
      useEffect(() => {
         getSession()
         .then((session)=>{
             if(session){
                 SetName(session.user.id)
-                console.log(status)
             }
             
         })
@@ -35,10 +36,7 @@ export default function Insights(){
 
 
 
-    const nextBtnHandler = ()=>{
-        SetPageNumber(pageNumber + 1)  
-    }
-
+   
 
     return (
     <>
@@ -74,10 +72,7 @@ export default function Insights(){
             }
           </div>
 
-          <div className="absolute bottom-[2pc] flex ">
-              <button onClick={()=> SetPageNumber(pageNumber - 1)} className={`mr-4 px-8 py-2  text-white rounded-md ${pageNumber === 0 ? 'bg-disabledprimary' : 'bg-primary'}`} disabled={pageNumber === 0 ? true : false} >Prev</button>
-              <button disabled={((pageNumber*6) > itemCount || itemCount < 6) ? true  : false} onClick={nextBtnHandler} className={`mr-4 px-8 py-2  text-white rounded-md ${((pageNumber*6) > itemCount || itemCount < 6) ? 'bg-disabledprimary'  : 'bg-primary'}`}>Next</button>
-          </div>
+          <DashPagination itemCount={itemCount}/> 
 
       </div>         
     </>)
