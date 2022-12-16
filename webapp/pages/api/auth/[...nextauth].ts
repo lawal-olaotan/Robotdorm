@@ -80,9 +80,6 @@ export default NextAuth({
    
 })
 
-
-
-
 function html({url,email}: Record<"url" | "email", string>) {
 
    const espacedEmail = `${email.replace(/\./g, "&#8203;.")}`; 
