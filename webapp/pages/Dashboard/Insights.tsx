@@ -3,6 +3,7 @@ import React, {useState,useEffect, useContext} from 'react';
 import { DashLayout } from '@components/dashboard/DashLayout';
 import { DashHead } from '@components/dashboard/DashHead';
 import { DashTitle } from '@components/dashboard/DashTitle';
+import { Summary } from '@components/dashboard/Summary';
 import { DashPagination } from '@components/dashboard/DashPagination';
 import {useSession,getSession} from 'next-auth/react'
 import { PageContext } from 'lib/PageProvider';
@@ -47,32 +48,13 @@ export default function Insights(){
           <div className="flex flex-wrap mt-8">
             { data.data.length !== 0 ?
                 data.data.map((summary:any)=> ( 
-                    <div key={summary._id} className="flex flex-col p-8 bg-white mr-8 rounded-lg mb-8 shadow-6xl w-[32%]">
-                        <p className="mb-6 font-semibold"> <span>Keyword:</span> <span className="text-secondary">{summary.keyWord}</span> </p>
-                        <div className="flex">
-                            <p className="flex flex-col text-center mr-6">
-                                <span  className="text-xs mb-2 text-gray-600">Est. Total Revenue</span>
-                                <span className="text-secondary font-semibold">{summary.EstTotalRevenue}</span>
-                            </p>
-                            <p className="flex flex-col text-center mr-6">
-                                <span className="text-xs mb-2 text-gray-600">Est. Avg Revenue</span>
-                                <span className="text-secondary font-semibold">{summary.EstAverageRevenue}</span>
-                            </p>
-                            <p className="flex flex-col text-center mr-6">
-                                <span className="text-xs mb-2 text-gray-600">Est. Total Units Sold</span>
-                                <span className="text-secondary font-semibold">{summary.EstTotalUnitsSold}</span>
-                            </p>
-                            <p className="flex flex-col text-center mr-6">
-                                <span className="text-xs mb-2 text-gray-600">Average Price</span>
-                                <span className="text-secondary font-semibold">{summary.AveragePrice}</span>
-                            </p>
-                        </div>
-                    </div>
-                )): <div> Error page </div>
+                    <Summary _id={summary._id} keyWord={summary.keyWord} EstTotalRevenue={summary.EstTotalRevenue} EstAverageRevenue={summary.EstAverageRevenue} EstTotalUnitsSold={summary.EstTotalUnitsSold} AveragePrice={summary.AveragePrice} /> 
+                )): <div> Empty List</div>
             }
           </div>
 
           <DashPagination itemCount={itemCount}/> 
+          
 
       </div>         
     </>)

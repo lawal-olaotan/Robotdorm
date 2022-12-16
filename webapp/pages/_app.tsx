@@ -16,7 +16,7 @@ type AppPropsWithLayout = AppProps & {
   Component: NextPageWithLayout
 }
 
-export default function MyApp({Component, pageProps: {session, ...pageProps} }: AppPropsWithLayout) {
+export default function MyApp({Component, pageProps: {session, ...pageProps} }: AppPropsWithLayout){
   const getLayout = Component.getLayout ?? ((page) => page )
   return (
     
