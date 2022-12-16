@@ -2,7 +2,7 @@ import { NextPage } from 'next';
 
 
 interface Props{
-    _id: string,
+    key: string,
     keyWord:string,
     EstTotalRevenue: string,
     EstAverageRevenue: string,
@@ -12,11 +12,11 @@ interface Props{
 
 export const Summary: NextPage<Props> = (Props) => {
 
-    const {_id, keyWord, EstTotalRevenue,   EstAverageRevenue, EstTotalUnitsSold, AveragePrice} = Props
+    const {key, keyWord, EstTotalRevenue,   EstAverageRevenue, EstTotalUnitsSold, AveragePrice} = Props
 
     return (
         <>
-         <div key={_id} className="flex flex-col p-8 bg-white mr-8 rounded-lg mb-8 shadow-6xl w-[32%]">
+         <div key={key} className="flex flex-col p-8 bg-white mr-8 rounded-lg mb-8 shadow-6xl w-[32%]">
                         <p className="mb-6 font-semibold"> <span>Keyword:</span> <span className="text-secondary">{keyWord}</span> </p>
                         <div className="flex">
                             <p className="flex flex-col text-center mr-6">
