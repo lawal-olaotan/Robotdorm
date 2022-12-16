@@ -28,8 +28,8 @@ export default NextAuth({
             host:'smtp.gmail.com',
             port: 587,
             auth:{
-               user:'robotdorm@gmail.com',
-               pass:'fctpynulycwdtbnm'
+               user: process.env.SMTP_EMAIL,
+               pass: process.env.SMTP_SECRET
             }
          },
          from:'robotdorm@gmail.com', 
