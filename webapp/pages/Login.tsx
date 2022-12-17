@@ -1,7 +1,7 @@
-import  React, {useEffect,useState} from 'react'
+import  React, {useEffect, useState} from 'react'
 import type { NextPage } from 'next';
-import { useRouter} from 'next/router'
-import { getSession} from 'next-auth/react'; 
+import { useRouter } from 'next/router'
+import { getSession } from 'next-auth/react'; 
 import AuthForm from '@components/AuthForm';
 
 
@@ -17,9 +17,9 @@ const Login: NextPage = () => {
             SetLoading(false) 
             if(session){
                 if(session.user.id !== undefined){
-                    chrome.runtime.sendMessage(process.env.Chrome_ID, {type:'browser',data:session.user.id}) 
+                    chrome.runtime.sendMessage(process.env.Chrome_ID, {type:'browser',data:session.user.id}); 
                 }
-                router.push('/Dashboard');
+                router.push('/Dashboard'); 
             }
         })
     },[router]); 

@@ -2,6 +2,7 @@ import React, {FC,useState} from 'react';
 
  interface userInfo {
     name:string,
+    _id:string
 }
 
 

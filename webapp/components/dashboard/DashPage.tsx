@@ -22,7 +22,6 @@ export const DashPage =() => {
         .then((session)=>{
             if(session){
                 if(session.user.name === undefined){
-                    console.log(myId)
                     cutName(myId.name)
                 }else{
                     cutName(session.user.name)
