@@ -6,7 +6,7 @@ import { FormFooters } from '@components/FormFooters';
 import {useRef, useContext, useState} from 'react'; 
 import {useSession} from 'next-auth/react'; 
 import { useRouter} from 'next/router';
-import {userDetails, userInfo} from '../interface/userSes'
+import { userInfo} from '../interface/userSes'
 import { MyContext } from 'lib/UserContext';
 
 
@@ -16,7 +16,6 @@ const Signup: NextPage = () => {
     const {setMyId} = useContext(MyContext); 
     const router = useRouter();
     const nameInputRef = useRef<HTMLInputElement>(null);
-    const [userId, setUserId] = useState<string>('')
    
   
     // event hook to update user information
@@ -41,11 +40,7 @@ const Signup: NextPage = () => {
            }, 
        })
        .then((response)=> response.json())
-       .then((data)=> {
-            const userInfo:userDetails = data.data
-            // TODO:only call in production mode
-             chrome.runtime.sendMessage(process.env.Chrome_ID, {type:'browser',data:userInfo._id}); 
-       })
+       .then((data)=> chrome.runtime.sendMessage(process.env.CHROME_ID, {type:'browser',data:data.data._id}))
 
        return true;
        
