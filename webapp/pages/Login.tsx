@@ -16,14 +16,18 @@ const Login: NextPage = () => {
         .then((session) => {
             SetLoading(false) 
             if(session){
-                if(session.user.id !== undefined){
-                    const chromeMessage = chrome.runtime.sendMessage('nlgemkboidojehdepoaebdcoanhealnb', {type:'browser',data:session.user.id}); 
-                    console.log(chromeMessage);
-                }
-                router.push('/Dashboard'); 
+                const pushDash = sendMessage(session)
+                if(pushDash){router.push('/Dashboard');}
             }
         })
     },[router]); 
+
+    const sendMessage = (session:any) => {
+        if(session.user.id !== undefined){
+            chrome.runtime.sendMessage('nlgemkboidojehdepoaebdcoanhealnb', {type:'browser',data:session.user.id}); 
+            return true;
+        }
+    }
 
     if(loading){
         return <p>Loading Page</p>
