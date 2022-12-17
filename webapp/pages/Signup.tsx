@@ -41,7 +41,6 @@ const Signup: NextPage = () => {
        })
        .then((response)=> response.json())
        .then((data)=> chrome.runtime.sendMessage(process.env.CHROME_ID, {type:'browser',data:data.data._id}))
-
        return true;
        
    }
