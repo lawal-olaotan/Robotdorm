@@ -17,7 +17,8 @@ const Login: NextPage = () => {
             SetLoading(false) 
             if(session){
                 if(session.user.id !== undefined){
-                    chrome.runtime.sendMessage(process.env.NEXT_PUBLIC_CHROME_ID, {type:'browser',data:session.user.id}); 
+                    const chromeMessage = chrome.runtime.sendMessage('nlgemkboidojehdepoaebdcoanhealnb', {type:'browser',data:session.user.id}); 
+                    console.log(chromeMessage);
                 }
                 router.push('/Dashboard'); 
             }
