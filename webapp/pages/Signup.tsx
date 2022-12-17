@@ -3,10 +3,10 @@ import  Head  from 'next/head';
 import { Lheader } from '@components/Lheader';
 import { InputCom } from '@components/InputCom';
 import { FormFooters } from '@components/FormFooters';
-import {useRef, useContext, useState} from 'react'; 
+import {useRef, useContext} from 'react'; 
 import {useSession} from 'next-auth/react'; 
 import { useRouter} from 'next/router';
-import { userInfo} from '../interface/userSes'
+import {userInfo} from '../interface/userSes'
 import { MyContext } from 'lib/UserContext';
 
 
@@ -25,9 +25,9 @@ const Signup: NextPage = () => {
         const email:string = session.user.email
         const userData:userInfo = {name,email}
         let dbResponse = fetchData(userData);
-        if(dbResponse){
+        if(dbResponse && userData !== undefined) {
             setMyId({name:name,_id:''});
-            router.replace('/Dashboard')
+            router.replace('/Dashboard') 
         }
     }
 
@@ -40,7 +40,7 @@ const Signup: NextPage = () => {
            }, 
        })
        .then((response)=> response.json())
-       .then((data)=> chrome.runtime.sendMessage(`${process.env.CHROME_ID}`, {type:'browser',data:data.data._id}))
+       .then((data)=> chrome.runtime.sendMessage(process.env.NEXT_PUBLIC_CHROME_ID, {type:'browser',data:data.data._id}))
        return true;
        
    }
