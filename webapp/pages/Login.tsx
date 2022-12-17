@@ -10,11 +10,15 @@ const Login: NextPage = () => {
     const [loading, SetLoading] = useState(true); 
     const router = useRouter();
 
+
     useEffect(()=> {
         getSession()
         .then((session) => {
             SetLoading(false) 
             if(session){
+                if(session.user.id !== undefined){
+                    chrome.runtime.sendMessage(process.env.Chrome_ID, {type:'browser',data:session.user.id}) 
+                }
                 router.push('/Dashboard');
             }
         })
