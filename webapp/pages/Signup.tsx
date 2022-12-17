@@ -3,7 +3,7 @@ import  Head  from 'next/head';
 import { Lheader } from '@components/Lheader';
 import { InputCom } from '@components/InputCom';
 import { FormFooters } from '@components/FormFooters';
-import {useRef, useContext} from 'react'; 
+import {useRef, useContext, useState} from 'react'; 
 import {useSession} from 'next-auth/react'; 
 import { useRouter} from 'next/router';
 import {userDetails, userInfo} from '../interface/userSes'
@@ -12,10 +12,11 @@ import { MyContext } from 'lib/UserContext';
 
 const Signup: NextPage = () => {
 
-    const{data: session,status} = useSession(); 
+    const{data: session} = useSession(); 
     const {setMyId} = useContext(MyContext); 
     const router = useRouter();
     const nameInputRef = useRef<HTMLInputElement>(null);
+    const [userId, setUserId] = useState<string>('')
    
   
     // event hook to update user information
@@ -25,15 +26,14 @@ const Signup: NextPage = () => {
         const email:string = session.user.email
         const userData:userInfo = {name,email}
         let dbResponse = fetchData(userData);
-        setMyId({name});
-
         if(dbResponse){
+            setMyId({name:name,_id:''});
             router.replace('/Dashboard')
         }
     }
 
-    const fetchData = async (userData:userInfo) => {
-        await fetch('/api/update', {
+    const fetchData = (userData:userInfo) => {
+        fetch('/api/update', {
            method:'POST', 
            body:JSON.stringify(userData),
            headers: {
@@ -43,9 +43,12 @@ const Signup: NextPage = () => {
        .then((response)=> response.json())
        .then((data)=> {
             const userInfo:userDetails = data.data
-            console.log(userInfo)
+            // TODO:only call in production mode
+             chrome.runtime.sendMessage(process.env.Chrome_ID, {type:'browser',data:userInfo._id}); 
        })
+
        return true;
+       
    }
 
   return (
