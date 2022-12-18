@@ -1,5 +1,5 @@
-import {useState,useRef,useEffect} from 'react';
-import {signIn,getSession} from 'next-auth/react'
+import {useState,useRef } from 'react';
+import { signIn } from 'next-auth/react'
 import  Head  from 'next/head'
 import { Lheader } from '@components/Lheader';
 import { InputCom } from '@components/InputCom';
