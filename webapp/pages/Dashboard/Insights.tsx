@@ -4,6 +4,7 @@ import { DashLayout } from '@components/dashboard/DashLayout';
 import { DashHead } from '@components/dashboard/DashHead';
 import { DashTitle } from '@components/dashboard/DashTitle';
 import { Summary } from '@components/dashboard/Summary';
+import { EmptySection } from '@components/dashboard/EmptySection';
 import { DashPagination } from '@components/dashboard/DashPagination';
 import {useSession,getSession} from 'next-auth/react'
 import { PageContext } from 'lib/PageProvider';
@@ -35,10 +36,6 @@ export default function Insights(){
         setItemCount(data.data.length)
     }
 
-
-
-   
-
     return (
     <>
       <DashHead PageName="Market Insights"/> 
@@ -49,7 +46,7 @@ export default function Insights(){
             { data.data.length !== 0 ?
                 data.data.map((summary:any)=> ( 
                     <Summary key={summary._id} keyWord={summary.keyWord} EstTotalRevenue={summary.EstTotalRevenue} EstAverageRevenue={summary.EstAverageRevenue} EstTotalUnitsSold={summary.EstTotalUnitsSold} AveragePrice={summary.AveragePrice} /> 
-                )): <div> Empty List</div>
+                )): <EmptySection title="Try your first Search" text="Keep track of your search keywords and metrics to make informed business decisions with up-to-date market insights."/>
             }
           </div>
 
