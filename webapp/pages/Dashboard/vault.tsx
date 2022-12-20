@@ -2,6 +2,7 @@ import React, {useState,useEffect, useContext} from 'react';
 import {useSession, getSession} from 'next-auth/react'
 import useSWR from 'swr'; 
 import {Tab, Tabs, TabList, TabPanel } from 'react-tabs'; 
+import {getCoreRowModel, useReactTable} from '@tanstack/react-table';
 
 import { PageContext } from 'lib/PageProvider';
 import { DashLayout } from '@components/dashboard/DashLayout';
@@ -9,14 +10,15 @@ import { DashHead } from '@components/dashboard/DashHead';
 import { DashTitle } from '@components/dashboard/DashTitle';
 import { EmptySection } from '@components/dashboard/EmptySection';
 import { DashPagination } from '@components/dashboard/DashPagination';
+import { columns } from '@components/dashboard/TableUtils'
 
-import { faRProject } from '@fortawesome/free-brands-svg-icons';
 
 export default function Lists(){
     const fetcher = (url) => fetch(url).then((res)=> res.json() ); 
-    const {data:session,status} = useSession();
+     const {data:session,status} = useSession();
      const [postById,SetpostId] = useState<string>(); 
-     const [itemCount, setItemCount] = useState(0)
+     const [itemCount, setItemCount] = useState(0);
+     const [rowSelection, setCheckedRow] = useState({});
      const {pageNumber} = useContext(PageContext); 
 
      useEffect(() => {
@@ -30,7 +32,19 @@ export default function Lists(){
     const { data, error } = useSWR(url, fetcher);  
     if(data === undefined){
         return <span>loading</span>
-    }else if(data.count !== undefined){console.log(data.data); setItemCount(data.data.length)}
+    }
+
+    const table = useReactTable({
+        data,
+        columns,
+        state: {
+            rowSelection,
+        },
+        onRowSelectionChange: setCheckedRow,
+        getCoreRowModel: getCoreRowModel(),
+        debugTable: true,
+    })
+
 
     return (
     <>
@@ -48,7 +62,26 @@ export default function Lists(){
                 {/* product section */}
                 <TabPanel>
                     <div>
-                    <EmptySection title="Add your Desired Products" text="Take your product research to the next level by saving products you're interested in"/>
+                        { data.data.length !== 0 ? 
+                        <table>
+                            <thead>
+                                {table.getHeaderGroups().map(headerGroup => (
+                                    <tr key={headerGroup.id}>
+                                        {headerGroup.headers.map(header=>{
+                                            return (
+                                                <th key={header.id} colSpan={header.colSpan}>
+
+                                                </th>
+                                            )
+                                        })}
+                                    </tr>
+                                ))}
+                            </thead>
+                        </table>
+
+                         :
+                            <EmptySection title="Add your Desired Products" text="Take your product research to the next level by saving products you're interested in"/>
+                        }
                     </div>
                 </TabPanel>
                 {/* sourced section */}

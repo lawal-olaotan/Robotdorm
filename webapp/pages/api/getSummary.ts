@@ -10,11 +10,21 @@ export default async function handler(req:NextApiRequest,res:NextApiResponse){
             const pageNumber:any = page ? req.query.page : 1;
             let summaryCount; 
             
-            if(pageNumber === 0){
+            if(pageNumber === 0)
+            {
                 summaryCount = await Db.collection(`${collection}`).find({'postedBy': query}).count()
             }
-            const userDetails = await Db.collection(`${collection}`).find({'postedBy': query}).skip(pageNumber * 6).limit(6).toArray();
-            res.status(200).json({data:userDetails,count:summaryCount});
+
+            const queriedData = await Db.collection(`${collection}`).find({'postedBy': query}).skip(pageNumber * 6).limit(6).toArray();
+            let refinedData; 
+            if(collection == 'summaries'){
+                refinedData = queriedData.map(({_id, postedBy, __v, createdAt, ...cleanedData}) => cleanedData)
+            }else
+            {
+                refinedData = queriedData.map(({_id, postedBy, __v, createdAt,revenueNum,ratings,salesPrice,customer,mode,shipping, ...cleanedData}) => cleanedData) 
+            }
+           console.log(refinedData);
+            res.status(200).json({data:refinedData,count:summaryCount});
             
         }catch (e:any){
             console.error(e);
@@ -29,8 +39,5 @@ export default async function handler(req:NextApiRequest,res:NextApiResponse){
 
 }
 
-const getDbData =(dnName:string,)=>
-{
 
-}
 
