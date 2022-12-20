@@ -1,3 +1,4 @@
+import {ObjectId} from 'mongodb'
 
 export type userInfo = {
     name?:string,
@@ -9,5 +10,25 @@ export type userDetails ={
     email:string,
     _id:string,
     emailVerified:string
+}
+
+export type summmaryDetails = {
+    EstTotalRevenue: string,
+    EstTotalUnitsSold: string,
+    EstAverageRevenue: string,
+    AveragePrice: string,
+    AverageRating: string,
+    keyWord: string,
+}
+
+export interface ProductDetails{
+    title:string,
+    img:string,
+    link:string,
+    keyWord:string 
+    price:string,
+    sales:number,
+    revenue:string,
+    
 }
 
