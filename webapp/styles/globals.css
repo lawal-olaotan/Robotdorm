@@ -486,6 +486,12 @@ Ensure the default browser behavior of the `hidden` attribute.
 .ml-4 {
   margin-left: 1rem;
 }
+.mr-2 {
+  margin-right: 0.5rem;
+}
+.mr-3 {
+  margin-right: 0.75rem;
+}
 .flex {
   display: flex;
 }
@@ -518,6 +524,27 @@ Ensure the default browser behavior of the `hidden` attribute.
 }
 .h-\[50vh\] {
   height: 50vh;
+}
+.h-\[100px\] {
+  height: 100px;
+}
+.h-\[80px\] {
+  height: 80px;
+}
+.h-\[60px\] {
+  height: 60px;
+}
+.h-\[50px\] {
+  height: 50px;
+}
+.h-\[600px\] {
+  height: 600px;
+}
+.h-\[620px\] {
+  height: 620px;
+}
+.h-\[640px\] {
+  height: 640px;
 }
 .w-\[28\%\] {
   width: 28%;
@@ -570,6 +597,27 @@ Ensure the default browser behavior of the `hidden` attribute.
 .w-1\/5 {
   width: 20%;
 }
+.w-\[100px\] {
+  width: 100px;
+}
+.w-\[80px\] {
+  width: 80px;
+}
+.w-\[60px\] {
+  width: 60px;
+}
+.w-\[80\%\] {
+  width: 80%;
+}
+.w-\[70\%\] {
+  width: 70%;
+}
+.w-\[50px\] {
+  width: 50px;
+}
+.w-4\/5 {
+  width: 80%;
+}
 .cursor-pointer {
   cursor: pointer;
 }
@@ -593,6 +641,9 @@ Ensure the default browser behavior of the `hidden` attribute.
 }
 .overflow-hidden {
   overflow: hidden;
+}
+.overflow-y-scroll {
+  overflow-y: scroll;
 }
 .rounded-lg {
   border-radius: 0.5rem;

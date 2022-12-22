@@ -2,3 +2,37 @@
     border-bottom: 4px solid #0A2635;
     outline: none;
 }
+
+table {
+  border: 1px solid lightgray;
+}
+
+tbody {
+  border-bottom: 1px solid lightgray;
+}
+
+tbody tr td:nth-child(n+2){
+    text-align:center;
+    width: 10%;
+}
+tbody tr td:last-child{
+ width:5%;
+}
+
+th, td {
+  border-bottom: 1px solid lightgray;
+  border-right: 1px solid lightgray;
+  padding: .5rem;
+}
+th{
+    background-color: #0A2635;
+    color: #FFFFFF;
+}
+
+tfoot {
+  color: gray;
+}
+
+tfoot th {
+  font-weight: normal;
+}

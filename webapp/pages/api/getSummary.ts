@@ -15,16 +15,18 @@ export default async function handler(req:NextApiRequest,res:NextApiResponse){
                 summaryCount = await Db.collection(`${collection}`).find({'postedBy': query}).count()
             }
 
-            const queriedData = await Db.collection(`${collection}`).find({'postedBy': query}).skip(pageNumber * 6).limit(6).toArray();
-            let refinedData; 
+            //  TODO: won't it be better to clean data before saving to the database
             if(collection == 'summaries'){
-                refinedData = queriedData.map(({_id, postedBy, __v, createdAt, ...cleanedData}) => cleanedData)
+                let searchSummaryData = await Db.collection(`${collection}`).find({'postedBy': query}).skip(pageNumber * 6).limit(6).toArray();
+                const RefinedSearchData  = searchSummaryData.map(({_id, postedBy, __v, createdAt, ...cleanedData}) => cleanedData)
+                res.status(200).json({data:RefinedSearchData,count:summaryCount});
             }else
             {
-                refinedData = queriedData.map(({_id, postedBy, __v, createdAt,revenueNum,ratings,salesPrice,customer,mode,shipping, ...cleanedData}) => cleanedData) 
+                const savedProduct = await Db.collection(`${collection}`).find({'postedBy': query}).toArray()
+                const refinedProductList = savedProduct.map(({_id, postedBy, __v, createdAt,revenueNum,ratings,salesPrice,customer,mode,shipping, ...cleanedData}) => cleanedData)
+                res.status(200).json(refinedProductList); 
             }
-           console.log(refinedData);
-            res.status(200).json({data:refinedData,count:summaryCount});
+            
             
         }catch (e:any){
             console.error(e);

@@ -1,39 +1,98 @@
-import React, {useState,useEffect, useContext} from 'react'; 
+
 import {useSession, getSession} from 'next-auth/react'
 import useSWR from 'swr'; 
 import {Tab, Tabs, TabList, TabPanel } from 'react-tabs'; 
-import {getCoreRowModel, useReactTable} from '@tanstack/react-table';
+import {getCoreRowModel, useReactTable, flexRender} from '@tanstack/react-table';
 
 import { PageContext } from 'lib/PageProvider';
 import { DashLayout } from '@components/dashboard/DashLayout';
 import { DashHead } from '@components/dashboard/DashHead';
 import { DashTitle } from '@components/dashboard/DashTitle';
 import { EmptySection } from '@components/dashboard/EmptySection';
-import { DashPagination } from '@components/dashboard/DashPagination';
-import { columns } from '@components/dashboard/TableUtils'
+
+import {IndeterminateCheckbox} from '@components/dashboard/IndeterminateCheckbox';
+
+
+import { createColumnHelper} from '@tanstack/react-table';
+import { ProductDetails } from 'interface/userSes';
+import React, {useEffect, useContext, useState} from 'react'; 
+
+
 
 
 export default function Lists(){
     const fetcher = (url) => fetch(url).then((res)=> res.json() ); 
      const {data:session,status} = useSession();
      const [postById,SetpostId] = useState<string>(); 
-     const [itemCount, setItemCount] = useState(0);
      const [rowSelection, setCheckedRow] = useState({});
      const {pageNumber} = useContext(PageContext); 
+
+     const columnHelper = createColumnHelper<ProductDetails>();
+     const columns = [
+         {
+                header: () => <span>Product</span>,
+                cell: ({ row }) =>  (
+                    <a href={row.original.link} target="_blank" className='flex items-center'>
+                        <img className='w-[50px] h-[50px] mr-3' src={row.original.img}/>
+                        <div className='flex flex-col'> <span>{row.original.title}</span> <span>{row.original.keyWord}</span></div>
+                    </a>
+     ),
+                footer: props => props.column.id,
+                id: 'link',
+          },
+          columnHelper.accessor('price', {
+            cell: info => info.getValue(),
+            footer: info => info.column.id,
+          }),
+          columnHelper.accessor('sales', {
+            header: () => <span>Est. Sales</span>,
+            cell: info => info.getValue(),
+            footer: props => props.column.id,
+            id: 'sales',
+          }),
+          columnHelper.accessor('revenue', {
+            header: () => <span>Est. Revenue</span>,
+            cell: info => info.getValue(),
+            footer: props => props.column.id,
+            id: 'revenue',
+          }),
+          columnHelper.display( {
+            id:'select',
+            header:({ table }) => (
+                <IndeterminateCheckbox {...{
+            checked: table.getIsAllRowsSelected(),
+            indeterminate: table.getIsSomeRowsSelected(),
+            onChange: table.getToggleAllRowsSelectedHandler(),
+                    }}
+                />
+            ),
+            cell:({ row }) => (
+                <div className='px-1'>
+                    <IndeterminateCheckbox
+                    {...{
+                        checked: row.getIsSelected(),
+                        indeterminate: row.getIsSomeSelected(),
+                        onChange: row.getToggleSelectedHandler(),
+                    }}
+                    />
+                </div>
+            ), 
+    
+            }),
+
+     ]
+     console.log(rowSelection);
 
      useEffect(() => {
         getSession()
         .then((session)=>{
             SetpostId(session.user.id)
         })
-    },[session]);
+       
+    },[]);
 
     const url = `/api/getSummary?query=${postById}&page=${pageNumber}&collection=lists`;
     const { data, error } = useSWR(url, fetcher);  
-    if(data === undefined){
-        return <span>loading</span>
-    }
-
     const table = useReactTable({
         data,
         columns,
@@ -45,6 +104,9 @@ export default function Lists(){
         debugTable: true,
     })
 
+    if(data === undefined){
+        return <span>loading</span>
+    } 
 
     return (
     <>
@@ -59,27 +121,48 @@ export default function Lists(){
                     <Tab className="pb-4 mr-4 ">Quotes</Tab>
                     <Tab className="pb-4 mr-4 ">Orders</Tab>
                 </TabList>
-                {/* product section */}
+           
                 <TabPanel>
-                    <div>
-                        { data.data.length !== 0 ? 
-                        <table>
+                    <div className='mt-8  h-[640px] overflow-y-scroll'>
+                        { data.length !== 0 ? 
+                    
+                        <table className='w-4/5'>
                             <thead>
                                 {table.getHeaderGroups().map(headerGroup => (
                                     <tr key={headerGroup.id}>
                                         {headerGroup.headers.map(header=>{
                                             return (
                                                 <th key={header.id} colSpan={header.colSpan}>
-
+                                                    {header.isPlaceholder ? null : (
+                                                        <>
+                                                          {flexRender(header.column.columnDef.header,header.getContext())}
+                                                        </>
+                                                    )}
                                                 </th>
                                             )
                                         })}
                                     </tr>
                                 ))}
                             </thead>
-                        </table>
-
-                         :
+                            <tbody>
+                            {table.getRowModel().rows.map(row => {
+                                    return (
+                                    <tr key={row.id}>
+                                        {row.getVisibleCells().map(cell => {
+                                        return (
+                                            <td key={cell.id}>
+                                            {flexRender(
+                                                cell.column.columnDef.cell,
+                                                cell.getContext()
+                                            )}
+                                            </td>
+                                        )
+                                        })}
+                                    </tr>
+                                    )
+                                })}
+                            </tbody>
+                        </table> :
                             <EmptySection title="Add your Desired Products" text="Take your product research to the next level by saving products you're interested in"/>
                         }
                     </div>
@@ -92,7 +175,6 @@ export default function Lists(){
             
           </div>
 
-          <DashPagination itemCount={itemCount}/> 
       </div>         
     </>)
 }
