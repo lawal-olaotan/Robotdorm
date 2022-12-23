@@ -17,9 +17,6 @@ import { createColumnHelper} from '@tanstack/react-table';
 import { ProductDetails } from 'interface/userSes';
 import React, {useEffect, useContext, useState} from 'react'; 
 
-
-
-
 export default function Lists(){
     const fetcher = (url) => fetch(url).then((res)=> res.json() ); 
      const {data:session,status} = useSession();
@@ -32,7 +29,7 @@ export default function Lists(){
          {
                 header: () => <span>Product</span>,
                 cell: ({ row }) =>  (
-                    <a href={row.original.link} target="_blank" className='flex items-center'>
+                    <a href={row.original.link} target="_blank" rel="noreferrer" className='flex items-center'>
                         <img className='w-[50px] h-[50px] mr-3' src={row.original.img}/>
                         <div className='flex flex-col'> <span>{row.original.title}</span> <span>{row.original.keyWord}</span></div>
                     </a>
@@ -81,7 +78,7 @@ export default function Lists(){
             }),
 
      ]
-     console.log(rowSelection);
+   
 
      useEffect(() => {
         getSession()
@@ -123,10 +120,10 @@ export default function Lists(){
                 </TabList>
            
                 <TabPanel>
-                    <div className='mt-8  h-[640px] overflow-y-scroll'>
+                    <div className='mt-8  h-[640px] xl:h-[520px] overflow-y-scroll'>
                         { data.length !== 0 ? 
                     
-                        <table className='w-4/5'>
+                        <table className='w-4/5 xl:w-[95%]'>
                             <thead>
                                 {table.getHeaderGroups().map(headerGroup => (
                                     <tr key={headerGroup.id}>
