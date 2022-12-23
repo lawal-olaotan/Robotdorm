@@ -19,6 +19,7 @@ export type summmaryDetails = {
     AveragePrice: string,
     AverageRating: string,
     keyWord: string,
+    _id:ObjectId
 }
 
 export interface ProductDetails{

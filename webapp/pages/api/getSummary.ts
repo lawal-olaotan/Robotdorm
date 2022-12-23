@@ -18,7 +18,7 @@ export default async function handler(req:NextApiRequest,res:NextApiResponse){
             //  TODO: won't it be better to clean data before saving to the database
             if(collection == 'summaries'){
                 let searchSummaryData = await Db.collection(`${collection}`).find({'postedBy': query}).skip(pageNumber * 6).limit(6).toArray();
-                const RefinedSearchData  = searchSummaryData.map(({_id, postedBy, __v, createdAt, ...cleanedData}) => cleanedData)
+                const RefinedSearchData  = searchSummaryData.map(({postedBy, __v, createdAt, ...cleanedData}) => cleanedData)
                 res.status(200).json({data:RefinedSearchData,count:summaryCount});
             }else
             {
