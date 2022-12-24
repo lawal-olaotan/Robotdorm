@@ -46,7 +46,7 @@ export default function Insights(){
           <div className="flex flex-wrap mt-8">
             { data.data.length !== 0 ?
                 data.data.map((summary:any)=> ( 
-                    <Summary postedBy={summary._id} keyWord={summary.keyWord} EstTotalRevenue={summary.EstTotalRevenue} EstAverageRevenue={summary.EstAverageRevenue} EstTotalUnitsSold={summary.EstTotalUnitsSold} AveragePrice={summary.AveragePrice} /> 
+                    <Summary key={summary._id} keyWord={summary.keyWord} EstTotalRevenue={summary.EstTotalRevenue} EstAverageRevenue={summary.EstAverageRevenue} EstTotalUnitsSold={summary.EstTotalUnitsSold} AveragePrice={summary.AveragePrice} /> 
                 )): <EmptySection title="Try your first Search" text="Keep track of your search keywords and metrics to make informed business decisions with up-to-date market insights."/>
             }
           </div>
