@@ -24,7 +24,7 @@ const Login: NextPage = () => {
 
     const sendMessage = (session:any) => {
         if(session.user.id !== undefined){
-            chrome.runtime.sendMessage('nlgemkboidojehdepoaebdcoanhealnb', {type:'browser',data:session.user.id}); 
+            chrome.runtime.sendMessage('ocphbhklbogjbkomckglmbcfldamdcbi', {type:'browser',data:session.user.id}); 
             return true;
         }
     }
