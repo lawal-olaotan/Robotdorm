@@ -40,7 +40,10 @@ const Signup: NextPage = () => {
            }, 
        })
        .then((response)=> response.json())
-       .then((data)=> chrome.runtime.sendMessage('ocphbhklbogjbkomckglmbcfldamdcbi', {type:'browser',data:data.data._id}))
+       .then((data)=> 
+    //    chrome.runtime.sendMessage('ocphbhklbogjbkomckglmbcfldamdcbi', {type:'browser',data:data.data._id})
+        console.log(data)
+       )
        return true;
        
    }
