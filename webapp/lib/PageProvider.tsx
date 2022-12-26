@@ -8,12 +8,8 @@ const PageContext = React.createContext<Partial<PageNumber>>({});
 
 const PageProvider:FC = ({children})=> {
 
-const [pageNumber,SetPageNumber] = useState<number>();
+const [pageNumber,SetPageNumber] = useState(0);
     
-    useEffect(()=>{
-        SetPageNumber(0)
-    })
-
     return(
     <PageContext.Provider value={{
         pageNumber,

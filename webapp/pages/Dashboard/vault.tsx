@@ -9,8 +9,8 @@ import { DashLayout } from '@components/dashboard/DashLayout';
 import { DashHead } from '@components/dashboard/DashHead';
 import { DashTitle } from '@components/dashboard/DashTitle';
 import { EmptySection } from '@components/dashboard/EmptySection';
-
 import {IndeterminateCheckbox} from '@components/dashboard/IndeterminateCheckbox';
+import { VaultIcons } from '@components/dashboard/VaultIcons'
 
 
 import { createColumnHelper} from '@tanstack/react-table';
@@ -111,7 +111,7 @@ export default function Lists(){
       <div>
           <DashTitle DashTitle="Products Vault"/>
 
-          <div className="flex flex-wrap mt-8">
+          <div className="flex flex-wrap mt-8 relative w-4/5 xl:w-[95%]">
             <Tabs className="w-full">
                 <TabList className="flex">
                     <Tab className="pb-4 mr-4 ">Products</Tab>
@@ -123,7 +123,7 @@ export default function Lists(){
                     <div className='mt-8  h-[640px] xl:h-[520px] overflow-y-scroll'>
                         { data.length !== 0 ? 
                     
-                        <table className='w-4/5 xl:w-[95%]'>
+                        <table className='w-full'>
                             <thead>
                                 {table.getHeaderGroups().map(headerGroup => (
                                     <tr key={headerGroup.id}>
@@ -169,9 +169,14 @@ export default function Lists(){
                 {/* status section */}
                 <TabPanel></TabPanel>
             </Tabs>
+
+            <div className={`${Object.keys(rowSelection).length === 0 ? 'hidden':'flex'} absolute right-4`}>
+                <VaultIcons imgStyle='mr-4 flex items-center' imgsrc='/source.svg' imgAlt='source'/>
+                <VaultIcons imgStyle='mr-4 flex items-center'imgsrc='/delete.svg' imgAlt='delete'/>
+                <VaultIcons imgStyle='flex items-center' imgsrc='/close.svg' imgAlt='close'/>
+          </div>
             
           </div>
-
       </div>         
     </>)
 }

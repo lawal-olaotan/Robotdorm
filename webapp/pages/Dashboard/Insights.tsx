@@ -8,7 +8,6 @@ import { EmptySection } from '@components/dashboard/EmptySection';
 import { DashPagination } from '@components/dashboard/DashPagination';
 import {useSession,getSession} from 'next-auth/react'
 import { PageContext } from 'lib/PageProvider';
-import { summmaryDetails } from 'interface/userSes';
 import useSWR from 'swr'; 
 
 
