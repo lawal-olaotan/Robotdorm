@@ -1,28 +1,25 @@
-
 import {useSession, getSession} from 'next-auth/react'
-import useSWR from 'swr'; 
 import {Tab, Tabs, TabList, TabPanel } from 'react-tabs'; 
-import {getCoreRowModel, useReactTable, flexRender} from '@tanstack/react-table';
+import {getCoreRowModel, useReactTable, flexRender,createColumnHelper} from '@tanstack/react-table';
+import React, {useEffect, useContext, useState} from 'react'; 
+import useSWR from 'swr'; 
 
-import { PageContext } from 'lib/PageProvider';
 import { DashLayout } from '@components/dashboard/DashLayout';
 import { DashHead } from '@components/dashboard/DashHead';
 import { DashTitle } from '@components/dashboard/DashTitle';
 import { EmptySection } from '@components/dashboard/EmptySection';
 import {IndeterminateCheckbox} from '@components/dashboard/IndeterminateCheckbox';
 import { VaultIcons } from '@components/dashboard/VaultIcons'
-
-
-import { createColumnHelper} from '@tanstack/react-table';
 import { ProductDetails } from 'interface/userSes';
-import React, {useEffect, useContext, useState} from 'react'; 
+import { VaultContext} from 'lib/VaultProvider';
+
 
 export default function Lists(){
     const fetcher = (url) => fetch(url).then((res)=> res.json() ); 
      const {data:session,status} = useSession();
      const [postById,SetpostId] = useState<string>(); 
-     const [rowSelection, setCheckedRow] = useState({});
-     const {pageNumber} = useContext(PageContext); 
+
+     const {setListData,setCheckedRow,rowSelection, nameInputRef} = useContext(VaultContext); 
 
      const columnHelper = createColumnHelper<ProductDetails>();
      const columns = [
@@ -79,17 +76,21 @@ export default function Lists(){
 
      ]
    
-
      useEffect(() => {
         getSession()
         .then((session)=>{
             SetpostId(session.user.id)
         })
+        
        
     },[]);
 
-    const url = `/api/getSummary?query=${postById}&page=${pageNumber}&collection=lists`;
+    const url = `/api/getSummary?query=${postById}&collection=lists`;
     const { data, error } = useSWR(url, fetcher);  
+    if(data !== undefined){
+        setListData(data);
+    }
+
     const table = useReactTable({
         data,
         columns,
@@ -111,19 +112,18 @@ export default function Lists(){
       <div>
           <DashTitle DashTitle="Products Vault"/>
 
-          <div className="flex flex-wrap mt-8 relative w-4/5 xl:w-[95%]">
+          <div className="flex flex-wrap mt-8 relative 2xl:w-4/5 xl:w-[95%]">
             <Tabs className="w-full">
                 <TabList className="flex">
                     <Tab className="pb-4 mr-4 ">Products</Tab>
-                    <Tab className="pb-4 mr-4 ">Quotes</Tab>
-                    <Tab className="pb-4 mr-4 ">Orders</Tab>
+                    <Tab className="pb-4 mr-4">Quotes</Tab>
+                    <Tab className="pb-4">Orders</Tab>
                 </TabList>
            
                 <TabPanel>
-                    <div className='mt-8  h-[640px] xl:h-[520px] overflow-y-scroll'>
+                    <div className='mt-8  2xl:h-[650px] xl:h-[520px] overflow-y-scroll'>
                         { data.length !== 0 ? 
-                    
-                        <table className='w-full'>
+                        <table className='w-full' ref={nameInputRef}>
                             <thead>
                                 {table.getHeaderGroups().map(headerGroup => (
                                     <tr key={headerGroup.id}>
@@ -160,7 +160,7 @@ export default function Lists(){
                                 })}
                             </tbody>
                         </table> :
-                            <EmptySection title="Add your Desired Products" text="Take your product research to the next level by saving products you're interested in"/>
+                        <EmptySection title="Add your Desired Products" text="Take your product research to the next level by saving products you're interested in"/>
                         }
                     </div>
                 </TabPanel>

@@ -6,6 +6,7 @@ import type {NextPage} from 'next';
 import {SessionProvider} from 'next-auth/react';
 import {ContextProvider} from '../lib/UserContext';
 import {PageProvider} from '../lib/PageProvider';
+import {VaultProvider} from '../lib/VaultProvider';
 
 
 
@@ -24,7 +25,9 @@ export default function MyApp({Component, pageProps: {session, ...pageProps} }: 
       <SessionProvider session={session}>
         <ContextProvider>
         <PageProvider>
+          <VaultProvider>
         {getLayout(<Component {...pageProps} />)}
+        </VaultProvider>
         </PageProvider>
         </ContextProvider>
       </SessionProvider>)

@@ -1,6 +1,8 @@
 import {NextPage} from 'next';
 import Image from 'next/image'
-import { useState } from 'react'
+import { useState, useContext} from 'react'
+import { VaultContext} from 'lib/VaultProvider';
+import { ProductDetails } from 'interface/userSes';
 
 interface VaultProps {
     imgsrc : string,
@@ -11,18 +13,34 @@ interface VaultProps {
 export const VaultIcons: NextPage<VaultProps>=(VaultProps) => {
     const {imgsrc,imgAlt,imgStyle} = VaultProps
     const [textState, setTextState] = useState<boolean>(false)
+    const {listData,rowSelection,nameInputRef}= useContext(VaultContext);
+    const [selectedProduct, setSelectedProduct] = useState<ProductDetails[]>()
+    const [quoteStatus, setQuoteStatus] = useState<boolean>(false)
+ 
 
     
 
 
     const handleVaultIcons = (e)=> {
-        const currentIcon = e.target.getAttribute("alt");
+        const currentIcon = e.target.getAttribute("alt")
+        const ProductTable = nameInputRef.current;
+        let newData = []; 
+
+        for (const selectedKeys in rowSelection){
+            newData.push(listData[selectedKeys])
+        }
+        
+
         switch (currentIcon) {
             case 'source':
-                // get selected products
-                // popup for quantity 
-                // navigate to Quotes
-                console.log('we are at the source')
+                if(newData.length !== 0)
+                {
+                    setSelectedProduct(newData)
+                    setQuoteStatus(true);
+                }
+                
+             
+                
                 break;
             case 'delete':
                 // get selected products
