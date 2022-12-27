@@ -29,7 +29,6 @@ export interface ProductDetails{
     keyWord:string 
     price:string,
     sales:number,
-    revenue:string,
-    
+    revenue:string
 }
 
