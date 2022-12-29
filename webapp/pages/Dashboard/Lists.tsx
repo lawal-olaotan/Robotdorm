@@ -4,6 +4,7 @@ import {getCoreRowModel, useReactTable, flexRender,createColumnHelper} from '@ta
 import React, {useEffect, useContext, useState} from 'react'; 
 import useSWR from 'swr'; 
 
+
 import { DashLayout } from '@components/dashboard/DashLayout';
 import { DashHead } from '@components/dashboard/DashHead';
 import { DashTitle } from '@components/dashboard/DashTitle';
@@ -12,6 +13,7 @@ import {IndeterminateCheckbox} from '@components/dashboard/IndeterminateCheckbox
 import { VaultIcons } from '@components/dashboard/VaultIcons'
 import { ProductDetails } from 'interface/userSes';
 import { VaultContext} from 'lib/VaultProvider';
+import { DashQuote } from '@components/dashboard/DashQuote';
 
 
 export default function Lists(){
@@ -19,7 +21,7 @@ export default function Lists(){
      const {data:session,status} = useSession();
      const [postById,SetpostId] = useState<string>(); 
 
-     const {setListData,setCheckedRow,rowSelection, nameInputRef} = useContext(VaultContext); 
+     const {setListData,setCheckedRow,rowSelection, nameInputRef,selectedProduct} = useContext(VaultContext); 
 
      const columnHelper = createColumnHelper<ProductDetails>();
      const columns = [
@@ -107,78 +109,84 @@ export default function Lists(){
     } 
 
     return (
-    <>
-      <DashHead PageName="Vault"/> 
-      <div>
-          <DashTitle DashTitle="Products Vault"/>
+    <div>
+        <div>
+            <DashHead PageName="Vault"/> 
+        <div>
+            <DashTitle DashTitle="Products Vault"/>
 
-          <div className="flex flex-wrap mt-8 relative 2xl:w-4/5 xl:w-[95%]">
-            <Tabs className="w-full">
-                <TabList className="flex">
-                    <Tab className="pb-4 mr-4 ">Products</Tab>
-                    <Tab className="pb-4 mr-4">Quotes</Tab>
-                    <Tab className="pb-4">Orders</Tab>
-                </TabList>
-           
-                <TabPanel>
-                    <div className='mt-8  2xl:h-[650px] xl:h-[520px] overflow-y-scroll'>
-                        { data.length !== 0 ? 
-                        <table className='w-full' ref={nameInputRef}>
-                            <thead>
-                                {table.getHeaderGroups().map(headerGroup => (
-                                    <tr key={headerGroup.id}>
-                                        {headerGroup.headers.map(header=>{
-                                            return (
-                                                <th key={header.id} colSpan={header.colSpan}>
-                                                    {header.isPlaceholder ? null : (
-                                                        <>
-                                                          {flexRender(header.column.columnDef.header,header.getContext())}
-                                                        </>
-                                                    )}
-                                                </th>
-                                            )
-                                        })}
-                                    </tr>
-                                ))}
-                            </thead>
-                            <tbody>
-                            {table.getRowModel().rows.map(row => {
-                                    return (
-                                    <tr key={row.id}>
-                                        {row.getVisibleCells().map(cell => {
-                                        return (
-                                            <td key={cell.id}>
-                                            {flexRender(
-                                                cell.column.columnDef.cell,
-                                                cell.getContext()
-                                            )}
-                                            </td>
-                                        )
-                                        })}
-                                    </tr>
-                                    )
-                                })}
-                            </tbody>
-                        </table> :
-                        <EmptySection title="Add your Desired Products" text="Take your product research to the next level by saving products you're interested in"/>
-                        }
-                    </div>
-                </TabPanel>
-                {/* sourced section */}
-                <TabPanel></TabPanel>
-                {/* status section */}
-                <TabPanel></TabPanel>
-            </Tabs>
-
-            <div className={`${Object.keys(rowSelection).length === 0 ? 'hidden':'flex'} absolute right-4`}>
-                <VaultIcons imgStyle='mr-4 flex items-center' imgsrc='/source.svg' imgAlt='source'/>
-                <VaultIcons imgStyle='mr-4 flex items-center'imgsrc='/delete.svg' imgAlt='delete'/>
-                <VaultIcons imgStyle='flex items-center' imgsrc='/close.svg' imgAlt='close'/>
-          </div>
+            <div className="flex flex-wrap mt-8 relative 2xl:w-4/5 xl:w-[95%]">
+                <Tabs className="w-full">
+                    <TabList className="flex">
+                        <Tab className="pb-4 mr-4 ">Products</Tab>
+                        <Tab className="pb-4 mr-4">Quotes</Tab>
+                        <Tab className="pb-4">Orders</Tab>
+                    </TabList>
             
-          </div>
-      </div>         
-    </>)
+                    <TabPanel>
+                        <div className='mt-8  2xl:h-[650px] xl:h-[520px] overflow-y-scroll'>
+                            { data.length !== 0 ? 
+                            <table className='w-full' ref={nameInputRef}>
+                                <thead>
+                                    {table.getHeaderGroups().map(headerGroup => (
+                                        <tr key={headerGroup.id}>
+                                            {headerGroup.headers.map(header=>{
+                                                return (
+                                                    <th key={header.id} colSpan={header.colSpan}>
+                                                        {header.isPlaceholder ? null : (
+                                                            <>
+                                                            {flexRender(header.column.columnDef.header,header.getContext())}
+                                                            </>
+                                                        )}
+                                                    </th>
+                                                )
+                                            })}
+                                        </tr>
+                                    ))}
+                                </thead>
+                                <tbody>
+                                {table.getRowModel().rows.map(row => {
+                                        return (
+                                        <tr key={row.id}>
+                                            {row.getVisibleCells().map(cell => {
+                                            return (
+                                                <td key={cell.id}>
+                                                {flexRender(
+                                                    cell.column.columnDef.cell,
+                                                    cell.getContext()
+                                                )}
+                                                </td>
+                                            )
+                                            })}
+                                        </tr>
+                                        )
+                                    })}
+                                </tbody>
+                            </table> :
+                            <EmptySection title="Add your Desired Products" text="Take your product research to the next level by saving products you're interested in"/>
+                            }
+                        </div>
+                    </TabPanel>
+                    {/* sourced section */}
+                    <TabPanel></TabPanel>
+                    {/* status section */}
+                    <TabPanel></TabPanel>
+                </Tabs>
+
+                <div className={`${Object.keys(rowSelection).length === 0 ? 'hidden':'flex'} absolute right-4`}>
+                    <VaultIcons imgStyle='mr-4 flex items-center' imgsrc='/source.svg' imgAlt='source'/>
+                    <VaultIcons imgStyle='mr-4 flex items-center'imgsrc='/delete.svg' imgAlt='delete'/>
+                    <VaultIcons imgStyle='flex items-center' imgsrc='/close.svg' imgAlt='close'/>
+            </div>
+                
+            </div>
+        </div>   
+        </div>
+        { selectedProduct !== undefined ? <DashQuote postedBy={postById}/> : <div></div>}
+
+    </div>
+    
+)
 }
 
 Lists.getLayout = function getLayout(page:React.ReactElement){
