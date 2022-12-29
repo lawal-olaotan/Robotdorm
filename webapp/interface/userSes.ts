@@ -32,3 +32,15 @@ export interface ProductDetails{
     revenue:string
 }
 
+export interface quoteProduct {
+        Colors:string,
+        Product:string,
+        Quantity:string
+    }[]
+
+
+export interface quoteDetails extends quoteProduct {
+    postedBy:string,
+    quoteContact:string
+}
+

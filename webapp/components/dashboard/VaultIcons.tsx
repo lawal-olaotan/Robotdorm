@@ -3,7 +3,6 @@ import Image from 'next/image'
 import { useState, useContext} from 'react'
 import { VaultContext} from 'lib/VaultProvider';
 import { ProductDetails } from 'interface/userSes';
-
 interface VaultProps {
     imgsrc : string,
      imgAlt:string,
@@ -13,13 +12,7 @@ interface VaultProps {
 export const VaultIcons: NextPage<VaultProps>=(VaultProps) => {
     const {imgsrc,imgAlt,imgStyle} = VaultProps
     const [textState, setTextState] = useState<boolean>(false)
-    const {listData,rowSelection,nameInputRef}= useContext(VaultContext);
-    const [selectedProduct, setSelectedProduct] = useState<ProductDetails[]>()
-    const [quoteStatus, setQuoteStatus] = useState<boolean>(false)
- 
-
-    
-
+    const {listData,rowSelection,nameInputRef,setQuoteStatus, setSelectedProduct}= useContext(VaultContext);
 
     const handleVaultIcons = (e)=> {
         const currentIcon = e.target.getAttribute("alt")
@@ -56,7 +49,6 @@ export const VaultIcons: NextPage<VaultProps>=(VaultProps) => {
                 break;
         }
     }
-    
 
     return (
         <div className='flex flex-col relative' >
