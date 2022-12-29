@@ -32,14 +32,9 @@ export interface ProductDetails{
     revenue:string
 }
 
-export interface quoteProduct {
-        Colors:string,
-        Product:string,
-        Quantity:string
-    }[]
 
-
-export interface quoteDetails extends quoteProduct {
+export type quoteDetails = {
+    quote:{}[]
     postedBy:string,
     quoteContact:string
 }
