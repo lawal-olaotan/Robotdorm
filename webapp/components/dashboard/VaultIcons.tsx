@@ -12,18 +12,33 @@ interface VaultProps {
 export const VaultIcons: NextPage<VaultProps>=(VaultProps) => {
     const {imgsrc,imgAlt,imgStyle} = VaultProps
     const [textState, setTextState] = useState<boolean>(false)
-    const {listData,rowSelection,nameInputRef,setQuoteStatus, setSelectedProduct}= useContext(VaultContext);
+    const {listData,rowSelection,setQuoteStatus, setSelectedProduct,setCheckedRow}= useContext(VaultContext);
+
+    const deleteProduct = async(data:ProductDetails[])=> {
+        fetch('/api/delete', {
+            method:'POST', 
+            body:JSON.stringify(data),
+            headers: {
+                'Content-Type': 'application/json',
+            }, 
+        })
+        .then((response)=> response.json())
+        .then((res)=>{
+             if(res.message)
+             {   
+                 setCheckedRow({})
+             }
+        }) 
+    }
 
     const handleVaultIcons = (e)=> {
         const currentIcon = e.target.getAttribute("alt")
-        const ProductTable = nameInputRef.current;
         let newData = []; 
 
         for (const selectedKeys in rowSelection){
             newData.push(listData[selectedKeys])
         }
         
-
         switch (currentIcon) {
             case 'source':
                 if(newData.length !== 0)
@@ -31,17 +46,14 @@ export const VaultIcons: NextPage<VaultProps>=(VaultProps) => {
                     setSelectedProduct(newData)
                     setQuoteStatus(true);
                 }
-                
-             
-                
+
                 break;
             case 'delete':
-                // get selected products
-                // remove from list Db
+                deleteProduct(newData);
                 break;
 
             case 'close':
-                // remove checked boxes 
+                setCheckedRow({})
 
             break;
         

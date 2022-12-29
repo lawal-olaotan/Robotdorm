@@ -1,7 +1,7 @@
 import Image from 'next/image'
 import { useContext, useRef} from 'react'
 import { VaultContext} from 'lib/VaultProvider';
-import { ProductDetails,quoteDetails } from 'interface/userSes';
+import { ProductDetails,quoteDetails} from 'interface/userSes';
 import {getCoreRowModel, useReactTable, flexRender,createColumnHelper} from '@tanstack/react-table';
 import { NextPage } from 'next';
 
@@ -11,7 +11,7 @@ interface quoteRequesterId {
 
 export const DashQuote:NextPage<quoteRequesterId> = (quoteRequesterId)=> {
     const {postedBy} = quoteRequesterId
-    const {setQuoteStatus,quoteStatus,selectedProduct} = useContext(VaultContext);
+    const {setQuoteStatus,quoteStatus,selectedProduct,setCheckedRow} = useContext(VaultContext);
     const wsRef = useRef<HTMLInputElement>(null);
     const quoteTable = useRef<HTMLTableElement>(null);
     const data = selectedProduct
@@ -56,21 +56,21 @@ export const DashQuote:NextPage<quoteRequesterId> = (quoteRequesterId)=> {
         debugTable: true,
     })
 
-    const handleQuote = (event: React.SyntheticEvent) =>{
+    const handleQuote = async(event: React.SyntheticEvent) =>{
         event.preventDefault();
         const   quoteRequester =  wsRef.current.value; 
         const quoteContent = quoteTable.current;
-        const quote = retrieveQuote(quoteContent);
-        const data = {
-            quote: quote,
+        const quoteProduct = retrieveQuote(quoteContent);
+        const data:quoteDetails = {
+            quote: quoteProduct,
             quoteContact:quoteRequester,
             postedBy:postedBy
         }
-        fetchData(data)
+        await fetchData(data)
     
     }
 
-    const fetchData = (data) => {
+    const fetchData = async (data:quoteDetails) => {
         fetch('/api/quote', {
            method:'POST', 
            body:JSON.stringify(data),
@@ -79,10 +79,16 @@ export const DashQuote:NextPage<quoteRequesterId> = (quoteRequesterId)=> {
            }, 
        })
        .then((response)=> response.json())
-       .then((res)=> 
-    //    chrome.runtime.sendMessage('ocphbhklbogjbkomckglmbcfldamdcbi', {type:'browser',data:data.data._id})
-        console.log(res)
-       ) 
+       .then((res)=>{
+            console.log(res)
+            if(res.message === 'success')
+            {   
+                setQuoteStatus(false)
+                setCheckedRow({})
+                    
+                // delete product from list
+            }
+       }) 
    }
 
     const retrieveQuote = (quoteContent:HTMLTableElement) => {
