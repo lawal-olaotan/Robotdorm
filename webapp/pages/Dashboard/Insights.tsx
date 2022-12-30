@@ -14,9 +14,8 @@ import { Loader } from '@components/dashboard/Loader';
 
 export default function Insights(){
     const fetcher = (url) => fetch(url).then((res)=> res.json() ); 
-    const {data:session,status} = useSession();
+    const {data:session} = useSession();
     const [myname,SetName] = useState<string>(); 
-    const [itemCount, setItemCount] = useState(0);
     const {pageNumber} = useContext(PageContext); 
 
      useEffect(() => {
@@ -43,7 +42,7 @@ export default function Insights(){
           <div className="flex flex-wrap mt-8">
             { data.data.length !== 0 ?
                 data.data.map((summary:any)=> ( 
-                    <Summary  keyWord={summary.keyWord} EstTotalRevenue={summary.EstTotalRevenue} EstAverageRevenue={summary.EstAverageRevenue} EstTotalUnitsSold={summary.EstTotalUnitsSold} AveragePrice={summary.AveragePrice} /> 
+                    <Summary keyWord={summary.keyWord} key={summary._id.toString()} EstTotalRevenue={summary.EstTotalRevenue} EstAverageRevenue={summary.EstAverageRevenue} EstTotalUnitsSold={summary.EstTotalUnitsSold} AveragePrice={summary.AveragePrice} /> 
                 )): <EmptySection title="Try your first Search" text="Keep track of your search keywords and metrics to make informed business decisions with up-to-date market insights."/>
             }
           </div>

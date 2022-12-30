@@ -18,11 +18,12 @@ import { Loader } from '@components/dashboard/Loader';
 
 
 export default function Lists(){
+    const {setListData,setCheckedRow,rowSelection, nameInputRef,selectedProduct} = useContext(VaultContext); 
     const fetcher = (url) => fetch(url).then((res)=> res.json() ); 
      const {data:session,status} = useSession();
      const [postById,SetpostId] = useState<string>(); 
 
-     const {setListData,setCheckedRow,rowSelection, nameInputRef,selectedProduct} = useContext(VaultContext); 
+     
 
      const columnHelper = createColumnHelper<ProductDetails>();
      const columns = [
