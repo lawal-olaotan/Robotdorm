@@ -3,13 +3,13 @@ import type { NextPage } from 'next';
 import { useRouter } from 'next/router'
 import { getSession } from 'next-auth/react'; 
 import AuthForm from '@components/AuthForm';
+import { Loader } from '@components/dashboard/Loader';
 
 
 const Login: NextPage = () => {
 
     const [loading, SetLoading] = useState(true); 
     const router = useRouter();
-
 
     useEffect(()=> {
         getSession()
@@ -24,17 +24,19 @@ const Login: NextPage = () => {
 
     const sendMessage = (session:any) => {
         if(session.user.id !== undefined){
-            // chrome.runtime.sendMessage('ocphbhklbogjbkomckglmbcfldamdcbi', {type:'browser',data:session.user.id}); 
+            const localEnv = window.location.href.includes('localhost:') 
+            if(!localEnv)
+            {
+            chrome.runtime.sendMessage('ocphbhklbogjbkomckglmbcfldamdcbi', {type:'browser',data:session.user.id})
+            }
             return true;
         }
     }
 
     if(loading){
-        return <p>Loading Page</p>
+        return <Loader/>
     }
-
     return <AuthForm/>
-
 }
 
 export default Login;
