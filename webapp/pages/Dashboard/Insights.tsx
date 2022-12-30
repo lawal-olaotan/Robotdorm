@@ -14,7 +14,7 @@ import { Loader } from '@components/dashboard/Loader';
 
 export default function Insights(){
     const fetcher = (url) => fetch(url).then((res)=> res.json() ); 
-    const {data:session} = useSession();
+    const {data:session,status} = useSession();
     const [myname,SetName] = useState<string>(); 
     const {pageNumber} = useContext(PageContext); 
 
