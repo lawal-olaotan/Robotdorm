@@ -27,7 +27,7 @@ const Login: NextPage = () => {
             const localEnv = window.location.href.includes('localhost:') 
             if(!localEnv)
             {
-            chrome.runtime.sendMessage('ocphbhklbogjbkomckglmbcfldamdcbi', {type:'browser',data:session.user.id})
+            chrome.runtime.sendMessage(process.env.NEXT_PUBLIC_CHROME, {type:'browser',data:session.user.id})
             }
             return true;
         }
