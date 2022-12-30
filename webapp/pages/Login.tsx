@@ -1,13 +1,12 @@
 import  React, {useEffect, useState} from 'react'
 import type { NextPage } from 'next';
-import { useRouter } from 'next/router'
-import { getSession } from 'next-auth/react'; 
+import { useRouter } from 'next/router' 
 import AuthForm from '@components/AuthForm';
 import { Loader } from '@components/dashboard/Loader';
-
+import {useSession, getSession} from 'next-auth/react'
 
 const Login: NextPage = () => {
-
+    const {data:session,status} = useSession();
     const [loading, SetLoading] = useState(true); 
     const router = useRouter();
 
@@ -17,7 +16,8 @@ const Login: NextPage = () => {
             SetLoading(false) 
             if(session){
                 const pushDash = sendMessage(session)
-                if(pushDash){router.push('/Dashboard');}
+                if(pushDash)
+                {router.push('/Dashboard');}
             }
         })
     },[router]); 
@@ -27,7 +27,7 @@ const Login: NextPage = () => {
             const localEnv = window.location.href.includes('localhost:') 
             if(!localEnv)
             {
-            chrome.runtime.sendMessage(process.env.NEXT_PUBLIC_CHROME, {type:'browser',data:session.user.id})
+            chrome.runtime.sendMessage('nlgemkboidojehdepoaebdcoanhealnb', {type:'browser',data:session.user.id})
             }
             return true;
         }
