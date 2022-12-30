@@ -40,10 +40,14 @@ const Signup: NextPage = () => {
            }, 
        })
        .then((response)=> response.json())
-       .then((data)=> 
-    //    chrome.runtime.sendMessage('ocphbhklbogjbkomckglmbcfldamdcbi', {type:'browser',data:data.data._id})
-        console.log(data)
-       )
+       .then((data)=>{
+        const localEnv = window.location.href.includes('localhost:') 
+            if(!localEnv)
+            {
+            chrome.runtime.sendMessage('ocphbhklbogjbkomckglmbcfldamdcbi', {type:'browser',data:data.data._id})
+            }
+    
+       })
        return true;
        
    }
