@@ -9,6 +9,7 @@ import { DashPagination } from '@components/dashboard/DashPagination';
 import {useSession,getSession} from 'next-auth/react'
 import { PageContext } from 'lib/PageProvider';
 import useSWR from 'swr'; 
+import { Loader } from '@components/dashboard/Loader';
 
 
 export default function Insights(){
@@ -31,11 +32,8 @@ export default function Insights(){
     const url = `/api/getSummary?query=${myname}&page=${pageNumber}&collection=summaries`;
     const { data, error } = useSWR(url, fetcher);  
     if(data === undefined){
-        return <span>loading</span>
-    }else if(data.count !== undefined){
-        setItemCount(data.data.length)
+        return <Loader/>
     }
-
     return (
     <>
       <DashHead PageName="Market Insights"/> 
@@ -44,13 +42,13 @@ export default function Insights(){
 
           <div className="flex flex-wrap mt-8">
             { data.data.length !== 0 ?
-                data.data.map((summary:any, index:number)=> ( 
-                    <Summary keys={index} keyWord={summary.keyWord} EstTotalRevenue={summary.EstTotalRevenue} EstAverageRevenue={summary.EstAverageRevenue} EstTotalUnitsSold={summary.EstTotalUnitsSold} AveragePrice={summary.AveragePrice} /> 
+                data.data.map((summary:any)=> ( 
+                    <Summary  keyWord={summary.keyWord} EstTotalRevenue={summary.EstTotalRevenue} EstAverageRevenue={summary.EstAverageRevenue} EstTotalUnitsSold={summary.EstTotalUnitsSold} AveragePrice={summary.AveragePrice} /> 
                 )): <EmptySection title="Try your first Search" text="Keep track of your search keywords and metrics to make informed business decisions with up-to-date market insights."/>
             }
           </div>
 
-          <DashPagination itemCount={itemCount}/> 
+          <DashPagination itemCount={data.count}/> 
           
 
       </div>         

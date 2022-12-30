@@ -1,9 +1,12 @@
 import Image from 'next/image'
-import { useContext, useRef} from 'react'
+import { useContext, useRef, useState} from 'react'
 import { VaultContext} from 'lib/VaultProvider';
 import { ProductDetails,quoteDetails} from 'interface/userSes';
 import {getCoreRowModel, useReactTable, flexRender,createColumnHelper} from '@tanstack/react-table';
 import { NextPage } from 'next';
+import {useSession} from 'next-auth/react'
+import { usePaystackPayment } from 'react-paystack';
+import {toast} from 'react-toastify'
 
 interface quoteRequesterId {
     postedBy: string;
@@ -11,6 +14,8 @@ interface quoteRequesterId {
 
 export const DashQuote:NextPage<quoteRequesterId> = (quoteRequesterId)=> {
     const {postedBy} = quoteRequesterId
+    const {data:session,status} = useSession();
+    const [quoteData, setQuoteData] = useState<quoteDetails>()
     const {setQuoteStatus,quoteStatus,selectedProduct,setCheckedRow} = useContext(VaultContext);
     const wsRef = useRef<HTMLInputElement>(null);
     const quoteTable = useRef<HTMLTableElement>(null);
@@ -48,6 +53,14 @@ export const DashQuote:NextPage<quoteRequesterId> = (quoteRequesterId)=> {
             className={row.original.title}
         />)}),
     ]
+    const config = {
+        Reference: session.user.id,
+        email:session.user.email,
+        amount:107500,
+        publicKey:process.env.NEXT_PUBLIC_PAYSTACK
+    }
+
+    const initializePayment = usePaystackPayment(config);
 
     const table = useReactTable({
         data,
@@ -56,18 +69,35 @@ export const DashQuote:NextPage<quoteRequesterId> = (quoteRequesterId)=> {
         debugTable: true,
     })
 
+    const onSuccess = async () => {
+        await fetchData(quoteData)
+        
+    }
+
+    const successMsg = () => {
+        return (<div>
+        <h4 className='font-semibold mb-2 text-primary'>Quote Request Confirmed</h4>
+        <p className='text-xs'>Thanks for your order, our quote specialist will reach out on the progress of sourcing your items</p>
+        </div>)
+    }
+
+    const onClose = () => {
+        // implementation for  whatever you want to do when the Paystack dialog closed.
+        console.log('closed')
+    }
+
     const handleQuote = async(event: React.SyntheticEvent) =>{
         event.preventDefault();
         const   quoteRequester =  wsRef.current.value; 
         const quoteContent = quoteTable.current;
         const quoteProduct = retrieveQuote(quoteContent);
-        const data:quoteDetails = {
+        setQuoteData({
             quote: quoteProduct,
             quoteContact:quoteRequester,
             postedBy:postedBy
-        }
-        await fetchData(data)
-    
+        })
+        setQuoteStatus(false)
+        initializePayment(onSuccess, onClose)
     }
 
     const fetchData = async (data:quoteDetails) => {
@@ -83,10 +113,10 @@ export const DashQuote:NextPage<quoteRequesterId> = (quoteRequesterId)=> {
             console.log(res)
             if(res.message === 'success')
             {   
-                setQuoteStatus(false)
-                setCheckedRow({})
-                    
-                // delete product from list
+                toast.success(successMsg, {
+                    position: toast.POSITION.TOP_RIGHT,
+                  });
+                setCheckedRow({}) 
             }
        }) 
    }
@@ -105,64 +135,76 @@ export const DashQuote:NextPage<quoteRequesterId> = (quoteRequesterId)=> {
     }
 
     return(
-        <div className={`${quoteStatus ? 'flex' : 'hidden'} h-full w-full z-30 bg-black absolute top-0 right-0 opacity-100`}>
+        <div className={`${quoteStatus ? 'flex' : 'hidden'} justify-center h-full w-full z-30 bg-black absolute top-0 right-0 opacity-100`}>
 
-            <div className='absolute top-[5pc] right-[4pc]' onClick={()=> {setQuoteStatus(false)}}>
+            <div className='absolute top-[2pc] right-[4pc]' onClick={()=> {setQuoteStatus(false)}}>
                 <Image  height='30px' width='30px' src='/close-white.svg' alt='close-quote' />
             </div>
 
-            <form onSubmit={handleQuote} className='m-auto flex flex-col justify-between max-h-[480px] w-1/2 bg-white opacity-100 z-50 p-4'>
-
+            <form onSubmit={handleQuote} className='mt-16 flex flex-col max-h-[520px] w-1/2 bg-white opacity-100 z-50 p-4'>
+                    <div className='text-center mb-3'>
+                        <h3 className='font-bold text-xl'>Save time and get the best pricing quote within 24 hours</h3>
+                        <p className='text-red-800'>Note: we only source minimum of 25 units upwards</p>
+                    </div>
+              
                 <div className='max-h-[400px] overflow-y-scroll'>
-                <table ref={quoteTable} className='w-full bg-white'>
-                                <thead>
-                                    {table.getHeaderGroups().map(headerGroup => (
-                                        <tr key={headerGroup.id}>
-                                            {headerGroup.headers.map(header=>{
-                                                return (
-                                                    <th key={header.id} colSpan={header.colSpan}>
-                                                        {header.isPlaceholder ? null : (
-                                                            <>
-                                                            {flexRender(header.column.columnDef.header,header.getContext())}
-                                                            </>
-                                                        )}
-                                                    </th>
-                                                )
-                                            })}
-                                        </tr>
-                                    ))}
-                                </thead>
-                                <tbody className='quoteTable'>
-                                {table.getRowModel().rows.map(row => {
-                                        return (
-                                        <tr key={row.id}>
-                                            {row.getVisibleCells().map(cell => {
+                    <table ref={quoteTable} className='w-full bg-white'>
+                                    <thead>
+                                        {table.getHeaderGroups().map(headerGroup => (
+                                            <tr key={headerGroup.id}>
+                                                {headerGroup.headers.map(header=>{
+                                                    return (
+                                                        <th key={header.id} colSpan={header.colSpan}>
+                                                            {header.isPlaceholder ? null : (
+                                                                <>
+                                                                {flexRender(header.column.columnDef.header,header.getContext())}
+                                                                </>
+                                                            )}
+                                                        </th>
+                                                    )
+                                                })}
+                                            </tr>
+                                        ))}
+                                    </thead>
+                                    <tbody className='quoteTable'>
+                                    {table.getRowModel().rows.map(row => {
                                             return (
-                                                <td key={cell.id}>
-                                                {flexRender(
-                                                    cell.column.columnDef.cell,
-                                                    cell.getContext()
-                                                )}
-                                                </td>
+                                            <tr key={row.id}>
+                                                {row.getVisibleCells().map(cell => {
+                                                return (
+                                                    <td key={cell.id}>
+                                                    {flexRender(
+                                                        cell.column.columnDef.cell,
+                                                        cell.getContext()
+                                                    )}
+                                                    </td>
+                                                )
+                                                })}
+                                            </tr>
                                             )
-                                            })}
-                                        </tr>
-                                        )
-                                    })}
-                                </tbody>
-                </table> 
+                                        })}
+                                    </tbody>
+                    </table> 
                 </div>
 
                 <div className='mt-4'>
                     <label className='mr-2 whatsapp' htmlFor="whatsapp-no"> Whatsapp Number</label>
                     <input ref={wsRef} className='border border-solid border-black p-1' type='tel' id='whatsapp-no'name='whatsapp-no' required/>
                 </div>
-              
-                <input className='mt-4 self-end  w-fit py-2.5 px-5 bg-primary text-white' type='submit' value='Request Quote'/>
+              <div className='self-end w-1/3'>
+                <div className='flex items-center justify-between text-sm'>
+                    <span>Preparation fee</span>
+                    <span>{Intl.NumberFormat('en-NG', { style: 'currency', currency: 'NGN' }).format(1000)}</span>
+                </div>
+                <div className='flex items-center justify-between mt-2 text-sm'>
+                    <span>VAT(7.5%)</span>
+                    <span>{Intl.NumberFormat('en-NG', { style: 'currency', currency: 'NGN' }).format(75)}</span>
+                </div>
+              <input className='mt-4 w-full py-2.5 px-5 bg-primary text-white' type='submit' value={`Request Quote  (${Intl.NumberFormat('en-NG', { style: 'currency', currency: 'NGN' }).format(1075)})`}/>
+              </div>
+                
             </form>
       
       </div>
-
-
     )
 }

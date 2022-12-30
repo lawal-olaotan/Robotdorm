@@ -7,16 +7,12 @@ export default async function handler(req:NextApiRequest,res:NextApiResponse){
         try{
             const Db = (await ClientPromise).db(); 
             const {query,page,collection} = req.query;
-            const pageNumber:any = page ? req.query.page : 1;
-            let summaryCount; 
-            
-            if(pageNumber === 0)
-            {
-                summaryCount = await Db.collection(`${collection}`).find({'postedBy': query}).count()
-            }
+            const pageNumber = Number(page);
 
+            
             //  TODO: won't it be better to clean data before saving to the database
             if(collection == 'summaries'){
+                let summaryCount = pageNumber === 0 ? await Db.collection(`${collection}`).find({'postedBy': query}).count() : 0;
                 let searchSummaryData = await Db.collection(`${collection}`).find({'postedBy': query}).skip(pageNumber * 6).limit(6).toArray();
                 const RefinedSearchData  = searchSummaryData.map(({postedBy, __v, createdAt, ...cleanedData}) => cleanedData)
                 res.status(200).json({data:RefinedSearchData,count:summaryCount});
