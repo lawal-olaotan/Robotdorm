@@ -44,7 +44,7 @@ const Signup: NextPage = () => {
         const localEnv = window.location.href.includes('localhost:') 
             if(!localEnv)
             {
-            chrome.runtime.sendMessage('ocphbhklbogjbkomckglmbcfldamdcbi', {type:'browser',data:data.data._id})
+            chrome.runtime.sendMessage(process.env.NEXT_PUBLIC_CHROME, {type:'browser',data:data.data._id})
             }
     
        })
