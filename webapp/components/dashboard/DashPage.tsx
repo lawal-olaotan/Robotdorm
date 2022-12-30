@@ -9,6 +9,7 @@ import { useRouter } from 'next/router';
 import { Todo } from '@components/dashboard/Todo';
 import {DashHead} from '@components/dashboard/DashHead'; 
 import { DashTitle } from './DashTitle';
+import { Loader } from './Loader';
 
 
 
@@ -69,7 +70,7 @@ export const DashPage =() => {
                 </div>
             </>
 
-        : <div>loading</div>}  
+        : <Loader/>}  
         </>
         
     )

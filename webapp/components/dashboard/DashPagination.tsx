@@ -1,25 +1,18 @@
 import { NextPage } from 'next';
 import {useContext} from 'react'
 import { PageContext } from 'lib/PageProvider';
-
-
-  
 interface Props{
     itemCount:number
 }
 
-
-
 export const DashPagination: NextPage<Props> = (Props) => {
-
     const {itemCount} = Props
     const {pageNumber,SetPageNumber} = useContext(PageContext); 
 
     const nextBtnHandler = ()=>{
         SetPageNumber(pageNumber + 1)  
     }
-
-
+    
     return (
         <>
             <div className="absolute bottom-[2pc] flex ">

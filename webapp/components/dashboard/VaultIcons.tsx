@@ -1,8 +1,12 @@
 import {NextPage} from 'next';
+import {useSession} from 'next-auth/react'
 import Image from 'next/image'
-import { useState, useContext} from 'react'
+import {useContext} from 'react'
 import { VaultContext} from 'lib/VaultProvider';
 import { ProductDetails } from 'interface/userSes';
+import {useSWRConfig} from 'swr'; 
+import {toast} from 'react-toastify'
+
 interface VaultProps {
     imgsrc : string,
      imgAlt:string,
@@ -11,8 +15,9 @@ interface VaultProps {
 
 export const VaultIcons: NextPage<VaultProps>=(VaultProps) => {
     const {imgsrc,imgAlt,imgStyle} = VaultProps
-    const [textState, setTextState] = useState<boolean>(false)
     const {listData,rowSelection,setQuoteStatus, setSelectedProduct,setCheckedRow}= useContext(VaultContext);
+    const {data:session,status} = useSession();
+    const {mutate}  = useSWRConfig();
 
     const deleteProduct = async(data:ProductDetails[])=> {
         fetch('/api/delete', {
@@ -27,14 +32,20 @@ export const VaultIcons: NextPage<VaultProps>=(VaultProps) => {
              if(res.message)
              {   
                  setCheckedRow({})
+                 if(status == 'authenticated'){
+                    mutate(`/api/getSummary?query=${session.user.id}&collection=lists`)
+                 }
+                 toast.success("Product Removed!", {
+                    position: toast.POSITION.TOP_RIGHT
+                  });
+                 
              }
         }) 
     }
 
     const handleVaultIcons = (e)=> {
-        const currentIcon = e.target.getAttribute("alt")
+        const currentIcon = e.target.getAttribute("data-alt")
         let newData = []; 
-
         for (const selectedKeys in rowSelection){
             newData.push(listData[selectedKeys])
         }
@@ -46,7 +57,6 @@ export const VaultIcons: NextPage<VaultProps>=(VaultProps) => {
                     setSelectedProduct(newData)
                     setQuoteStatus(true);
                 }
-
                 break;
             case 'delete':
                 deleteProduct(newData);
@@ -54,7 +64,6 @@ export const VaultIcons: NextPage<VaultProps>=(VaultProps) => {
 
             case 'close':
                 setCheckedRow({})
-
             break;
         
             default:
@@ -63,10 +72,9 @@ export const VaultIcons: NextPage<VaultProps>=(VaultProps) => {
     }
 
     return (
-        <div className='flex flex-col relative' >
-            <div className={`${ textState == false ? 'hidden':''} px-4 py-2 bg-primary text-white absolute m-auto text-xs top-[-2.5pc] left-[-1.5pc] rounded-lg`}>{imgAlt}</div>
-            <div onClick={handleVaultIcons} onMouseEnter={()=> {setTextState(true)}} onMouseLeave={()=> {setTextState(false)}} className={imgStyle}>
-                <Image height='20px' width='20px' src={imgsrc} alt={imgAlt} />
+        <div className='flex flex-col items-center relative' >
+            <div onClick={handleVaultIcons} className={`${imgStyle} cursor-pointer`}>
+                {imgAlt === 'source' ? <div data-alt={imgAlt} className="w-fit px-4 py-2 rounded-lg bg-primary text-white">Request Quote</div> : <Image height='20px' width='20px' src={imgsrc} data-alt={imgAlt} />}
             </div>
         </div>
         
