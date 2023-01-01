@@ -31,7 +31,7 @@ export default handler.use(post(validator))
 
         await dbInstance.collection('users').findOneAndUpdate(query,newValue,function(err,document){
             if(!err){
-                res.status(200).send({data:document.value});
+                res.status(200).send(document.value);
             }else{
                 console.log(err);
             }
