@@ -13,14 +13,12 @@ const Login: NextPage = () => {
     useEffect(()=> {
         getSession()
         .then((session) => {
-            SetLoading(false) 
             if(session){
                 const pushDash = sendMessage(session)
-                if(pushDash)
-                {router.push('/Dashboard');}
+                if(pushDash){router.push('/Dashboard');}
             }
         })
-    },[router]); 
+    },[]); 
 
     const sendMessage = (session:any) => {
         if(session.user.id !== undefined){

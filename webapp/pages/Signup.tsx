@@ -44,8 +44,9 @@ const Signup: NextPage = () => {
         const localEnv = window.location.href.includes('localhost:') 
             if(!localEnv)
             {
-            chrome.runtime.sendMessage('nlgemkboidojehdepoaebdcoanhealnb', {type:'browser',data:data.data._id})
+            chrome.runtime.sendMessage('nlgemkboidojehdepoaebdcoanhealnb', {type:'browser',data:data._id})
             }
+            console.log(data);
     
        })
        return true;
