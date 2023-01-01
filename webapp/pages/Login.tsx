@@ -28,6 +28,9 @@ const Login: NextPage = () => {
             chrome.runtime.sendMessage('nlgemkboidojehdepoaebdcoanhealnb', {type:'browser',data:session.user.id})
             }
             return true;
+        }else{
+            SetLoading(false)
+            return false;
         }
     }
 
