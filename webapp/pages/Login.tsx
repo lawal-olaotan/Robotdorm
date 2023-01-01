@@ -14,25 +14,20 @@ const Login: NextPage = () => {
         getSession()
         .then((session) => {
             if(session){
-                const pushDash = sendMessage(session)
-                if(pushDash){router.push('/Dashboard');}
-            }
-        })
-    },[]); 
-
-    const sendMessage = (session:any) => {
-        if(session.user.id !== undefined){
-            const localEnv = window.location.href.includes('localhost:') 
+                const localEnv = window.location.href.includes('localhost:') 
             if(!localEnv)
             {
             chrome.runtime.sendMessage('nlgemkboidojehdepoaebdcoanhealnb', {type:'browser',data:session.user.id})
             }
-            return true;
+            router.push('/Dashboard');
         }else{
             SetLoading(false)
-            return false;
         }
-    }
+            
+        })
+    },[]); 
+
+    
 
     if(loading){
         return <Loader/>
