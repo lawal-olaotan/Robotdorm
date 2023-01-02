@@ -15,6 +15,7 @@ export default async function handler(req:NextApiRequest,res:NextApiResponse){
                 let summaryCount = pageNumber === 0 ? await Db.collection(`${collection}`).find({'postedBy': query}).count() : 0;
                 let searchSummaryData = await Db.collection(`${collection}`).find({'postedBy': query}).skip(pageNumber * 6).limit(6).toArray();
                 const RefinedSearchData  = searchSummaryData.map(({postedBy, __v, createdAt, ...cleanedData}) => cleanedData)
+                console.log(RefinedSearchData)
                 res.status(200).json({data:RefinedSearchData,count:summaryCount});
             }else
             {
