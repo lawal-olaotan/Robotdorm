@@ -16,7 +16,6 @@ const Signup: NextPage = () => {
     const {setMyId} = useContext(MyContext); 
     const router = useRouter();
     const nameInputRef = useRef<HTMLInputElement>(null);
-   
   
     // event hook to update user information
     const submitName = (event: React.SyntheticEvent) => {
@@ -24,34 +23,27 @@ const Signup: NextPage = () => {
         event.preventDefault();
         const email:string = session.user.email
         const userData:userInfo = {name,email}
-        let dbResponse = fetchData(userData);
-        if(dbResponse && userData !== undefined) {
-            setMyId({name:name,_id:''});
-            router.replace('/Dashboard') 
-        }
+        const canNavigate = fetchData(userData);
+        if(canNavigate) {router.push('/Dashboard')}
     }
 
-    const fetchData = (userData:userInfo) => {
-        fetch('/api/update', {
-           method:'POST', 
-           body:JSON.stringify(userData),
-           headers: {
-               'Content-Type': 'application/json',
-           }, 
-       })
-       .then((response)=> response.json())
-       .then((data)=>{
-        const localEnv = window.location.href.includes('localhost:') 
-            if(!localEnv)
-            {
-            chrome.runtime.sendMessage('nlgemkboidojehdepoaebdcoanhealnb', {type:'browser',data:data._id})
-            }
-            console.log(data);
-    
-       })
-       return true;
-       
-   }
+    const fetchData = async (userData:userInfo) => {
+        try{
+            const updateurl = await fetch('/api/update', {
+                method:'POST', 
+                body:JSON.stringify(userData),
+                headers: {
+                    'Content-Type': 'application/json',
+                }, 
+            })
+            const dataJson = await updateurl.json();
+            setMyId({name:dataJson.name,_id:dataJson._id});
+            chrome.runtime.sendMessage('nlgemkboidojehdepoaebdcoanhealnb', {type:'browser',data:dataJson._id})
+            return true
+        }catch(error){
+            console.log(error)
+        }
+    }
 
   return (
         <div>
