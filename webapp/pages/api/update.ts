@@ -28,10 +28,9 @@ export default handler.use(post(validator))
         const newValue = {$set:{name:myName}}; 
         const query:Query = {email:myEmail}
 
-
-        await dbInstance.collection('users').findOneAndUpdate(query,newValue,function(err,document){
+        await dbInstance.collection('users').findOneAndUpdate(query,newValue,{returnDocument:'after'},function(err,document){
             if(!err){
-                res.status(200).send(document.value);
+                res.status(200).send(document.value)
             }else{
                 console.log(err);
             }

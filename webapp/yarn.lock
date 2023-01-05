@@ -833,8 +833,8 @@ chokidar@^3.5.2:
 
 chrome@^0.1.0:
   version "0.1.0"
-  resolved "https://registry.npmjs.org/chrome/-/chrome-0.1.0.tgz"
-  integrity sha1-9h2beS/v6MGUxwVt3BAscmqGQyk=
+  resolved "https://registry.yarnpkg.com/chrome/-/chrome-0.1.0.tgz#f61d9b792fefe8c194c7056ddc102c726a864329"
+  integrity sha512-6KYl20U4Taj6YipylsWr2etUvp9AElJKfGNSBmyGTymYmancnOb041ZNadolEZi2nboLXH7jMSqUmm4kpuTzfg==
   dependencies:
     exeq "^2.2.0"
     plist "^1.1.0"

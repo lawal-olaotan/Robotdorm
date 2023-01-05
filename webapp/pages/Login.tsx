@@ -14,7 +14,6 @@ const Login: NextPage = () => {
         getSession()
         .then((session) => {
             if(session){
-                console.log(session.user.id)
                 const localEnv = window.location.href.includes('localhost:') 
             if(!localEnv)
             {

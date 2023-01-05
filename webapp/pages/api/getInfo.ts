@@ -14,7 +14,7 @@ export default async function handler(req:NextApiRequest,res:NextApiResponse){
             let userDetails = await Db.collection('users').findOne({
                 email: user.email
             });
-            res.status(200).send({data:userDetails});
+            res.status(200).send(userDetails);
         }catch (e:any){
             console.error(e);
             res.status(500).json({
