@@ -37,8 +37,8 @@ const Signup: NextPage = () => {
                 }, 
             })
             const dataJson = await updateurl.json();
-            setMyId({name:dataJson.name,_id:dataJson._id});
             chrome.runtime.sendMessage('nlgemkboidojehdepoaebdcoanhealnb', {type:'browser',data:dataJson._id})
+            setMyId({name:dataJson.name,_id:dataJson._id});
             return true
         }catch(error){
             console.log(error)
