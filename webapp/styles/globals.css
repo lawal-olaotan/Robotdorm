@@ -404,6 +404,9 @@ Ensure the default browser behavior of the `hidden` attribute.
 .relative {
   position: relative;
 }
+.sticky {
+  position: sticky;
+}
 .top-\[-1pc\] {
   top: -1pc;
 }
@@ -615,8 +618,8 @@ Ensure the default browser behavior of the `hidden` attribute.
 .w-1\/2 {
   width: 50%;
 }
-.w-1\/5 {
-  width: 20%;
+.w-1\/3 {
+  width: 33.333333%;
 }
 .w-\[5\.5\%\] {
   width: 5.5%;
@@ -624,12 +627,18 @@ Ensure the default browser behavior of the `hidden` attribute.
 .w-3\/5 {
   width: 60%;
 }
+.w-1\/5 {
+  width: 20%;
+}
 .w-fit {
   width: -moz-fit-content;
   width: fit-content;
 }
-.w-1\/3 {
-  width: 33.333333%;
+.w-\[160px\] {
+  width: 160px;
+}
+.grow {
+  flex-grow: 1;
 }
 .cursor-pointer {
   cursor: pointer;
@@ -639,9 +648,6 @@ Ensure the default browser behavior of the `hidden` attribute.
 }
 .flex-wrap {
   flex-wrap: wrap;
-}
-.items-start {
-  align-items: flex-start;
 }
 .items-center {
   align-items: center;
@@ -780,6 +786,18 @@ Ensure the default browser behavior of the `hidden` attribute.
 .px-4 {
   padding-left: 1rem;
   padding-right: 1rem;
+}
+.py-8 {
+  padding-top: 2rem;
+  padding-bottom: 2rem;
+}
+.px-2 {
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+}
+.py-6 {
+  padding-top: 1.5rem;
+  padding-bottom: 1.5rem;
 }
 .pt-\[4\.1rem\] {
   padding-top: 4.1rem;
@@ -1009,6 +1027,10 @@ Ensure the default browser behavior of the `hidden` attribute.
     margin-bottom: 0px;
   }
 
+  .md\:hidden {
+    display: none;
+  }
+
   .md\:w-1\/4 {
     width: 25%;
   }
@@ -1074,6 +1096,10 @@ Ensure the default browser behavior of the `hidden` attribute.
 
   .lg\:w-48 {
     width: 12rem;
+  }
+
+  .lg\:w-8\/12 {
+    width: 66.666667%;
   }
 
   .lg\:flex-row {
@@ -1158,6 +1184,10 @@ Ensure the default browser behavior of the `hidden` attribute.
     width: 25%;
   }
 
+  .xl\:w-1\/2 {
+    width: 50%;
+  }
+
   .xl\:px-24 {
     padding-left: 6rem;
     padding-right: 6rem;
@@ -1173,6 +1203,11 @@ Ensure the default browser behavior of the `hidden` attribute.
     padding-right: 15rem;
   }
 
+  .xl\:py-4 {
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+  }
+
   .xl\:text-xl {
     font-size: 1.25rem;
     line-height: 1.75rem;
@@ -1181,6 +1216,16 @@ Ensure the default browser behavior of the `hidden` attribute.
   .xl\:text-5xl {
     font-size: 3rem;
     line-height: 1;
+  }
+
+  .xl\:text-3xl {
+    font-size: 1.875rem;
+    line-height: 2.25rem;
+  }
+
+  .xl\:text-4xl {
+    font-size: 2.25rem;
+    line-height: 2.5rem;
   }
 
   .xl\:leading-normal {
@@ -1229,14 +1274,23 @@ Ensure the default browser behavior of the `hidden` attribute.
     width: 4%;
   }
 
+  .\32xl\:w-2\/4 {
+    width: 50%;
+  }
+
   .\32xl\:px-72 {
     padding-left: 18rem;
     padding-right: 18rem;
   }
 
-  .\32xl\:py-16 {
-    padding-top: 4rem;
-    padding-bottom: 4rem;
+  .\32xl\:px-16 {
+    padding-left: 4rem;
+    padding-right: 4rem;
+  }
+
+  .\32xl\:py-4 {
+    padding-top: 1rem;
+    padding-bottom: 1rem;
   }
 
   .\32xl\:px-\[35rem\] {
@@ -1247,6 +1301,16 @@ Ensure the default browser behavior of the `hidden` attribute.
   .\32xl\:py-20 {
     padding-top: 5rem;
     padding-bottom: 5rem;
+  }
+
+  .\32xl\:px-32 {
+    padding-left: 8rem;
+    padding-right: 8rem;
+  }
+
+  .\32xl\:px-80 {
+    padding-left: 20rem;
+    padding-right: 20rem;
   }
 
   .\32xl\:text-5xl {

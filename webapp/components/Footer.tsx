@@ -9,8 +9,6 @@ export const Footer = () => {
 
     const Myicons: Icons [] = [
 
-    {link:'https://github.com/manlikleo',icon:"/github.svg",
-        },
         { 
             icon:"/facebook.svg",
             link:"https://www.facebook.com/robotdorm"
@@ -32,7 +30,7 @@ export const Footer = () => {
                     <Link key={icons.link} href={icons.link}><a className="text-white "><img src={icons.icon} alt="" /></a></Link>
                 ))}
             </div>
-            <p className="text-center">© 2021 Robot Dorm a subsidiary of Olaotan Multiventure Limited </p>
+            <p className="text-center">© 2021 Robot Dorm</p>
 
         </div>
         )
