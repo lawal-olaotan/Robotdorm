@@ -14,11 +14,6 @@ const Login: NextPage = () => {
         getSession()
         .then((session) => {
             if(session){
-                const localEnv = window.location.href.includes('localhost:') 
-            if(!localEnv)
-            {
-            chrome.runtime.sendMessage('nlgemkboidojehdepoaebdcoanhealnb', {type:'browser',data:session.user.id})
-            }
             router.push('/Dashboard');
         }else{
             SetLoading(false)
