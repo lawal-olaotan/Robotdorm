@@ -10,6 +10,7 @@ import {userInfo} from '../interface/userSes'
 import { MyContext } from 'lib/UserContext';
 
 
+
 const Signup: NextPage = () => {
 
     const{data: session} = useSession(); 
@@ -23,11 +24,7 @@ const Signup: NextPage = () => {
         event.preventDefault();
         const email:string = session.user.email
         const userData:userInfo = {name,email}
-        const canNavigate = fetchData(userData);
-        if(canNavigate) {
-            chrome.runtime.sendMessage('nlgemkboidojehdepoaebdcoanhealnb', {type:'browser',data:myId._id})
-            router.push('/Dashboard')
-        }
+        fetchData(userData);
     }
 
     const fetchData = async (userData:userInfo) => {
@@ -41,7 +38,9 @@ const Signup: NextPage = () => {
             })
             const dataJson = await updateurl.json();
             setMyId({name:dataJson.name,_id:dataJson._id});
-            return true
+            chrome.runtime.sendMessage('nlgemkboidojehdepoaebdcoanhealnb', {type:'browser',data:dataJson._id}, (res)=>{
+                if(res.ok){return true}
+            })
         }catch(error){
             console.log(error)
         }
