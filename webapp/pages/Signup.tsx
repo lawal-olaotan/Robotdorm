@@ -14,7 +14,7 @@ import { MyContext } from 'lib/UserContext';
 const Signup: NextPage = () => {
 
     const{data: session} = useSession(); 
-    const {setMyId,myId} = useContext(MyContext); 
+    const {setMyId} = useContext(MyContext); 
     const router = useRouter();
     const nameInputRef = useRef<HTMLInputElement>(null);
   
@@ -24,7 +24,8 @@ const Signup: NextPage = () => {
         event.preventDefault();
         const email:string = session.user.email
         const userData:userInfo = {name,email}
-        fetchData(userData);
+        const updatedData = fetchData(userData);
+        if(updatedData){router.replace('/Verify')}
     }
 
     const fetchData = async (userData:userInfo) => {
@@ -38,9 +39,7 @@ const Signup: NextPage = () => {
             })
             const dataJson = await updateurl.json();
             setMyId({name:dataJson.name,_id:dataJson._id});
-            chrome.runtime.sendMessage('nlgemkboidojehdepoaebdcoanhealnb', {type:'browser',data:dataJson._id}, (res)=>{
-                if(res.ok){return true}
-            })
+            return true;
         }catch(error){
             console.log(error)
         }
