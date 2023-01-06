@@ -12,15 +12,12 @@ const Verify: NextPage = () => {
 
   
     useEffect(()=>{
-        if(myId !== undefined)
-        {
+       
         console.log(myId);
-        chrome.runtime.sendMessage('nlgemkboidojehdepoaebdcoanhealnb', {type:'browser',data:'63b7c87356675d60b891148f'},res => {
-            if(res.ok){
-            router.replace('/Dashboard');
-            }
-        })
-        }
+        chrome.runtime.sendMessage('nlgemkboidojehdepoaebdcoanhealnb', {type:'browser',data:'63b7c87356675d60b891148f'})
+        router.replace('/Dashboard');
+        
+        
 
     }, [])
 
