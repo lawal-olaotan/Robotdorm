@@ -25,7 +25,7 @@ const Signup: NextPage = () => {
         const email:string = session.user.email
         const userData:userInfo = {name,email}
         const updatedData = fetchData(userData);
-        if(updatedData){router.replace('/dashboard')}
+        if(updatedData){router.replace('/Dashboard')}
     }
 
     const fetchData = async (userData:userInfo) => {
