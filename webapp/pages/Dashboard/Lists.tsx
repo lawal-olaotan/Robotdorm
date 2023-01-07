@@ -83,7 +83,9 @@ export default function Lists(){
      useEffect(() => {
         getSession()
         .then((session)=>{
-            SetpostId(session.user.id)
+            if(status == 'authenticated'){
+                SetpostId(session.user.id)
+            }
         })
         
        

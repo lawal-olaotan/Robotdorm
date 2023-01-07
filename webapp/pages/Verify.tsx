@@ -16,9 +16,6 @@ const Verify: NextPage = () => {
         console.log(myId);
         chrome.runtime.sendMessage('nlgemkboidojehdepoaebdcoanhealnb', {type:'browser',data:'63b7c87356675d60b891148f'})
         router.replace('/Dashboard');
-        
-        
-
     }, [])
 
     
