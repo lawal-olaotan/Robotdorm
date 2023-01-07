@@ -2,9 +2,6 @@ import Link from 'next/link';
 
 interface Icons {icon: string,link:string}
 
-
-
-
 export const Footer = () => {
 
     const Myicons: Icons [] = [
