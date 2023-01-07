@@ -22,14 +22,11 @@ export const DashPage =() => {
         getSession()
         .then((session)=>{
             if(session){
-                console.log(myId);
                 if(session.user.name === undefined){
                     cutName(myId.name)
                 }else{
                     cutName(session.user.name)
                 }
-            }else{
-                router.replace('/Login')
             }
             
         })

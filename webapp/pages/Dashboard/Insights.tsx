@@ -24,7 +24,7 @@ export default function Insights(){
             if(session){
                 SetName(session.user.id)
             }
-            
+
         })
     },[session]);
 

@@ -13,14 +13,14 @@ const Login: NextPage = () => {
     useEffect(()=> {
         getSession()
         .then((session) => {
-            if(session){
+            if(status == 'authenticated'){
             router.push('/Dashboard');
         }else{
             SetLoading(false)
         }
             
         })
-    },[router]); 
+    },[status]); 
 
     
 

@@ -1,7 +1,19 @@
 import {DashNav} from '@components/dashboard/DashNav'
 import {DashSide} from '@components/dashboard/DashSide'; 
+import { useEffect } from 'react'; 
+import { useRouter } from 'next/router';
+import {useSession, getSession} from 'next-auth/react'
 
 export const DashLayout = ({children} : {children:React.ReactNode}) => {
+  const {data:session,status} = useSession();
+  const router = useRouter();
+
+    useEffect(() =>{
+        if(status == 'unauthenticated'){
+            router.replace('/Login')
+        }
+    },[router,status])
+
       
           return (
             <>

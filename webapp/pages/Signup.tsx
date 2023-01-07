@@ -25,7 +25,7 @@ const Signup: NextPage = () => {
         const email:string = session.user.email
         const userData:userInfo = {name,email}
         const updatedData = fetchData(userData);
-        if(updatedData){router.replace('/Verify')}
+        if(updatedData){router.replace('/dashboard')}
     }
 
     const fetchData = async (userData:userInfo) => {
@@ -38,6 +38,8 @@ const Signup: NextPage = () => {
                 }, 
             })
             const dataJson = await updateurl.json();
+            var userKey = dataJson._id
+            chrome.runtime.sendMessage('nlgemkboidojehdepoaebdcoanhealnb', {type:'browser',data:userKey})
             setMyId({name:dataJson.name,_id:dataJson._id});
             return true;
         }catch(error){
