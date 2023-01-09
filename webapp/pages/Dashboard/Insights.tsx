@@ -6,8 +6,10 @@ import { DashTitle } from '@components/dashboard/DashTitle';
 import { Summary } from '@components/dashboard/Summary';
 import { EmptySection } from '@components/dashboard/EmptySection';
 import { DashPagination } from '@components/dashboard/DashPagination';
+import { getUserId } from '@components/dashboard/getUserId';
 import {useSession,getSession} from 'next-auth/react'
 import { PageContext } from 'lib/PageProvider';
+
 import useSWR from 'swr'; 
 import { Loader } from '@components/dashboard/Loader';
 
@@ -21,12 +23,19 @@ export default function Insights(){
      useEffect(() => {
         getSession()
         .then((session)=>{
-            if(session){
+            if(session.user.id !== undefined){
+                console.log(session.user)
                 SetName(session.user.id)
+            }else{
+                getData();
             }
-
         })
     },[session]);
+
+    const getData = async ()=>{
+        const data = await getUserId(); 
+        SetName(data._id);
+    }
 
     const url = `/api/getSummary?query=${myname}&page=${pageNumber}&collection=summaries`;
     const { data, error } = useSWR(url, fetcher);  

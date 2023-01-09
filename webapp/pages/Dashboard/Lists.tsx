@@ -2,7 +2,7 @@ import {useSession, getSession} from 'next-auth/react'
 import {getCoreRowModel, useReactTable, flexRender,createColumnHelper} from '@tanstack/react-table';
 import React, {useEffect, useContext, useState} from 'react'; 
 import useSWR from 'swr'; 
-import {ToastContainer} from 'react-toastify'
+import {ToastContainer} from 'react-toastify';
 
 
 import { DashLayout } from '@components/dashboard/DashLayout';
@@ -15,7 +15,7 @@ import { ProductDetails } from 'interface/userSes';
 import { VaultContext} from 'lib/VaultProvider';
 import { DashQuote } from '@components/dashboard/DashQuote';
 import { Loader } from '@components/dashboard/Loader';
-
+import { getUserId } from '@components/dashboard/getUserId';
 
 export default function Lists(){
     const {setListData,setCheckedRow,rowSelection, nameInputRef,selectedProduct} = useContext(VaultContext); 
@@ -83,13 +83,20 @@ export default function Lists(){
      useEffect(() => {
         getSession()
         .then((session)=>{
-            if(status == 'authenticated'){
+            if(session.user.id !== undefined){
                 SetpostId(session.user.id)
+            }else{
+                getData()
             }
         })
         
        
-    },[]);
+    },[session]);
+
+    const getData = async ()=>{
+        const data = await getUserId(); 
+        SetpostId(data._id);
+    }
 
     const url = `/api/getSummary?query=${postById}&collection=lists`;
     const { data, error } = useSWR(url, fetcher);  

@@ -15,10 +15,10 @@ exports.saveList = async(req,res)=> {
                 }
         });
 
-        res.status(200).send('data saved successfull');
+        res.status(200).send({data:'data saved successfull'});
     }catch (err){
         console.log(err.message);
-        res.status(500).send("data not saved")
+        res.status(500).send({data:"data not saved"})
     }
     
 }
@@ -68,12 +68,12 @@ exports.saveData = async (req,res)=> {
             
         }else{
             // get the data here
-            res.status(200).send('data found') 
+            res.status(200).send({data:'data found'}) 
         }
 
     } catch (err){
         console.log(err.message);
-        res.status(500).send("data not saved")
+        res.status(500).send({data:"data not saved"})
     }
 }
 
