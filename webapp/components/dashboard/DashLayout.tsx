@@ -20,7 +20,7 @@ export const DashLayout = ({children} : {children:React.ReactNode}) => {
               <DashNav/>
               <main className="flex pt-[4.1rem] bg-dashbg h-screen">
                 <DashSide/>
-                <div className="ml-32 mt-6 w-full">
+                <div className="xl:ml-32 lg:ml-20 mt-6 w-full">
                   {children}
                 </div>
               </main>

@@ -22,9 +22,6 @@ export default function Lists(){
     const fetcher = (url) => fetch(url).then((res)=> res.json() ); 
      const {data:session,status} = useSession();
      const [postById,SetpostId] = useState<string>(); 
-
-     
-
      const columnHelper = createColumnHelper<ProductDetails>();
      const columns = [
          {
@@ -79,8 +76,7 @@ export default function Lists(){
             }),
 
      ]
-   
-     useEffect(() => {
+    useEffect(() => {
         getSession()
         .then((session)=>{
             if(session.user.id !== undefined){
@@ -89,8 +85,6 @@ export default function Lists(){
                 getData()
             }
         })
-        
-       
     },[session]);
 
     const getData = async ()=>{
@@ -125,8 +119,12 @@ export default function Lists(){
             <DashHead PageName="Vault"/> 
             <div className='relative'>
                 <DashTitle DashTitle="Products Vault"/>
-                <div className="flex flex-wrap mt-8 relative 2xl:w-full xl:w-[95%]">
-
+                <div className="flex flex-col flex-wrap mt-8 relative 2xl:w-full xl:w-[95%]">
+                <div className={`${Object.keys(rowSelection).length === 0 ? 'hidden':'flex'} self-end items-center 2xl:w-[27%]`}>
+                        <VaultIcons imgStyle='mr-4 flex items-center' imgsrc='/source.svg' imgAlt='source'/>
+                        <VaultIcons imgStyle='mr-4 flex items-center'imgsrc='/delete.svg' imgAlt='delete'/>
+                        <VaultIcons imgStyle='flex items-center' imgsrc='/close.svg' imgAlt='close'/>
+                </div>
                     <div className='mt-12 w-full 2xl:max-h-[700px] xl:max-h-[520px] overflow-y-scroll'>
                                 { data.length !== 0 ? 
                                 <table  ref={nameInputRef}>
@@ -169,13 +167,6 @@ export default function Lists(){
                                 <EmptySection title="Add your Desired Products" text="Take your product research to the next level by saving products you're interested in"/>
                                 }
                     </div>
-
-                    <div className={`${Object.keys(rowSelection).length === 0 ? 'hidden':'flex'} absolute xl:right-4 2xl:right-60 items-center top-[-1pc]`}>
-                        <VaultIcons imgStyle='mr-4 flex items-center' imgsrc='/source.svg' imgAlt='source'/>
-                        <VaultIcons imgStyle='mr-4 flex items-center'imgsrc='/delete.svg' imgAlt='delete'/>
-                        <VaultIcons imgStyle='flex items-center' imgsrc='/close.svg' imgAlt='close'/>
-                </div>
-                    
                 </div>
             </div>   
         </div>
