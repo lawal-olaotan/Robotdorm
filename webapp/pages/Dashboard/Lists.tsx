@@ -120,7 +120,7 @@ export default function Lists(){
             <div className='relative'>
                 <DashTitle DashTitle="Products Vault"/>
                 <div className="flex flex-col flex-wrap mt-8 relative 2xl:w-full xl:w-[95%]">
-                <div className={`${Object.keys(rowSelection).length === 0 ? 'hidden':'flex'} self-end items-center 2xl:w-[27%]`}>
+                <div className={`${Object.keys(rowSelection).length === 0 ? 'hidden':'flex'} items-center 2xl:w-[27%]`}>
                         <VaultIcons imgStyle='mr-4 flex items-center' imgsrc='/source.svg' imgAlt='source'/>
                         <VaultIcons imgStyle='mr-4 flex items-center'imgsrc='/delete.svg' imgAlt='delete'/>
                         <VaultIcons imgStyle='flex items-center' imgsrc='/close.svg' imgAlt='close'/>

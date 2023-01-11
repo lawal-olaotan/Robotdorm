@@ -45,26 +45,34 @@ exports.saveData = async (req,res)=> {
             saveToDb(new Summary(summary));
 
             // send first page data
-            
+            const scrappedData = []
             for( let y = 0; y < dbData.length; y++){
                 let newProduct = new Product; 
                 let newKeys = dbData[y]; 
                 Object.assign(newProduct, newKeys);
                 newProduct.postedBy = dbid;
                 newProduct.keyWord = keyword;
+                scrappedData.push(newProduct);
                 saveToDb(newProduct)
             }
 
-            let dataResponse = {
-                currentPage:1,
-                data:dbData.splice(0,10), 
-                list:true,
-                summaryData:summary,
-                totalPage: Math.ceil((dbData.length/10)),
-                totalProduct: dbData.length
+            if(scrappedData.length !== 0){
+                let dataResponse = {
+                    currentPage:1,
+                    data:scrappedData.splice(0,10), 
+                    list:true,
+                    summaryData:summary,
+                    totalPage: Math.ceil((dbData.length/10)),
+                    totalProduct: dbData.length
+                }
+
+                res.status(200).send(dataResponse);
+
             }
 
-            res.status(200).send(dataResponse);
+        
+
+            
             
         }else{
             // get the data here
