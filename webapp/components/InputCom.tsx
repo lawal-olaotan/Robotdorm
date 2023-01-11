@@ -18,7 +18,7 @@ export const InputCom: NextPage<Props> = (Props) => {
     return (
         <div className="flex flex-col mb-4">
             <label htmlFor="email">{labelName}</label>
-            <input className="mt-2 p-3.5 border-solid border border-grey rounded-lg" autoComplete="off" id={id} name={id} type={type} placeholder={placeholder} ref={refName}/>
+            <input className="mt-2 p-3.5 border-solid border border-grey rounded-lg" autoComplete="off" id={id} name={id} type={type} placeholder={placeholder} ref={refName} required/>
         </div>
     )
 }

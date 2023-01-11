@@ -13,8 +13,8 @@ export const Section:NextPage<Props> = (Props)=> {
     const {sectionTitle,sectionSubTitle,imgTitle} = Props
     
     return (
-        <div className='bg-primary h-[60vh]'>
-            <div className='lg:flex justify-between items-center lg:py-12 2xl:py-20 sm:hidden xl:px-24 sm:p-4  lg:px-12 2xl:w-[1440px] m-auto'>
+        <div className='bg-primary sm:hidden lg:flex items-center justify-center xl:h-[60vh] lg:h-[50vh]'>
+            <div className='lg:flex justify-between items-center lg:py-12 2xl:py-20  xl:px-24 sm:p-4  lg:px-12 2xl:w-[1440px] m-auto'>
             <div className="text-white lg:w-[46%] 2xl:w-1/2">
 
                 <h3 className="xl:text-4xl lg:text-4xl xl:leading-normal font-semibold mb-8 2xl:mb-10">
