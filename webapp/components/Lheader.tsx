@@ -13,7 +13,7 @@ export const Lheader: NextPage<Props> = (Props) => {
             <Link  href="/"><a className="inline-flex lg:w-52 sm:w-48 mb-5"> 
                         <img className="w-100" src="/logo2.png" alt="robotdorm-logo" />
                 </a></Link>
-            <p className='text-3xl text-primary'>{Title}</p>
+            <p className='lg:text-xl 2xl:text-2xl text-primary'>{Title}</p>
         </div>
         
         )

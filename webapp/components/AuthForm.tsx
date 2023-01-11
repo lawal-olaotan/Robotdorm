@@ -5,6 +5,7 @@ import { Lheader } from '@components/Lheader';
 import { InputCom } from '@components/InputCom';
 import { FormFooters } from '@components/FormFooters';
 import { EmailMes } from '@components/Emailsent';
+import {  SignupLoader } from '@components/dashboard/Loader';
 
 interface IUsers {
     email:string
@@ -16,11 +17,14 @@ const AuthForm = ()=> {
     const emailInputRef = useRef<HTMLInputElement>(null);
 
     const [Emailsent,setEmailSent] = useState(false);
+    const [buttonPushed, setButtonPushed] = useState(false);
     const [userInfo, setUserInfo] = useState<IUsers>({email:""}); 
+
 
     
     const submitForm = async (event: React.SyntheticEvent) => {
         event.preventDefault();
+        setButtonPushed(true)
 
         const InputEmail = emailInputRef.current.value
 
@@ -29,7 +33,6 @@ const AuthForm = ()=> {
         };
         setUserInfo(userdetails)
     
-
         const result = await signIn('email', {
             redirect:false,
             email: InputEmail
@@ -57,7 +60,7 @@ const AuthForm = ()=> {
             </Head>
         <main className="flex items-center justify-center py-20">
 
-            <div className="w-[28%]">
+            <div className="xl:w-[25%] lg:w-2/6">
 
                 <Lheader Title="Login In / Register to RobotDorm"/>
 
@@ -65,11 +68,12 @@ const AuthForm = ()=> {
 
                     <InputCom labelName='Email' id="email" type="email" placeholder="Please enter your email" refName={emailInputRef} />
 
-                    <button className="rounded-lg mt-8 bg-secondary p-3.5 w-full text-white">Send Verification Link</button>
+                    <button className="rounded-lg mt-8 bg-secondary p-3.5 w-full text-white flex items-center justify-center">
+                        { buttonPushed ? <SignupLoader/> :'Send Verification Link' }
+                        </button>
                 </form>
 
                 <div className="mt-9 flex flex-col items-center">
-                        {/* <FormFooters question="New to Robotdorm?" link="Sign Up Now" url="/Signup"/> */}
                         <FormFooters question="Problems or Questions?" link="Contact Us" url="/Signup"/>
                 </div>
 

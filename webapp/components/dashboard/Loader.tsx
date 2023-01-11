@@ -1,5 +1,5 @@
 
-import { Triangle } from  'react-loader-spinner'
+import { Triangle, Rings } from  'react-loader-spinner'
 
 
 export const Loader =() => {
@@ -18,4 +18,20 @@ export const Loader =() => {
         </div>
     )
 
+}
+
+export const SignupLoader =() => {
+
+    return(
+        <Rings
+        height="30"
+        width="30"
+        color="#FFFFFF"
+        radius="6"
+        wrapperStyle={{}}
+        wrapperClass=""
+        visible={true}
+        ariaLabel="rings-loading"
+        />
+    )
 }
