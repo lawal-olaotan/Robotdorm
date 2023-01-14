@@ -23,7 +23,7 @@ export default function Contact(){
                  phone: target.phone.value,
                  message: target.message.value,
               };
-                fetch(`https://getform.io/f/${process.env.NEXT_PUBLIC_GETFORM}`,{
+                fetch('https://getform.io/f/08b3c619-b1d7-4d6c-856b-e2cbec9f577e',{
                 method: 'POST',
                 body:JSON.stringify(formData),
                 headers: {
