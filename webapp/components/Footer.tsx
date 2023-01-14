@@ -15,7 +15,7 @@ export const Footer = () => {
             link:"https://www.instagram.com/robotdorm/?hl=en"
         },{
             icon:"/mail.svg",
-            link:"https://api.whatsapp.com/send?phone=447546979379&text=checking%20out%20your%20extension"
+            link:"/contact"
         }
     ]
     
