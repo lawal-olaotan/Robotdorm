@@ -22,7 +22,7 @@ export default function Install(){
                 <p className="text-red-900">Note: to expand the videos below, kindly click the youtube link instead of expanding the video here.</p>
             </div>
             <div>
-            <YoutubeWidgets title="How to set up your jumia keyword tool" description="This video takes you through how to properly setup your your jumia keyword tool."  videoId="_CxA9hneGkg"/>
+            <YoutubeWidgets title="How to set up your jumia keyword tool" description="This video takes you through how to properly setup your jumia keyword tool."  videoId="_CxA9hneGkg"/>
 
             <YoutubeWidgets title="Finding validated products on jumia" description="This video takes you through how to find already validated products that you could add to your store and start making profit." videoId="8FEhz2-Hq8A"/>   
             </div>
