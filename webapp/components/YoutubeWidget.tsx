@@ -1,6 +1,4 @@
 import {NextPage} from 'next'
-import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'; 
-import {faClock} from '@fortawesome/free-solid-svg-icons';
 import YouTube from "react-youtube";
 
 interface YoutubeProps {
@@ -34,7 +32,7 @@ export const YoutubeWidgets:NextPage<YoutubeProps>  =(YoutubeProps)=> {
                         <h3 className="mb-2 font-semibold text-1xl">{title}</h3>
                     
                         <p className="mb-2">{description}</p>
-                        <span><FontAwesomeIcon icon={faClock}/> <span className="ml-4">{duration}</span></span>
+                        <span className="ml-4">{duration}</span>
                     </div>
                 </div>
 
