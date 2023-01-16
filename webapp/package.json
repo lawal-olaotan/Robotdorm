@@ -33,6 +33,7 @@
     "react-paystack": "^4.0.2",
     "react-scroll": "^1.8.4",
     "react-toastify": "^9.1.1",
+    "react-youtube": "^10.1.0",
     "swr": "^1.1.2"
   },
   "devDependencies": {
