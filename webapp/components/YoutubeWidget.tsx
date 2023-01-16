@@ -4,7 +4,6 @@ import YouTube from "react-youtube";
 interface YoutubeProps {
     title: string;
     description: string;
-    duration:string;
     videoId: string;
 }
 
@@ -22,7 +21,7 @@ export const YoutubeWidgets:NextPage<YoutubeProps>  =(YoutubeProps)=> {
         event.target.pauseVideo();
     }
 
-    const {title, description, duration, videoId} = YoutubeProps
+    const {title, description, videoId} = YoutubeProps
 
 
     return (
@@ -30,9 +29,7 @@ export const YoutubeWidgets:NextPage<YoutubeProps>  =(YoutubeProps)=> {
                     <YouTube videoId={videoId} opts={yTOpts} onReady={onReady}/>
                     <div className="ml-4">
                         <h3 className="mb-2 font-semibold text-1xl">{title}</h3>
-                    
                         <p className="mb-2">{description}</p>
-                        <span className="ml-4">{duration}</span>
                     </div>
                 </div>
 
