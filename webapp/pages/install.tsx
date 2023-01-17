@@ -13,8 +13,8 @@ export default function Install(){
                 <title> Thank you | RobotDorm</title>
                 <link rel="icon" href="/favicon.ico" />
         </Head>
-        <main className="h-[83vh] w-full">
-            <div className="xl:w-1/2 lg:w-10/12 m-auto"> 
+        <main className="2xl:h-[83vh] lg:h-full w-full">
+            <div className="2xl:w-1/2 xl:w-3/5 lg:w-10/12 m-auto"> 
            
             <div className="w-full my-4 text-center">
                 <h1 className="font-bold text-2xl mb-2">Thanks you for installing our extension</h1>
