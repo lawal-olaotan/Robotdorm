@@ -13,6 +13,8 @@ const Login: NextPage = () => {
     useEffect(()=> {
         getSession()
         .then((session) => {
+            // TODO: this is a temporary fix, looking for a roboust approach to sending message to the Extension
+            chrome.runtime.sendMessage('iebnenlmoeolohhmbjilijlgpjbjljhm', {type:'browser',data:session.user.id})
             if(status == 'authenticated'){
             router.push('/Dashboard');
         }else{
