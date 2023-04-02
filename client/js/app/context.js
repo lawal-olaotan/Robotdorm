@@ -38,7 +38,7 @@ if(!jumiaDomainExtensions.includes(url)){
 
         // Price symbol was investigated across all website
         let PriceSymbol = document.querySelector(".-m.-upp.-fs14.-pvs").innerHTML; 
-        let currency = PriceSymbol.split(' ')[1].replaceAll(/\().+?\)/, "");
+        let currency = PriceSymbol.split(' ')[1].replaceAll(/\(.+?\)/, "");
 
         const searchData = {searchLink : urlArray , keyWord : queryData, currency:currency};
         
