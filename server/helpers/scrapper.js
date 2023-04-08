@@ -1,7 +1,16 @@
 
 
 const bluebird = require('bluebird'); 
-const {withBrowser,withPage} = require('../helpers/product'); 
+const {withBrowser,withPage} = require('../helpers/product');
+
+// util function returns curreny for different website based on country currency formatting rules
+const returnCurrency = (amount,currency)=> {
+    let reversedCurrency = ['DA', 'TND', 'Dhs', 'FCFA',];
+    let priceFormat = reversed => currency.includes(reversed);
+    const isPriceRversed = reversedCurrency.some(priceFormat) ? `${amount.toLocaleString()} ${currency}` : `${currency} ${amount.toLocaleString()}`
+    return isPriceRversed 
+}
+
 
 // scrape page 
 exports.searchPage = async(data) => {
@@ -61,6 +70,7 @@ const getProducts = async(page) => {
                         const img = container.childNodes[0].childNodes[0].dataset.src
                         const productInfo = container.childNodes[1];
                         const price = productInfo.querySelector('.prc').innerHTML;
+                        const currency = price.replace(/[^A-Za-z]/g, '');
                         const modeEle = productInfo.querySelector('.tag._glb._sm');
                         let mode; 
                         if(modeEle === null){
@@ -90,23 +100,26 @@ const getProducts = async(page) => {
                        
                        let sales = (customer * 11)
                        if(price !== ''){
-                        let priceNum = price.split(' ');
-                        if(priceNum.length > 2){
-                            salesPrice = (parseInt(priceNum[1].replace(/,/g, '')) + parseInt(priceNum[4].replace(/,/g, '')))/2
+                        let priceNum = price.split('-')
+                        if(priceNum.length > 1){
+                            salesPrice = (parseInt(priceNum[0].replace(/[^0-9]/g, '')) + parseInt(priceNum[1].replace(/[^0-9]/g, '')))/2
                         }else{
-                             salesPrice = parseInt(priceNum[1].replace(/,/g, ''))
+                             salesPrice = parseInt(price.replace(/[^0-9]/g, ''))
                         }
                        }
 
-                       let revenueNum = (salesPrice*sales); 
-                       let revenue = revenueNum.toLocaleString();
+                       let revenueNum = salesPrice * sales; 
+                       let reversedCurrency = ['DA', 'TND', 'Dhs', 'FCFA',];
+                       let priceFormat = reversed => currency.includes(reversed);
+                       const isPriceRversed = reversedCurrency.some(priceFormat) ? `${revenueNum.toLocaleString()} ${currency}` : `${currency} ${revenueNum.toLocaleString()}`
+
                         let products = {
                             title : title,
                             img : img,
                             link:link,
                             price:price,
                             sales:sales,
-                            revenue:'₦'+' '+revenue,
+                            revenue: isPriceRversed,
                             revenueNum:revenueNum,
                             salesPrice:salesPrice,
                             ratings:rating,
@@ -114,8 +127,8 @@ const getProducts = async(page) => {
                             mode:mode,
                             shipping:shipping
                         }
-                        productArray.push(products)
-        });
+                        productArray.push(products);
+        })
 
         let newProd = productArray.filter(item => item.customer !== 0);
 
@@ -130,6 +143,7 @@ const getProducts = async(page) => {
 exports.getSummary = async(data)=> {
 
     try {
+    let currency = data[0].price.replace(/[^A-Za-z]/g, '')
     let totalRev = 0;
     let totalSales = 0;
     let totalPrice = 0;
@@ -142,18 +156,18 @@ exports.getSummary = async(data)=> {
         totalrating += data[i].ratings; 
     }
 
-    let totalfig = totalRev.toLocaleString();
-    let avgRev = parseInt((totalRev/data.length).toFixed()).toLocaleString();
-    let avgPrice = parseFloat((totalPrice/data.length).toFixed()).toLocaleString();
+    let totalfig = returnCurrency(totalRev.toLocaleString(),currency);
+    let avgRev = returnCurrency(parseInt((totalRev/data.length).toFixed()),currency) 
+    let avgPrice = returnCurrency(parseFloat((totalPrice/data.length).toFixed()),currency) ;
     let avgRatings = (totalrating/data.length).toFixed(1)
-    let totalsell = totalSales.toLocaleString()
+    let totalsell = totalSales.toLocaleString();
 
 
     const summaryData= {
-        "EstTotalRevenue" :'₦'+' '+totalfig, 
+        "EstTotalRevenue" :totalfig, 
         "EstTotalUnitsSold" : totalsell,
-        "EstAverageRevenue" : '₦'+' '+avgRev,
-        "AveragePrice":'₦'+' '+avgPrice,
+        "EstAverageRevenue" :avgRev,
+        "AveragePrice": avgPrice,
         "AverageRating": avgRatings, 
         
     }
