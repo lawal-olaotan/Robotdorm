@@ -1,5 +1,6 @@
 let dev = true;
-let serverDomain = 'https://robotdorm.online/';
+// let serverDomain = 'https://robotdorm.online/';
+let serverDomain = 'http://localhost:8000/'
 let webAppUrl =  'https://yapa-chrome-extension.vercel.app/';
 
 // message exhange between popupJs and context.Js

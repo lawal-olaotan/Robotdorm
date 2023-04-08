@@ -8,6 +8,7 @@ localStorage.removeItem('list');
 // checking webpage and sending boolean response to popup js for view manipulation. 
 const jumiaDomainExtensions = [
     'https://www.jumia.com.ng/',
+    'https://www.jumia.dz/',
     'https://www.jumia.ma/',
     'https://www.jumia.com.eg/',
     'https://www.jumia.com.gh/',
@@ -33,16 +34,11 @@ if(!jumiaDomainExtensions.some(checkUrlExtension)){
         const urlArray = []
         let searchLink = url;
         urlArray.push(searchLink);
-        for(let i =2; i <= 40; i++){
+for(let i =2; i <= 25; i++){   
             let searchlinks = `${url}&page=${[i]}#catalog-listing`;
             urlArray.push(searchlinks);
         }
         let queryData = document.querySelector('.brcbs.col16.-pvs').lastChild.innerHTML;
-
-        // Price symbol was investigated across all website
-        // let PriceSymbol = document.querySelector(".-m.-upp.-fs14.-pvs").innerHTML; 
-        // let currency = PriceSymbol.split(' ')[1].replaceAll(/\(.+?\)/, "");
-
         const searchData = {searchLink : urlArray , keyWord : queryData};
         
         const PrevKey = localStorage.getItem('Keyword');
