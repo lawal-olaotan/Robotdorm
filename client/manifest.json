@@ -30,7 +30,7 @@
         "storage"
       ], 
       "externally_connectable": {
-        "matches": ["https://www.robotdorm.com/*"]
+        "matches": ["https://www.robotdorm.com/*","https://yapa-chrome-extension.vercel.app/*"]
       }
     
 }

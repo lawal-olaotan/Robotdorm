@@ -7,21 +7,24 @@ localStorage.removeItem('list');
 
 // checking webpage and sending boolean response to popup js for view manipulation. 
 const jumiaDomainExtensions = [
-    'https://www.jumia.com.ng',
-    'https://www.jumia.ma',
-    'https://www.jumia.com.eg',
+    'https://www.jumia.com.ng/',
+    'https://www.jumia.ma/',
+    'https://www.jumia.com.eg/',
     'https://www.jumia.com.gh/',
-    'https://www.jumia.ci',
+    'https://www.jumia.ci/',
     'https://www.jumia.co.ke',
-    'https://www.jumia.ma',
-    'https://www.jumia.sn',
+    'https://www.jumia.ma/',
+    'https://www.jumia.sn/',
     'https://www.zando.co.za/',
     'https://www.jumia.com.tn/',
     'https://www.jumia.ug/'
 ]
 
-// TODO: I'm not sure this is right approach you can kindly review and let me know your thoughts
-if(!jumiaDomainExtensions.includes(url)){
+// checks if domain extension is contains a subString of the url
+const checkUrlExtension = (domainUrl) => url.includes(domainUrl); 
+
+if(!jumiaDomainExtensions.some(checkUrlExtension)){
+    console.log(url);
     sendToPopup(false, 'mypage')
 }else{
     sendToPopup(true, 'mypage'); 
@@ -37,10 +40,10 @@ if(!jumiaDomainExtensions.includes(url)){
         let queryData = document.querySelector('.brcbs.col16.-pvs').lastChild.innerHTML;
 
         // Price symbol was investigated across all website
-        let PriceSymbol = document.querySelector(".-m.-upp.-fs14.-pvs").innerHTML; 
-        let currency = PriceSymbol.split(' ')[1].replaceAll(/\(.+?\)/, "");
+        // let PriceSymbol = document.querySelector(".-m.-upp.-fs14.-pvs").innerHTML; 
+        // let currency = PriceSymbol.split(' ')[1].replaceAll(/\(.+?\)/, "");
 
-        const searchData = {searchLink : urlArray , keyWord : queryData, currency:currency};
+        const searchData = {searchLink : urlArray , keyWord : queryData};
         
         const PrevKey = localStorage.getItem('Keyword');
         
