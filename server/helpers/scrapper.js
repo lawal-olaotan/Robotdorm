@@ -3,7 +3,7 @@
 const bluebird = require('bluebird'); 
 const {withBrowser,withPage} = require('../helpers/product');
 
-// util function returns curreny for different website based on country currency formatting rules
+// util function returns currency for different website based on country currency formatting rules
 const returnCurrency = (amount,currency)=> {
     let reversedCurrency = ['DA', 'TND', 'Dhs', 'FCFA',];
     let priceFormat = reversed => currency.includes(reversed);
