@@ -25,14 +25,14 @@ export default NextAuth({
    providers:[
       EmailProvider({
          server: {
-            host:'smtp.gmail.com',
+            host: process.env.SMTP_SERVER,
             port: 587,
             auth:{
-               user: process.env.SMTP_EMAIL,
+               user: process.env.SMTP_USER,
                pass: process.env.SMTP_SECRET
             }
          },
-         from:'robotdorm@gmail.com', 
+         from:process.env.SMTP_EMAIL, 
          async sendVerificationRequest({
 
             identifier:email,
@@ -163,7 +163,7 @@ function html({url,email}: Record<"url" | "email", string>) {
                <tr>
                  <td style="padding:30px;text-align:center;font-size:12px;background-color:#f4f6fae0;color:#307BD1;">
                    <p style="margin:0 0 8px 0;"><a href="http://www.instagram.com/robotdorm" style="text-decoration:none;"><img src="https://i.ibb.co/f2NkLxG/instagram.png" width="30" height="30" alt="f" style="display:inline-block;color:#307BD1;"></a> <a href="http://www.facebook.com/robotdorm" style="text-decoration:none;"><img src="https://i.ibb.co/G9rCJw5/facebook.png" width="30" height="30" alt="t" style="display:inline-block;color:#307BD1;"></a></p>
-                   <p style="margin:0;font-size:14px;line-height:20px;">&reg; Robotdorm Lagos,Nigeria 2021<br><a class="unsub" href="https://api.whatsapp.com/send?phone=447546979379&text=Hi%20I%20want%20to%20unsubscribe%20from%20you%20newsletter%20thanks" style="color:#307BD1;text-decoration:underline;">Unsubscribe instantly</a></p>
+                   <p style="margin:0;font-size:14px;line-height:20px;">&reg; 71-75 Shelton Street, Covent Garden, London, United Kingdom, WC2H 9JQ<br><a class="unsub" href="https://api.whatsapp.com/send?phone=447546979379&text=Hi%20I%20want%20to%20unsubscribe%20from%20you%20newsletter%20thanks" style="color:#307BD1;text-decoration:underline;">Unsubscribe instantly</a></p>
                  </td>
                </tr>
              </table>
