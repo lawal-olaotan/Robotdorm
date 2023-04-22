@@ -1,7 +1,6 @@
 let dev = true;
-// let serverDomain = 'https://robotdorm.online/';
-let serverDomain = 'http://localhost:8000/'
-let webAppUrl =  'https://yapa-chrome-extension.vercel.app/';
+let serverDomain = 'https://robotdorm.online/';
+let webAppUrl =  'https://www.robotdorm.com/';
 
 // message exhange between popupJs and context.Js
 chrome.runtime.onMessage.addListener(
@@ -105,11 +104,6 @@ chrome.runtime.onMessageExternal.addListener(
   }
 )
 
-// chrome.runtime.onInstalled.addListener(
-//   function(){
-//       chrome.tabs.create({url:webAppUrl+'install'});
-//   }
-// )
 
 async function postData(type,data,path){
   const response = await fetch(serverDomain+path,{

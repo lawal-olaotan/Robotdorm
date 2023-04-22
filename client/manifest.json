@@ -1,8 +1,8 @@
 {
     "manifest_version":3,
     "name": "Jumia Keyword Tool",
-    "description": "jumia product research tool",
-    "version": "1.0.3", 
+    "description": "Jumia product research tool for ecommerce product research",
+    "version": "1.0.5", 
     "content_scripts":[
         {
             "js": ["js/lib/jquery-3.6.0.min.js","js/app/context-util.js","js/app/context.js"],
