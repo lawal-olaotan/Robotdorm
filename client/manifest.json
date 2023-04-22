@@ -1,13 +1,8 @@
 {
     "manifest_version":3,
     "name": "Jumia Keyword Tool",
-<<<<<<< HEAD
     "description": "Jumia product research tool for ecommerce product research",
     "version": "1.0.5", 
-=======
-    "description": "jumia product research tool",
-    "version": "1.0.3", 
->>>>>>> a79b2fc31ba17fffc7b6fdcb36f77579a418f42f
     "content_scripts":[
         {
             "js": ["js/lib/jquery-3.6.0.min.js","js/app/context-util.js","js/app/context.js"],
@@ -35,11 +30,7 @@
         "storage"
       ], 
       "externally_connectable": {
-<<<<<<< HEAD
         "matches": ["https://www.robotdorm.com/*","https://yapa-chrome-extension.vercel.app/*"]
-=======
-        "matches": ["https://www.robotdorm.com/*"]
->>>>>>> a79b2fc31ba17fffc7b6fdcb36f77579a418f42f
       }
     
 }
