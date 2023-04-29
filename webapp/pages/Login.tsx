@@ -16,7 +16,7 @@ const Login: NextPage = () => {
 
         if(session){
             // TODO: this is a temporary fix, looking for a roboust approach to sending message to the Extension
-            chrome.runtime.sendMessage('ffpnhcmdlecacddlpajbdimoiegofnoe', {type:'browser',data:session.user.id})
+            chrome.runtime.sendMessage('iebnenlmoeolohhmbjilijlgpjbjljhm', {type:'browser',data:session.user.id})
             router.push('/Dashboard');
         }else{
             SetLoading(false)
