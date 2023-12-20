@@ -1,3 +1,4 @@
+import '../styles/tailwind.css'
 import '../styles/globals.css'
 import '../styles/tabs.css'
 import 'react-toastify/dist/ReactToastify.css';

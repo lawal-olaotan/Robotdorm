@@ -26,12 +26,12 @@ export const DashNav = () => {
         setActive(false);
       });
   }, [active]);
-
-  if (status === "authenticated") return null;
+  
+  if (status !== "authenticated") return null;
 
   return (
-    <nav className="flex items-center justify-between py-4 pr-12 pl-6 fixed left-0 right-0 top-0 z-[1] h-[68px] shadow-5xl bg-white">
-      <div className="lg:w-full xl:w-[42%] flex items-center xl:justify-between lg:justify-evenly">
+    <nav className="flex items-center justify-between py-4 pr-12 pl-0 lg:pl-[75px] xl:pl-[90px] fixed left-0 right-0 top-0 z-[1] h-[68px] shadow-5xl bg-white">
+      <div className="w-full flex items-center lg:justify-between">
         <Link href="/Dashboard">
           <a className="inline-flex lg:w-48 sm:w-48">
             <img className="w-100" src="/logo2.png" alt="robotdorm-logo" />

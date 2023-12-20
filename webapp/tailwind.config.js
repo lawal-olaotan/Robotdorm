@@ -1,33 +1,36 @@
 module.exports = {
-  mode:'jit',
-  content:['./pages/**/*.{js,tx,jsx,tsx}','./components/**/*.{js,tx,jsx,tsx}'],
-  media:false,
+  mode: "jit",
+  content: [
+    "./pages/**/*.{js,tx,jsx,tsx}",
+    "./components/**/*.{js,tx,jsx,tsx}",
+  ],
+  media: false,
   theme: {
-    screens:{
-      'sm':"320px",
-      'md':"768px",
-      'lg':'1024px',
-      'xl':'1440px',
-      '2xl':'1920px',
-    },
     extend: {
-      fontFamily:{
-        "sans": ['Poppins', 'sans-serif']
+      screens: {
+        _sm: "320px",
+        _md: "768px",
+        _lg: "1024px",
+        _xl: "1440px",
+        _2xl: "1920px",
       },
-      colors:{
-        primary:'#0A2635',
-        grey:'#808080',
-        blue: '#0D67FF',
-        secondary:'#307BD1',
-        dashpop:'#EBF6FE',
-        dashbg:'#F1F3F6',
-        disabledprimary:'#0A263556',
+      fontFamily: {
+        sans: ["Poppins", "sans-serif"],
       },
-      boxShadow:{
-        '5xl': 'rgb(0 0 0 / 8%) 0px 2px 12px 0px',
-        '6xl': 'rgba(0, 0, 0, 0.15) 0px 2px 8px'
-      }
+      colors: {
+        primary: "#0A2635",
+        grey: "#808080",
+        blue: "#0D67FF",
+        secondary: "#307BD1",
+        dashpop: "#EBF6FE",
+        dashbg: "#F1F3F6",
+        disabledprimary: "#0A263556",
+      },
+      boxShadow: {
+        "5xl": "rgb(0 0 0 / 8%) 0px 2px 12px 0px",
+        "6xl": "rgba(0, 0, 0, 0.15) 0px 2px 8px",
+      },
     },
   },
   plugins: [],
-}
+};
