@@ -17,7 +17,7 @@ const Login: NextPage = () => {
         if (typeof chrome?.runtime?.sendMessage === "function") {
           chrome?.runtime?.sendMessage(
             process.env.NEXT_PUBLIC_EXTENTION_ID ??
-              "ocpegaoclencmfdifefaeklddjdemfgb",
+              "iebnenlmoeolohhmbjilijlgpjbjljhm",
             { type: "browser", data: session.user.id },
             () => {
               router.push("/Dashboard");
