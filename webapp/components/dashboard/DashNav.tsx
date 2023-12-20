@@ -95,9 +95,12 @@ export const DashNav = () => {
                 <button
                   role="button"
                   className="w-full text-sm font-semibold text-blue block mt-2"
-                  onClick={(e) => {
+                  onClick={async (e) => {
                     e.preventDefault();
-                    signOut();
+                    const isSessionRemoved = await chrome?.runtime.sendMessage("iebnenlmoeolohhmbjilijlgpjbjljhm",{
+                      type:"delete"
+                    })
+                    if(isSessionRemoved) signOut();
                   }}
                 >
                   Logout
