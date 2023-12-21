@@ -99,7 +99,7 @@ export const DashNav = () => {
                     e.preventDefault();
                     const isSessionRemoved = await chrome?.runtime.sendMessage("iebnenlmoeolohhmbjilijlgpjbjljhm",{
                       type:"delete"
-                    })
+                    }) as any
                     if(isSessionRemoved) signOut();
                   }}
                 >
