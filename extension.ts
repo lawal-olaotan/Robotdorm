@@ -1,0 +1,1 @@
+export const extensionId = process?.env.NEXT_PUBLIC_DEVENV !== "production" ? "eekndbllknniickgmngbbalepibpkfff" : "iebnenlmoeolohhmbjilijlgpjbjljhm"
