@@ -8,7 +8,7 @@ import {useSession} from 'next-auth/react';
 import { useRouter} from 'next/router';
 import {userInfo} from '../interface/userSes'
 import { MyContext } from 'lib/UserContext';
-
+import { extensionId } from "../extension"
 
 
 const Signup: NextPage = () => {
@@ -39,7 +39,7 @@ const Signup: NextPage = () => {
             })
             const dataJson = await updateurl.json();
             var userKey = dataJson._id
-            chrome?.runtime?.sendMessage('jpppngikbipklahemfhagnelgmalclli', {type:'browser',data:userKey})
+            chrome?.runtime?.sendMessage( extensionId, {type:'browser',data:userKey})
             setMyId({name:dataJson.name,_id:dataJson._id});
             return true;
         }catch(error){

@@ -4,6 +4,7 @@ import { Navitems } from "@components/Navitems";
 import { DashIcons } from "@components/dashboard/DashIcons";
 import { signOut, useSession } from "next-auth/react";
 import { Session } from "next-auth";
+import { extensionId } from "../../extension"
 
 export const DashNav = () => {
   const [active, setActive] = useState(false);
@@ -97,10 +98,10 @@ export const DashNav = () => {
                   className="w-full text-sm font-semibold text-blue block mt-2"
                   onClick={async (e) => {
                     e.preventDefault();
-                    const isSessionRemoved = await chrome?.runtime.sendMessage("iebnenlmoeolohhmbjilijlgpjbjljhm",{
+                      chrome?.runtime.sendMessage(extensionId,{
                       type:"delete"
-                    }) as any
-                    if(isSessionRemoved) signOut();
+                    })
+                    signOut();
                   }}
                 >
                   Logout
