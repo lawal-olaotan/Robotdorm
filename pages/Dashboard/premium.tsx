@@ -9,7 +9,10 @@ import AnimationData from "../../lottie/premium.json";
 
 export default function Account(){
     useEffect(()=> {
-        chrome.runtime.sendMessage(extensionId,{type:"premium", data:''})
+        setTimeout(() => {
+            chrome.runtime.sendMessage('eekndbllknniickgmngbbalepibpkfff',{type:"premium", data:''})
+        }, 3000);
+        
     },[])
     return (
         <>
