@@ -45,7 +45,7 @@ export const DashNav = () => {
           />
           <Navitems
             routeName="Chrome Extension"
-            routeLink="https://chrome.google.com/webstore/detail/robotdorm-chrome-extensio/iebnenlmoeolohhmbjilijlgpjbjljhm/related?hl=en-GB&authuser=0"
+            routeLink="https://chromewebstore.google.com/detail/jumia-keyword-tool/iebnenlmoeolohhmbjilijlgpjbjljhm"
           />
         </div>
       </div>

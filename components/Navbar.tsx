@@ -37,7 +37,7 @@ export const Navbar = () => {
                 <Navitems routeName="About Us" routeLink="/about" />
                 <Navitems routeName="Contact Us" routeLink="/contact" />
                 <Navitems routeName="Privacy policy" routeLink="https://www.freeprivacypolicy.com/live/2b77386d-c86d-4d5c-a9ae-9379b8825ba4"/>
-                <Link href="https://chrome.google.com/webstore/detail/jumia-keyword-tool/iebnenlmoeolohhmbjilijlgpjbjljhm/"><a className="sm:hidden lg:flex items-center bg-white text-primary px-6 py-2">Add Extension</a></Link>
+                <Link href="https://chromewebstore.google.com/detail/iebnenlmoeolohhmbjilijlgpjbjljhm?hl=en-GB"><a className="sm:hidden lg:flex items-center bg-white text-primary px-6 py-2">Add Extension</a></Link>
             </div>
             
             <button className="lg:hidden inline-flex outline-none" onClick={handleButton}>

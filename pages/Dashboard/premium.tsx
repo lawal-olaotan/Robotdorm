@@ -1,7 +1,6 @@
 import { DashLayout } from '@components/dashboard/DashLayout';
 import { DashHead } from '@components/dashboard/DashHead';
 import { DashTitle } from '@components/dashboard/DashTitle';
-import Image from 'next/image'
 import React,{ useEffect} from 'react';
 import { extensionId } from "../../extension"
 import Lottie from "lottie-react";
@@ -10,7 +9,7 @@ import AnimationData from "../../lottie/premium.json";
 export default function Account(){
     useEffect(()=> {
         setTimeout(() => {
-            chrome.runtime.sendMessage('eekndbllknniickgmngbbalepibpkfff',{type:"premium", data:''})
+            chrome.runtime.sendMessage(extensionId,{type:"premium", data:''})
         }, 3000);
         
     },[])
