@@ -4,7 +4,7 @@
     "outDir": "./build/types",
     "target": "es5",
     "lib": ["dom", "dom.iterable", "esnext"],
-    "types": ["node","chrome"],
+    "types": ["chrome"],
     "typeRoots":["../webapp/types/next-auth.d.ts"],
     "allowJs": true,
     "skipLibCheck": true,

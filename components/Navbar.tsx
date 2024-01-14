@@ -7,14 +7,15 @@ import { useRouter } from 'next/router';
 
 export const Navbar = () => {
     const [active, setActive] = useState(false);
-    const router = useRouter()
+    const router = useRouter(); 
+
     const handleButton = () => {
         setActive(!active);
     }
 
     useEffect(() =>{
-        handleButton()      
-    },[router.asPath])
+        setActive(false)
+    },[router?.asPath])
 
     return (
         <>
@@ -30,10 +31,6 @@ export const Navbar = () => {
             <button className=" lg:hidden absolute top-6 right-6" onClick={handleButton}>
                          <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="feather feather-x"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
             </button>
-
-
-
-
                 <Navitems routeName="About Us" routeLink="/about" />
                 <Navitems routeName="Contact Us" routeLink="/contact" />
                 <Navitems routeName="Privacy policy" routeLink="https://www.freeprivacypolicy.com/live/2b77386d-c86d-4d5c-a9ae-9379b8825ba4"/>

@@ -8,11 +8,10 @@ module.exports = {
   theme: {
     extend: {
       screens: {
-        _sm: "320px",
-        _md: "768px",
-        _lg: "1024px",
-        _xl: "1440px",
-        _2xl: "1920px",
+        sm: "320px",
+        md: "768px",
+        lg: "1024px",
+        xl: "1440px",
       },
       fontFamily: {
         sans: ["Poppins", "sans-serif"],
