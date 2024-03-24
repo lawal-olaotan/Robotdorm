@@ -2,7 +2,7 @@ import { Layouts01 } from "@components/Layouts01"
 import type { ReactElement} from 'react'
 import  Head  from 'next/head';
 import React from 'react'; 
-import { YoutubeWidgets } from "@components/YoutubeWidget";
+import { YoutubeWidgets } from "@components/LandingPage/YoutubeWidget";
 
 
 

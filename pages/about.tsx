@@ -1,7 +1,7 @@
 import { Layouts01 } from "@components/Layouts01"
 import type { ReactElement } from 'react'
 import  Head  from 'next/head';
-import { AboutSec } from '@components/AboutSec';
+import { AboutSec } from '@components/LandingPage/AboutSec';
 
 export default function About(){
     return (
