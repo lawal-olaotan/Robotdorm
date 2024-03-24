@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { useState, useEffect } from "react";
-import { Navitems } from "@components/Navitems";
+import { Navitems } from "@components/LandingPage/Navitems";
 import { DashIcons } from "@components/dashboard/DashIcons";
 import { signOut, useSession } from "next-auth/react";
 import { Session } from "next-auth";

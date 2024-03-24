@@ -2,9 +2,9 @@ import {useState,useRef } from 'react';
 import { signIn } from 'next-auth/react'
 import  Head  from 'next/head'
 import { Lheader } from '@components/Lheader';
-import { InputCom } from '@components/InputCom';
+import { InputCom } from '@components/Auth/InputCom';
 import { FormFooters } from '@components/FormFooters';
-import { EmailMes } from '@components/Emailsent';
+import { EmailMes } from '@components/Auth/Emailsent';
 import {  SignupLoader } from '@components/dashboard/Loader';
 
 interface IUsers {

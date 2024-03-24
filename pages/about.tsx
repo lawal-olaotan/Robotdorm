@@ -14,7 +14,7 @@ export default function About(){
 
                 <div className='sm:p-4 lg:py-10 xl:px-24 lg:px-12 2xl:w-[1440px] m-auto flex flex-col text-center'>
                     <h2 className="text-xl font-bold mb-4">Who We Are</h2>
-                        <p className='sm:w-full lg:w-[80ch] m-auto'>Robotdorm is an ecommerce company focused in creating marketplace commerce business in Africa with huge presence in Lagos,Nigeria and Nairobi,Kenya. Founded in 2018, Robotdorm has sold and shipped thousands of products on ecommerce platforms like Jumia and through our independent stores built on Shopify and Woo-commerce.</p>
+                        <p className='sm:w-full lg:w-[80ch] m-auto'>Robotdorm is an ecommerce company focused in creating marketplace commerce business and tehnology around the world. Founded in 2018, Robotdorm has sold and shipped thousands of products on ecommerce platforms like Jumia and through our independent stores built on Shopify and Woo-commerce.</p>
                 </div> 
 
                 <AboutSec 

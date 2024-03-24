@@ -27,7 +27,7 @@ export const Footer = () => {
                     <Link key={icons.link} href={icons.link}><a className="text-white "><img src={icons.icon} alt="" /></a></Link>
                 ))}
             </div>
-            <p className="text-center">© 2021 Robot Dorm</p>
+            <p className="text-center">© 2024 Robot Dorm</p>
 
         </div>
         )

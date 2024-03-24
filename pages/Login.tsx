@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import type { NextPage } from "next";
 import { useRouter } from "next/router";
-import AuthForm from "@components/AuthForm";
+import AuthForm from "@components/Auth/AuthForm";
 import { Loader } from "@components/dashboard/Loader";
 import { useSession, getSession } from "next-auth/react";
 import { extensionId } from "../extension"

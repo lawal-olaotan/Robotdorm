@@ -1,6 +1,7 @@
 import type { NextApiResponse, NextApiRequest} from "next";
 import handler,{check,post,initiValidation} from '../../lib/middlehelper'
 import ClientPromise from '../../lib/mongoDb';
+import emailMarketingProvider from "lib/Email";
 
 
 const validator = initiValidation([
@@ -12,36 +13,27 @@ export default handler.use(post(validator))
 
 
 .post( async (req:NextApiRequest,res:NextApiResponse)=> {
-        const data = req.body;
+        
         
     try{
-        
-        const {name,email} = data
-        let myName:string = name
-        let myEmail:string = email
-
-        type Query = {
-            email:string
-        }
-
         const dbInstance = (await ClientPromise).db();
-        const newValue = {$set:{name:myName}}; 
-        const query:Query = {email:myEmail}
+        let emailClient = emailMarketingProvider()
+        const data = req.body;
+        const {name,email} = data
 
-        await dbInstance.collection('users').findOneAndUpdate(query,newValue,{returnDocument:'after'},function(err,document){
-            if(!err){
-                res.status(200).send(document.value)
-            }else{
-                console.log(err);
+
+        await dbInstance.collection('users').findOneAndUpdate({email},{$set:{name}},{returnDocument:'after'}, async function(err,document){
+            if(!err){ 
+                await emailClient.createContact(email,name)
+                return res.status(200).send(document.value)
             }
         });
     
          
     
-    }catch (e:any){
-            console.error(e);
+    }catch (error:any){
             res.status(500).json({
-                message:"server error"
+                message: error.message
             })
         }
 });

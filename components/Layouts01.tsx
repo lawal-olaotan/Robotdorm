@@ -1,6 +1,6 @@
 import React from 'react';
-import { Navbar } from './Navbar';
-import { Footer } from './Footer';
+import { Navbar } from './LandingPage/Navbar';
+import { Footer } from './LandingPage/Footer';
 
 
 

@@ -1,5 +1,5 @@
 
-import { Hero }from  '@components/Hero';
+import { Hero }from  '@components/LandingPage/Hero';
 import  Head  from 'next/head';
 import { Layouts01 } from "@components/Layouts01"
 import type { ReactElement } from 'react'

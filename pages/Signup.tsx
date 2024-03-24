@@ -1,7 +1,7 @@
 import type { NextPage } from 'next';
 import  Head  from 'next/head'; 
 import { Lheader } from '@components/Lheader';
-import { InputCom } from '@components/InputCom';
+import { InputCom } from '@components/Auth/InputCom';
 import { FormFooters } from '@components/FormFooters';
 import {useRef, useContext} from 'react'; 
 import {useSession} from 'next-auth/react'; 
@@ -66,7 +66,7 @@ const Signup: NextPage = () => {
                     </form>
 
                     <div className="mt-9 flex flex-col items-center">
-                            <FormFooters question="Problems or Questions?" link="Contact Us" url="https://api.whatsapp.com/send?phone=254700418727&text=I%20think%20I%20need%20your%20attention"
+                            <FormFooters question="Problems or Questions?" link="Contact Us" url="https://api.whatsapp.com/send?phone=+447546979379&text=I%20think%20I%20need%20your%20attention"
                             />
                     </div>
 

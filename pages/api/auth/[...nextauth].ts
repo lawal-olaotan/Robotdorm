@@ -52,8 +52,8 @@ export default NextAuth({
       })
    ], 
    pages:{
-      signIn:'/Login',
-      newUser: '/Signup',
+      signIn:'/login',
+      newUser: '/signup',
    }, 
    callbacks:{
       async session ({session}){

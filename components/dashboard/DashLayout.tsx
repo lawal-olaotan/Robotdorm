@@ -10,7 +10,7 @@ export const DashLayout = ({children} : {children:React.ReactNode}) => {
 
     useEffect(() =>{
         if(status == 'unauthenticated'){
-            router.replace('/Login')
+            router.replace('/login')
         }
     },[router,status])
 
