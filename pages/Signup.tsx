@@ -11,7 +11,7 @@ import { MyContext } from 'lib/UserContext';
 import { extensionId } from "../extension"
 
 
-const Signup: NextPage = () => {
+export default function Signup(){
 
     const{data: session} = useSession(); 
     const {setMyId} = useContext(MyContext); 
@@ -76,5 +76,3 @@ const Signup: NextPage = () => {
         </div>
   )
 }
-
-export default Signup;

@@ -6,7 +6,7 @@ import { Loader } from "@components/dashboard/Loader";
 import { useSession, getSession } from "next-auth/react";
 import { extensionId } from "../extension"
 
-const Login: NextPage = () => {
+export default function Login(){
   const { data: session, status } = useSession();
   const [loading, SetLoading] = useState(true);
   const router = useRouter();
@@ -30,12 +30,12 @@ const Login: NextPage = () => {
         SetLoading(false);
       }
     });
-  }, [status]);
+  }, [router]);
 
   if (loading) {
     return <Loader />;
   }
-  return <AuthForm />;
+
+  return (<AuthForm />)
 };
 
-export default Login;
