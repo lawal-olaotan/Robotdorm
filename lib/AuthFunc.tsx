@@ -5,7 +5,7 @@ export function AuthFunc ({children}:{children:React.ReactNode}){
     const router = useRouter(); 
     const {data: session, status} = useSession<boolean>({required:true,
      onUnauthenticated(){
-        router.push('/Login')
+        router.push('/login')
      }});
      const isUser = !!session?.user
 
