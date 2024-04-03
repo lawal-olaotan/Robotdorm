@@ -12,20 +12,11 @@ export default function Login(){
   const router = useRouter();
 
   useEffect(() => {
-    getSession().then((session) => {
+    getSession().then(async(session) => {
       if (session) {
         // TODO: this is a temporary fix, looking for a roboust approach to sending message to the Extension
-        if (typeof chrome?.runtime?.sendMessage === "function") {
-          chrome?.runtime?.sendMessage(
-            extensionId,
-            { type: "browser", data: session.user.id },
-            () => {
-              router.push("/Dashboard");
-            }
-          );
-        } else {
+          chrome.runtime.sendMessage(extensionId,{ type: "browser", data: session.user.id })
           router.push("/Dashboard");
-        }
       } else {
         SetLoading(false);
       }
