@@ -33,7 +33,7 @@ export const Navbar = () => {
                             <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="feather feather-x"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
                 </button>
                     <Navitems routeName="About Us" routeLink="/about" />
-                    <Navitems routeName="Contact Sales" routeLink="/contact" />
+                    <Navitems routeName="Contact Sales" routeLink="https://us12.list-manage.com/contact-form?u=2fb544e735311cbddb1b13831&form_id=77652526220b2b199c0794a74dbfbe86" />
                     <Navitems routeName="Login" routeLink="/login"/>
                 </div>
             

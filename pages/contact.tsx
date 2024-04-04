@@ -11,18 +11,20 @@ export default function Contact(){
     const handleContactUs = async (event: React.SyntheticEvent) => {
 
             try{event.preventDefault();
-            const target = event.target as typeof event.target & {
-                email: { value: string };
-                name: { value: string };
-                phone: { value: string };
-                message: { value: string };
-            };
-              const formData = {
-                 email: target.email.value,
-                 name: target.name.value,
-                 phone: target.phone.value,
-                 message: target.message.value,
-              };
+                    const target = event.target as typeof event.target & {
+                        email: { value: string };
+                        name: { value: string };
+                        phone: { value: string };
+                        message: { value: string };
+                    };
+
+                    const formData = {
+                        email: target.email.value,
+                        name: target.name.value,
+                        phone: target.phone.value,
+                        message: target.message.value,
+                    };
+
                 fetch('https://getform.io/f/08b3c619-b1d7-4d6c-856b-e2cbec9f577e',{
                 method: 'POST',
                 body:JSON.stringify(formData),
@@ -50,19 +52,19 @@ export default function Contact(){
             <Head>
                 <title>Contact Us | RobotDorm</title>
                 <link rel="icon" href="/favicon.ico" />
-            </Head>
+            </Head>+
             <main className="sm:p-4 lg:py-10 xl:px-24 lg:px-12 2xl:w-[1440px] m-auto h-[83vh]">
                 <div className="lg:w-4/12 sm:w-full m-auto mt-4">
                     <div className="mb-8">
-                        <h1 className="text-3xl font-bold mb-8 text-primary">Contact Sales</h1>
-                        <p>Ready to create your dream ecommerce business or interested in our solutions? reach out to our sales team.</p>
+                        <h1 className="text-3xl font-bold mb-8 text-primary">Contact Support</h1>
+                        <p>Ready to create your dream ecommerce business or interested in our solutions? reach out to our support team.</p>
                     </div>
                         <form ref={formRef} className="w-full" onSubmit={handleContactUs}>
                                 <input className="border border-solid border-black p-2 w-full mb-4" type="text" name="name" placeholder="Full Name" required/>
 
                                 <input className="border border-solid border-black p-2 w-full mb-4" type="email" name="email" placeholder="Email" required/>
 
-                                <input className="border border-solid border-black p-2 w-full mb-4" type="tel" name="phone" placeholder="Phone Number (optional)"/>
+                                <input className="border border-solid border-black p-2 w-full mb-4" type="tel" name="phone" placeholder="Whatsapp Number" required/>
 
                                 <textarea className="border border-solid border-black p-2 w-full mb-6" cols={30} rows={6} name="message" placeholder="Tell us what you have in mind" required />
 
