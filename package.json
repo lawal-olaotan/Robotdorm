@@ -27,7 +27,7 @@
     "mongodb": "^4.3.1",
     "mongoose": "^6.1.6",
     "next": "12.2.2",
-    "next-auth": "4.10.3",
+    "next-auth": "4.19.2",
     "next-connect": "^0.11.0",
     "node": "^16.13.2",
     "nodemailer": "^6.7.2",
@@ -39,6 +39,7 @@
     "react-scroll": "^1.8.4",
     "react-toastify": "^9.1.1",
     "react-youtube": "^10.1.0",
+    "stripe": "^14.24.0",
     "swr": "^1.1.2"
   },
   "devDependencies": {

@@ -52,7 +52,7 @@ export default function Contact(){
             <Head>
                 <title>Contact Us | RobotDorm</title>
                 <link rel="icon" href="/favicon.ico" />
-            </Head>+
+            </Head>
             <main className="sm:p-4 lg:py-10 xl:px-24 lg:px-12 2xl:w-[1440px] m-auto h-[83vh]">
                 <div className="lg:w-4/12 sm:w-full m-auto mt-4">
                     <div className="mb-8">
