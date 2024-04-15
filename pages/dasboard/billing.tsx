@@ -43,7 +43,6 @@ export default function Billing(){
                 <div className="mt-8">
                     <h1 className='text-4xl font-bold mb-4'>Launching Soon</h1>
                     <p>We are working on creating a robust account settings feature that makes your account more secure</p>
-
                 </div>
             </div>
     </>

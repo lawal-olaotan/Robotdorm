@@ -27,7 +27,7 @@
     
   },
     "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "pages/_document.tsx", "node_modules/Navbar.tsx","pages/**/*",
-      "src/**/*", "interface/userSes.js",],
+      "src/**/*", "interface/userSes.js", "next.config.js",],
     "exclude": ["node_modules"],
   
  

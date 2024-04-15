@@ -37,6 +37,7 @@ export const paymentEngine = ()=>{
         return session.url;
     }
 
+
     return {
         portalUrl
     }
@@ -45,3 +46,23 @@ export const paymentEngine = ()=>{
 
     
 };
+
+
+export const checkout = async (method: string, data:any) => {
+    const stripeCheckoutRoute = process.env.NEXT_PUBLIC_PAYMENT_SERVICE as string
+        try {
+          const apicall = await fetch(stripeCheckoutRoute,
+            {
+              method: method,
+              body: JSON.stringify(data),
+              headers: {
+                "Content-Type": "application/json",
+              },
+            }
+          );
+          const apifetchResponse = await apicall.json();
+          return apifetchResponse;
+        } catch (error) {
+          console.log(`Error ${error}`);
+        }
+}
