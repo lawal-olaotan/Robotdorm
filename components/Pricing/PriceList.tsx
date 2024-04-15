@@ -6,8 +6,7 @@ import { checkout } from 'lib/payment'
 export const PriceList = ()=> {
     const router = useRouter()
     //TODO: create a currency conversion based on users ip address
-    const beePriceId = process.env.NEXT_PUBLIC_BEEID as string 
-    const atlasPriceId = process.env.NEXT_PUBLIC_ATLASID as string
+
     const pricingdescriptions = [
 
         {
@@ -15,7 +14,7 @@ export const PriceList = ()=> {
             subtitle:"For short-term product research",
             priceTitle:"£5/week",
             priceSubTitle:"Unlimited access to product research tool.",
-            priceId: beePriceId,
+            priceId: "price_1P54Q1AvIJrXKY258zAoNyIg",
             isDemo:false,
             trialDays:1,
             features:['Weekly access','30 min expert session']
@@ -25,7 +24,7 @@ export const PriceList = ()=> {
             subtitle:"For professional sellers",
             priceTitle:"£12/month",
             priceSubTitle:"£12 billed monthtly",
-            priceId:atlasPriceId,
+            priceId:"price_1P54QMAvIJrXKY25O0u9fpqR",
             isDemo:false,
             trialDays:7,
             features:['7 day free trial','Cancel anytime']
@@ -45,7 +44,7 @@ export const PriceList = ()=> {
     const routePaymentButtons = async(event:React.SyntheticEvent)=> {
         event.preventDefault();
         const  button = event.target as HTMLButtonElement;
-        const priceId = button.getAttribute( 'data-priceId' );
+        const priceId = button.getAttribute( 'data-priceId');
 
         if(!priceId) router.push('https://us12.list-manage.com/contact-form?u=2fb544e735311cbddb1b13831&form_id=77652526220b2b199c0794a74dbfbe86')
         
@@ -63,7 +62,7 @@ export const PriceList = ()=> {
         <div  className="flex lg:flex-row sm:flex-col lg:space-y-0 lg:space-x-8 sm:space-y-6 sm:space-x-0">
 
         {pricingdescriptions.map((pricing,index)=>(
-            <div key={index} className="bg-white p-6 lg:w-1/4 sm:w-full">
+            <div key={index} className="bg-white p-6 2xl:w-1/4 sm:w-full">
                 <div className="my-3">
                     <h3 className="text-2xl font-medium">{pricing.title}</h3>
                     <span className="text-sm">{pricing.subtitle}</span>
