@@ -16,7 +16,7 @@ export default function Pricing(){
                 <link rel="icon" href="/favicon.ico" />
             </Head>
 
-            <div className="bg-gradient-to-b from-sky-50 to-sky-100 px-40 py-12 sm:p-8 lg:px-24">
+            <div className="bg-gradient-to-b from-sky-50 to-sky-100 px-40 py-12 sm:p-8 lg:px-24 overflow-hidden">
             <Title/>
             <PriceList/>
             <Review/>
