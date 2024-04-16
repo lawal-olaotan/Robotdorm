@@ -4,9 +4,12 @@ import  Head  from 'next/head';
 import { PriceList } from "../components/Pricing/PriceList"
 import { Title } from "@components/Pricing/Title";
 import { Review } from "@components/Pricing/Review";
+import {useSession} from 'next-auth/react'; 
 
 
 export default function Pricing(){
+
+    
 
     return (
 
@@ -17,9 +20,9 @@ export default function Pricing(){
             </Head>
 
             <div className="bg-gradient-to-b from-sky-50 to-sky-100 px-40 py-12 sm:p-8 lg:px-24 overflow-hidden">
-            <Title/>
-            <PriceList/>
-            <Review/>
+                <Title/>
+                <PriceList/>
+                <Review/>
             </div>
         </div>
 

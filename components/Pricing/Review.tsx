@@ -76,12 +76,8 @@ export const Review = ()=> {
         });
         }
 
-        return controls.stop;
+        return controls?.stop;
     }, [xTranslation, width]);
-
-    const openCheckout = ()=> {
-
-    }
 
     
     return(
