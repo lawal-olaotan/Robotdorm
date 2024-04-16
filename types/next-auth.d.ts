@@ -9,6 +9,11 @@ declare module 'next-auth' {
             name:string,
             id:string,
             emailVerified:string
+            isPremium:boolean,
+            services?:{
+                used:number,
+                total:number
+            }
         }
     }
 }

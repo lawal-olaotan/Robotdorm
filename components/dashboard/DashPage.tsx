@@ -37,6 +37,7 @@ export const DashPage =() => {
        let newName = myName.split(' ')[0]
        setUserName(newName)
    }
+   
     return (
         <>
             { userName !== undefined ? 

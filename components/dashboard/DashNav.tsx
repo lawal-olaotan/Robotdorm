@@ -33,7 +33,7 @@ export const DashNav = () => {
   return (
     <nav className="flex items-center justify-between py-4 pr-12 pl-0 lg:pl-[75px] xl:pl-[90px] fixed left-0 right-0 top-0 z-[1] h-[68px] shadow-5xl bg-white">
       <div className="w-full flex items-center lg:justify-between">
-        <Link href="/Dashboard">
+        <Link href="/dashboard">
           <a className="inline-flex lg:w-48 sm:w-48">
             <img className="w-100" src="/logo2.png" alt="robotdorm-logo" />
           </a>
@@ -58,10 +58,6 @@ export const DashNav = () => {
           <DashIcons
             imgsrc="/ig.png"
             soLink="https://www.instagram.com/robotdorm/"
-          />
-          <DashIcons
-            imgsrc="/ws.png"
-            soLink="https://api.whatsapp.com/send?phone=447546979379&text=checking%20out%20your%20extension"
           />
         </div>
         <div>

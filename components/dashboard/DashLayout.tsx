@@ -9,9 +9,8 @@ export const DashLayout = ({children} : {children:React.ReactNode}) => {
   const router = useRouter();
 
     useEffect(() =>{
-        if(status == 'unauthenticated'){
-            router.replace('/login')
-        }
+        if(status == 'unauthenticated') router.replace('/login')
+          if(session && !session.user?.isPremium) router.replace('/pricing')
     },[router,status])
 
       

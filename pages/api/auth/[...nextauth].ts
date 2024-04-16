@@ -4,6 +4,7 @@ import ClientPromise from '../../../lib/mongoDb';
 import  EmailProvider from 'next-auth/providers/email';
 import {createTransport} from 'nodemailer'; 
 import type { NextAuthOptions } from 'next-auth';
+import { db } from 'lib/db';
 
 
 
@@ -11,7 +12,12 @@ interface userInfo {
   name:string,
   email:string,
   id:string,
-  emailVerified:string
+  emailVerified:string,
+  isPremium:boolean,
+  service?:{
+    used:number,
+    total:number
+  }
 }
 export const authOptions : NextAuthOptions = {
   secret: process.env.NEXT_SECRET,
@@ -57,23 +63,29 @@ export const authOptions : NextAuthOptions = {
   }, 
   callbacks:{
      async session ({session}){
+       let dbClient = db(); 
+       const userDetails = await dbClient.getUserByEmail(session.user.email);
+       if(!userDetails) return session
+    
+        const { _id,emailVerified,name,email,isPremium} =  userDetails;
+        let userAccess = await dbClient.getAccessbyId(_id.toString()); 
+        let service = !userAccess ? {total:5,used:0} : userAccess.services;
 
-       let dbInstance = (await ClientPromise).db();
+        if(!userAccess){
+          //add default access for a new user
+          const accessObject = {userId:_id.toString(),service}
+          await dbClient.saveUserAccess(accessObject)
+        }
 
-       let userDetails = await dbInstance.collection('users').findOne({
-         email:session.user.email
-     });
-
-     if(userDetails){
-         let myUser:userInfo = {
-             id:userDetails.id,
-             emailVerified:userDetails.emailVerified,
-             name: userDetails.name,
-             email: userDetails.email,
+         let user:userInfo = {
+             id:_id.toString(),
+            emailVerified,
+            name,
+            email,
+            isPremium,
+            service
          }
-         session.user = myUser;
-     }
-
+         session.user = user;
        return session
      }, 
   }
