@@ -3,6 +3,8 @@ import { MongoDBAdapter } from '@next-auth/mongodb-adapter'
 import ClientPromise from '../../../lib/mongoDb'; 
 import  EmailProvider from 'next-auth/providers/email';
 import {createTransport} from 'nodemailer'; 
+import type { NextAuthOptions } from 'next-auth';
+import { db } from 'lib/db';
 
 
 
@@ -10,75 +12,86 @@ interface userInfo {
   name:string,
   email:string,
   id:string,
-  emailVerified:string
+  emailVerified:string,
+  isPremium:boolean,
+  service?:{
+    used:number,
+    total:number
+  }
 }
+export const authOptions : NextAuthOptions = {
+  secret: process.env.NEXT_SECRET,
 
-export default NextAuth({
-   secret: process.env.NEXT_SECRET,
+  adapter:MongoDBAdapter(ClientPromise),
+  session:{
+     strategy:'database',
+     maxAge: 7776000,
+     updateAge: 7776000, 
+  },
+  providers:[
+     EmailProvider({
+        server: {
+           host: process.env.SMTP_SERVER,
+           port: 587,
+           auth:{
+              user: process.env.SMTP_USER,
+              pass: process.env.SMTP_SECRET
+           }
+        },
+        from:process.env.SMTP_EMAIL, 
+        async sendVerificationRequest({
 
-   adapter:MongoDBAdapter(ClientPromise),
-   session:{
-      strategy:'database',
-      maxAge: 7776000,
-      updateAge: 7776000, 
-   },
-   providers:[
-      EmailProvider({
-         server: {
-            host: process.env.SMTP_SERVER,
-            port: 587,
-            auth:{
-               user: process.env.SMTP_USER,
-               pass: process.env.SMTP_SECRET
-            }
-         },
-         from:process.env.SMTP_EMAIL, 
-         async sendVerificationRequest({
+           identifier:email,
+           url,
+           provider:{server,from},
+        }){
+           const transport = createTransport(server)
+           await transport.sendMail({
+              to:email,
+              from,
+              subject:`Log in to RobotDorm ❤️`,
+              html: html({url,email }) 
+           })
+        }
 
-            identifier:email,
-            url,
-            provider:{server,from},
-         }){
-            const transport = createTransport(server)
-            await transport.sendMail({
-               to:email,
-               from,
-               subject:`Log in to RobotDorm ❤️`,
-               html: html({url,email }) 
-            })
+        
+     })
+  ], 
+  pages:{
+     signIn:'/login',
+     newUser: '/signup',
+  }, 
+  callbacks:{
+     async session ({session}){
+       let dbClient = db(); 
+       const userDetails = await dbClient.getUserByEmail(session.user.email);
+       if(!userDetails) return session
+    
+        const { _id,emailVerified,name,email,isPremium} =  userDetails;
+        let userAccess = await dbClient.getAccessbyId(_id.toString()); 
+        let service = !userAccess ? {total:5,used:0} : userAccess.services;
+
+        if(!userAccess){
+          //add default access for a new user
+          const accessObject = {userId:_id.toString(),service}
+          await dbClient.saveUserAccess(accessObject)
+        }
+
+         let user:userInfo = {
+             id:_id.toString(),
+            emailVerified,
+            name,
+            email,
+            isPremium,
+            service
          }
-
-         
-      })
-   ], 
-   pages:{
-      signIn:'/login',
-      newUser: '/signup',
-   }, 
-   callbacks:{
-      async session ({session}){
-
-        let dbInstance = (await ClientPromise).db();
-
-        let userDetails = await dbInstance.collection('users').findOne({
-          email:session.user.email
-      });
-
-      if(userDetails){
-          let myUser:userInfo = {
-              id:userDetails.id,
-              emailVerified:userDetails.emailVerified,
-              name: userDetails.name,
-              email: userDetails.email,
-          }
-          session.user = myUser;
-      }
-
-        return session
-      }, 
-   }
-   
-})
+         session.user = user;
+       return session
+     }, 
+  }
+  
+}
+export default NextAuth(authOptions)
 
 function html({url,email}: Record<"url" | "email", string>) {
 

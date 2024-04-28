@@ -5,7 +5,7 @@ import { Triangle, Rings } from  'react-loader-spinner'
 export const Loader =() => {
 
     return (
-        <div className='w-full h-2/4 flex  justify-center items-center'>
+        <div className='w-full h-full flex  justify-center items-center'>
             <Triangle
             height="200"
             width="200"

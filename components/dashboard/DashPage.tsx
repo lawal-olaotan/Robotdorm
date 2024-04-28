@@ -10,6 +10,7 @@ import { Todo } from '@components/dashboard/Todo';
 import {DashHead} from '@components/dashboard/DashHead'; 
 import { DashTitle } from './DashTitle';
 import { Loader } from './Loader';
+import Image from 'next/image'
 
 
 
@@ -37,6 +38,7 @@ export const DashPage =() => {
        let newName = myName.split(' ')[0]
        setUserName(newName)
    }
+   
     return (
         <>
             { userName !== undefined ? 
@@ -44,7 +46,7 @@ export const DashPage =() => {
                 <DashHead PageName="Dashboard"/>
                 <div>
                     <DashTitle DashTitle={` Welcome ${userName}`} />
-                    <div className="mt-8 flex justify-between shadow-6xl bg-white w-[90%] 2xl:w-9/12 rounded-lg p-8">
+                    <div className="mt-8 flex justify-between shadow-6xl bg-white lg:w-[90%] xl:w-fit rounded-lg p-8">
                         <div>
                             <div className="mb-8">
                                 <h2 className="mb-2 text-xl font-semibold ">Getting started with RobotDorm Jumia Tools</h2>
@@ -53,15 +55,15 @@ export const DashPage =() => {
     
                             <ul className="flex flex-col h-3/5 justify-around">
                                     <Todo iconTypes={faDownload} iconText="Download our chrome extension and register an account" />
-                                    <Todo iconTypes={faSearch} iconText="Search our desired keyword/products on Jumia Nigeria" />
+                                    <Todo iconTypes={faSearch} iconText="Search our desired keywords on any jumia website" />
                                     <Todo iconTypes={faPager} iconText="Use our chrome extension to get the best sellers" />
                                     <Todo iconTypes={faSave} iconText="Save your desired products to your list" />
-                                    <Todo iconTypes={faStoreAlt} iconText="Download products to csv or let us source for you" />
+                                    <Todo iconTypes={faStoreAlt} iconText="Download products to csv (coming soon)" />
                             </ul>
                         </div>
                         <div>
                     <div className='flex items-center justify-center'>
-                            <img src="/Success.png" alt="welcomepic" />
+                            <Image  height={400} width={400} src="/Success.png" alt="welcomepic" />
                     </div>
                         </div>
                     </div>

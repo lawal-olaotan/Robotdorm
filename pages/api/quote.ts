@@ -1,15 +1,14 @@
 import type { NextApiResponse, NextApiRequest} from "next";
-import {quoteScheme} from '../../lib/Models/quote'
 import ClientPromise from '../../lib/mongoDb';
 
 export default async function handler (req:NextApiRequest, res:NextApiResponse){
     if(req.method == "POST")
     {   
-        const data:quoteScheme = req.body; 
+        const data = req.body; 
        try{
         
        const dbInstance = (await ClientPromise).db();
-       await dbInstance.collection('quote').insertOne(data,function(err){
+       dbInstance.collection('quote').insertOne(data,function(err){
         if(err){
             console.log(err);
         }

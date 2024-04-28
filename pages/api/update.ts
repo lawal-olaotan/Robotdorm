@@ -22,7 +22,7 @@ export default handler.use(post(validator))
         const {name,email} = data
 
 
-        await dbInstance.collection('users').findOneAndUpdate({email},{$set:{name}},{returnDocument:'after'}, async(err,document) => {
+        await dbInstance.collection('users').findOneAndUpdate({email},{$set:{name,isPremium:false}},{returnDocument:'after'}, async(err,document) => {
                 if(err) throw new Error(JSON.stringify(err));
                 await emailClient.createContact(email,name)
                 return res.status(200).send(document.value)

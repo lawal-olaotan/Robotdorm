@@ -25,7 +25,7 @@ export default function Signup(){
         const email:string = session.user.email
         const userData:userInfo = {name,email}
         const updatedData = fetchData(userData);
-        if(updatedData){router.replace('/Dashboard')}
+        if(updatedData){router.replace('/dashboard')}
     }
 
     const fetchData = async (userData:userInfo) => {

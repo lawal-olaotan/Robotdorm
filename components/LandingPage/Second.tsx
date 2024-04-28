@@ -7,7 +7,7 @@ import Link from "next/link"
 
 export const Second = () => {
     return (
-        <div className="bg-white lg:py-16 lg:px-24 sm:p-4 my-4 flex items-center justify-center flex-col">
+        <div className="bg-gradient-to-tl from-sky-100 to-blue-500 lg:py-16 lg:px-24 sm:p-4 flex items-center justify-center flex-col">
             <div className="text-center sm:mb-12 2xl:mb-20">
                 <h2 className="lg:text-4xl sm:text-2xl font-semibold sm:mb-5 2xl:mb-8">Discover the products winning in the market</h2>
                 <h4 className="xl:text-xl xl:px-60 lg:px-24 lg:text-base 2xl:px-[30rem] lg:block  sm:hidden">With RobotDorm chrome extension you can use the best data available on jumia to make informed decision to grow your online business.</h4>
