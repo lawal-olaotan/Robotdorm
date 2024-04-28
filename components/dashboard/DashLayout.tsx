@@ -11,18 +11,25 @@ export const DashLayout = ({children} : {children:React.ReactNode}) => {
     useEffect(() =>{
         if(status == 'unauthenticated') router.replace('/login')
           if(session && !session.user?.isPremium) router.replace('/pricing')
-    },[router,status])
+    },[router,status,session])
 
       
           return (
             <>
-              <DashNav/>
-              <main className="flex pt-[4.1rem] bg-dashbg h-screen">
-                <DashSide/>
-                <div className="xl:ml-32 lg:ml-20 mt-6 w-full">
-                  {children}
-                </div>
-              </main>
-            </>)
+              <div className="sm:hidden lg:block">
+                  <DashNav/>
+                  <main className="flex pt-[4.1rem] bg-dashbg h-screen">
+                    <DashSide/>
+                    <div className="xl:ml-32 lg:ml-28 mt-6 w-full">
+                      {children}
+                    </div>
+                  </main>
+              </div>
+              <div className='sm:block lg:hidden'>
+                        <h1>mobile not supported at the moment</h1>
+              </div>
+              
+            </>
+            )
 
 }
