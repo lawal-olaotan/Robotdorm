@@ -3,14 +3,13 @@ import { useRouter } from 'next/router'
 import { checkout } from 'lib/payment'
 import {useSession} from 'next-auth/react'; 
 
-
 export const PriceList = ()=> {
     const router = useRouter()
     const{data: session} = useSession();
     //TODO: create a currency conversion based on users ip address
 
     const beePriceId = process.env.NEXT_PUBLIC_BEEID as string
-    const atlasPriceId = process.env.NEXT_PUBLIC_PAYMENT_SERVICE as string
+    const atlasPriceId = process.env.NEXT_PUBLIC_ATLASID as string
 
     const pricingdescriptions = [
 
@@ -51,16 +50,16 @@ export const PriceList = ()=> {
         if(!session) return router.replace('/login')
 
         const  button = event.target as HTMLButtonElement;
-        const priceId = button.getAttribute( 'data-priceId');
+        const priceId = button.getAttribute('data-priceid');
         const trialDays = button.getAttribute('data-free');
         if(!priceId) router.push('https://us12.list-manage.com/contact-form?u=2fb544e735311cbddb1b13831&form_id=77652526220b2b199c0794a74dbfbe86'); 
 
     
-        const url = window.location.href
+        const return_url = window.location.href
         const success_link = process.env.NEXT_PUBLIC_SUCCESS_URL as string
-        const checkoutInformation = {priceId,return_url:url,email:session.user.email,trialDays,success_link}
+        const checkoutInformation = {priceId,return_url,email:session.user.email,userId:session.user.id,trialDays,success_link}
 
-        // // TODO get user section and 
+        // TODO get user section and 
         const checkoutSession = await checkout('POST',checkoutInformation);
         router.replace(checkoutSession.session.url)
 
@@ -80,7 +79,9 @@ export const PriceList = ()=> {
                     <span className="text-xs">{pricing.priceSubTitle}</span>
                 </div>
                 
-                <button onClick={routePaymentButtons} data-priceId={pricing.priceId} data-free={pricing.trialDays} className="my-3 px-10 py-2 bg-sky-600 text-white">{!pricing.isDemo ? "Get started" : "Request Demo"}</button>
+                <button onClick={routePaymentButtons} data-priceid={pricing.priceId} data-free={pricing.trialDays} className="my-3 px-10 py-2 bg-sky-600 text-white">
+                    
+                    { !pricing.isDemo ? "Get started" : "Request Demo"}</button>
 
                 <div className="my-4">
                     {pricing.features.map((feature,index)=>(

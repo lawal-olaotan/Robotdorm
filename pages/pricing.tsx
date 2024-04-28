@@ -20,7 +20,7 @@ export default function Pricing(){
             </Head>
 
             <div className="bg-gradient-to-b from-sky-50 to-sky-100 px-40 py-12 sm:p-8 lg:px-24 overflow-hidden">
-                <Title/>
+                <Title subTextPos="" logoSize={30}/>
                 <PriceList/>
                 <Review/>
             </div>
