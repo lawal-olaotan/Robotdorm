@@ -21,13 +21,13 @@ export const Section:NextPage<Props> = (Props)=> {
                     {sectionTitle}
                 </h3>
 
-            <p className="text-xl mb-12"> {sectionSubTitle}</p>
+            <p className="text-sm mb-12"> {sectionSubTitle}</p>
 
             <Link href="https://chromewebstore.google.com/detail/iebnenlmoeolohhmbjilijlgpjbjljhm?hl=en-GB">
                 <a className="px-8 py-4 bg-white text-primary rounded-lg">Install Chrome Extension</a>
             </Link>
             </div>
-            <div className="w-[33%]">
+            <div className="w-[33%] shadow-lg shadow-primary">
                 <img className="w-100 rounded-lg" src={imgTitle} alt="extensionpic" />
             </div>
         </div>

@@ -19,7 +19,7 @@ export const Navbar = () => {
 
     return (
         <>
-        <nav className=" w-100 bg-white sticky top-0 left-0 z-10">
+        <nav className=" w-100 bg-gradient-to-tl from-sky-100 to-blue-500 sticky top-0 left-0 z-10 ">
             <div className='2xl:w-[1440px] m-auto flex items-center justify-between py-2 xl:px-24 lg:px-12 sm:p-4'>
                 <Link  href="/">
                     <a className="inline-flex lg:w-1/4 sm:w-full"> 
@@ -27,10 +27,10 @@ export const Navbar = () => {
                     </a>
                 </Link>
 
-                <div className= { `${active ? 'flex' : 'hidden'} z-0 lg:flex 2xl:w-2/5 xl:w-1/2 lg:w-8/12 lg:flex-row items-center justify-end lg:p-0 lg:h-auto lg:bg-transparent lg:relative lg:text-base text-sky-600 sm:absolute sm:flex-col sm:w-full sm:top-0 sm:left-0 sm:pt-20 sm:bg-primary sm:h-screen sm:self-start sm:flex-start sm:text-2xl sm:z-10`}   >
+                <div className= { `${active ? 'flex' : 'hidden'} z-0 lg:flex 2xl:w-2/5 xl:w-1/2 lg:w-8/12 lg:flex-row items-center lg:justify-end lg:p-0 lg:h-auto lg:bg-transparent lg:relative lg:text-base text-sky-600 sm:absolute sm:flex-col sm:w-full sm:top-0 sm:left-0 sm:pt-20 sm:bg-primary sm:h-screen  sm:text-2xl sm:z-10`}   >
 
                     <button className=" lg:hidden absolute top-6 right-6" onClick={handleButton}>
-                                <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="feather feather-x"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="feather feather-x text-white"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
                     </button>
                         <Navitems routeName="About" routeLink="/about" />
                         <Navitems routeName="Contact" routeLink="https://us12.list-manage.com/contact-form?u=2fb544e735311cbddb1b13831&form_id=77652526220b2b199c0794a74dbfbe86" />
@@ -40,7 +40,7 @@ export const Navbar = () => {
                 </div>
             
                 <button className="lg:hidden inline-flex outline-none" onClick={handleButton}>
-                        <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="feather feather-menu text-white"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="feather feather-menu text-primary"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
                 </button>
             </div>
         </nav>
