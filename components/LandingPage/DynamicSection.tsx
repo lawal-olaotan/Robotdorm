@@ -22,7 +22,7 @@ export const DynamicSection:NextPage<Props> = (Props)=> {
 
                     <p className="lg:text-base sm:text-sm mb-12">{sectionSubTitle}</p>
 
-                    <Link href="/pricing" ><a className="px-12 py-4 bg-sky-600 text-white rounded-md">Get started</a>
+                    <Link href="https://chromewebstore.google.com/detail/robotdorm-jumia-keyword-t/iebnenlmoeolohhmbjilijlgpjbjljhm?hl=en-GB" ><a className="px-12 py-4 bg-sky-600 text-white rounded-md">Get Started</a>
                     </Link>
                 </div>
 
