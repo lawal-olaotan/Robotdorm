@@ -20,7 +20,7 @@ export const Footer = () => {
     ]
     
     return(
-        <div className="bg-primary text-white flex items-center md:justify-between xl:px-24 sm:p-4  lg:px-12 2xl:px-72 lg:py-8 md:flex-row sm:flex-col sm:justify-center md:text-sm sm:text-xs">
+        <div className="bg-secondary text-white flex items-center md:justify-between xl:px-24 sm:p-4  lg:px-12 2xl:px-72 lg:py-8 md:flex-row sm:flex-col sm:justify-center md:text-sm sm:text-xs">
 
             <div className="flex justify-between items-center lg:w-[20%] md:w-1/4 sm:w-1/2 sm:mb-4 md:mb-0">
                 { Myicons.map((icons: Icons)=> (

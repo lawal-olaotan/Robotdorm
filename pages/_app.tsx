@@ -10,7 +10,7 @@ import {SessionProvider} from 'next-auth/react';
 import {ContextProvider} from '../lib/UserContext';
 import {PageProvider} from '../lib/PageProvider';
 import {VaultProvider} from '../lib/VaultProvider';
-import ReactGA from 'react-ga';
+import ReactGA from 'react-ga4';
 
 
 type NextPageWithLayout = NextPage & {
@@ -23,14 +23,17 @@ type AppPropsWithLayout = AppProps & {
 
 export default function MyApp({Component, pageProps: {session, ...pageProps} }: AppPropsWithLayout){
   const getLayout = Component.getLayout ?? ((page) => page )
+
+  // initialise google analytics
   ReactGA.initialize(process.env.NEXT_PUBLIC_GA);
+  
   return (
     
       <SessionProvider session={session}>
         <ContextProvider>
         <PageProvider>
           <VaultProvider>
-        {getLayout(<Component {...pageProps} />)}
+          {getLayout(<Component {...pageProps} />)}
         </VaultProvider>
         </PageProvider>
         </ContextProvider>

@@ -5,6 +5,7 @@ import  EmailProvider from 'next-auth/providers/email';
 import {createTransport} from 'nodemailer'; 
 import type { NextAuthOptions } from 'next-auth';
 import { db } from 'lib/db';
+import crypto from "node:crypto"
 
 
 
@@ -30,6 +31,10 @@ export const authOptions : NextAuthOptions = {
   },
   providers:[
      EmailProvider({
+      generateVerificationToken() {
+        const random = crypto.randomBytes(8);
+        return Buffer.from(random).toString("hex").slice(0,8)
+      },
         server: {
            host: process.env.SMTP_SERVER,
            port: 587,
@@ -39,22 +44,16 @@ export const authOptions : NextAuthOptions = {
            }
         },
         from:process.env.SMTP_EMAIL, 
-        async sendVerificationRequest({
-
-           identifier:email,
-           url,
-           provider:{server,from},
-        }){
+        async sendVerificationRequest(params){
+          const{ identifier:email, url, provider:{server,from}, token,theme} = params
            const transport = createTransport(server)
            await transport.sendMail({
               to:email,
               from,
               subject:`Log in to RobotDorm ❤️`,
-              html: html({url,email }) 
+              html: html({url,email,token}) 
            })
         }
-
-        
      })
   ], 
   pages:{
@@ -88,16 +87,17 @@ export const authOptions : NextAuthOptions = {
          session.user = user;
        return session
      }, 
+    //  TODO add signIn to check for existing users
   }
   
 }
+
 export default NextAuth(authOptions)
 
-function html({url,email}: Record<"url" | "email", string>) {
+function html({url,email,token}: Record<"url" | "email"|"token", string>) {
 
    const espacedEmail = `${email.replace(/\./g, "&#8203;.")}`; 
 
-   const btnBackgroundColor = '#307BD1'
 
    return `<div><head>
      <style>
@@ -139,33 +139,24 @@ function html({url,email}: Record<"url" | "email", string>) {
                    <a href="https://www.robotdorm.com/" style="text-decoration:none;"><img src="https://i.ibb.co/DWy2QK2/logomail.png" width="165" alt="Logo" style="width:165px;max-width:80%;height:auto;border:none;text-decoration:none;color:#ffffff;"></a>
                  </td>
                </tr>
-               <tr>
-                 <td style="background-color:#ffffff;padding: 20px">
-                   <p style="margin:0;">Dear Valued Customer</p>
-                 </td>
-               </tr>
+
                <tr>
                    <td style="background-color:#ffffff;padding: 20px">
-                     <p style="margin:0;">A request to login was made with your email: <span style="font-weight:600;">${espacedEmail}</span>  </p>
+                     <p style="margin:0;">A request to login was made to: <span style="font-weight:600;">${espacedEmail}</span>  </p>
                    </td>
                </tr>
                <tr>
                    <td style="background-color:#ffffff;padding:10px 20px">
-                     <p style="margin:0;">Kindly proceed to login into your account:</p>
+                     <p style="margin:0;">Login with your confirmation code</p>
                    </td>
                </tr>
                <tr >
                    <td height="60px" style="height:60px; padding:0 20px">
-                     <a href=${url} style="margin:0;background:${btnBackgroundColor}; color:#ffffff; padding:14px 12px;text-decoration:none">Login to RobotDorm</a>
+                     <p style="margin:0; color:#307BD1;padding:14px 12px;text-decoration:none">${token.toUpperCase()}</p>
                    </td>
                    
                </tr>
                
-               <tr>
-                   <td style="background-color:#ffffff;padding: 20px;">
-                     <p style="margin:0;">If you have any question reach out <a href="https://api.whatsapp.com/send?phone=447546979379&text=Hi%20I%20have%20an%20error%20with%20my%20Robotdorm%20extension">here</a></p>
-                   </td>
-               </tr>
                <tr>
                    <td style="background-color:#ffffff;padding: 20px;">
                      <p style="margin:0;">Thanks</p>
@@ -189,4 +180,5 @@ function html({url,email}: Record<"url" | "email", string>) {
    </div>`
 
 }
+
 

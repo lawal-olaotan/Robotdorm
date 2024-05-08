@@ -4,7 +4,6 @@ import  Head  from 'next/head';
 import { PriceList } from "../components/Pricing/PriceList"
 import { Title } from "@components/Pricing/Title";
 import { Review } from "@components/Pricing/Review";
-import {useSession} from 'next-auth/react'; 
 
 
 export default function Pricing(){
