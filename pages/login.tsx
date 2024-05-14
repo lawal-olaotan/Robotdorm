@@ -14,12 +14,20 @@ export default function Login(){
   // TODO: turn to custom hook
   // TODO: try using browser cookies to login users
   // TODO: 
+  const loginStatus = (user,router) => {
+    if(!user.isPremium) return router.push('/pricing')
+      router.push("/dashboard");
+  }
   useEffect(() => {
     getSession().then(async(session) => {
       if (!session) return  SetLoading(false);
-        // TODO: this is a temporary fix, looking for a roboust approach to sending message to the Extension
-          chrome.runtime.sendMessage(extensionId,{ type:"browser", data: session.user.id })
-          router.push("/dashboard");
+      try{
+        chrome.runtime.sendMessage(extensionId,{ type:"browser", data: session.user.id })
+        loginStatus (session.user,router)
+      }catch(error){
+        loginStatus (session.user,router)
+      }
+    
     });
   }, [router]);
 

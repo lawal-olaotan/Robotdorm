@@ -3,6 +3,9 @@ import {getCoreRowModel, useReactTable, flexRender,createColumnHelper} from '@ta
 import React, {useEffect, useContext, useState} from 'react'; 
 import useSWR from 'swr'; 
 import {ToastContainer} from 'react-toastify';
+import { GetServerSidePropsContext } from "next";
+import {authOptions}  from "../api/auth/[...nextauth]";
+import { getServerSession } from "next-auth";
 
 
 import { DashLayout } from '@components/dashboard/DashLayout';
@@ -15,13 +18,11 @@ import { ProductDetails } from 'interface/userSes';
 import { VaultContext} from 'lib/VaultProvider';
 import { DashQuote } from '@components/dashboard/DashQuote';
 import { Loader } from '@components/dashboard/Loader';
-import { getUserId } from '@components/dashboard/getUserId';
 
-export default function Lists(){
+export default function Lists({user}){
+    const {id} = JSON.parse(user)
     const {setListData,setCheckedRow,rowSelection, nameInputRef,selectedProduct} = useContext(VaultContext); 
     const fetcher = (url) => fetch(url).then((res)=> res.json() ); 
-     const {data:session,status} = useSession();
-     const [postById,SetpostId] = useState<string>(); 
      const columnHelper = createColumnHelper<ProductDetails>();
      const columns = [
          {
@@ -76,23 +77,9 @@ export default function Lists(){
             }),
 
      ]
-    useEffect(() => {
-        getSession()
-        .then((session)=>{
-            if(session.user.id !== undefined){
-                SetpostId(session.user.id)
-            }else{
-                getData()
-            }
-        })
-    },[session]);
 
-    const getData = async ()=>{
-        const data = await getUserId(); 
-        SetpostId(data._id);
-    }
 
-    const url = `/api/getSummary?query=${postById}&collection=lists`;
+    const url = `/api/getSummary?query=${id}&collection=lists`;
     const { data, error } = useSWR(url, fetcher);  
     if(data !== undefined){
         setListData(data);
@@ -170,7 +157,7 @@ export default function Lists(){
                 </div>
             </div>   
         </div>
-        { selectedProduct !== undefined ? <DashQuote postedBy={postById}/> : <div></div>}
+        { selectedProduct !== undefined ? <DashQuote postedBy={id}/> : <div></div>}
         <ToastContainer/>
     </div>
     
@@ -183,4 +170,22 @@ Lists.getLayout = function getLayout(page:React.ReactElement){
             {page}
         </DashLayout>
     )
+}
+
+export async function getServerSideProps(context:GetServerSidePropsContext){
+
+    const session = await getServerSession(context.req,context.res,authOptions);
+    if(!session) return{
+        redirect:{
+            destination:'/login',
+            permanent:false
+        }
+    }
+
+    const { user} = session
+    return {
+        props: {
+          user:JSON.stringify(user)
+        },
+    };
 }

@@ -4,17 +4,17 @@ import { Lheader } from '@components/Lheader';
 import { InputCom } from '@components/Auth/InputCom';
 import { FormFooters } from '@components/FormFooters';
 import {useRef, useContext} from 'react'; 
-import {useSession} from 'next-auth/react'; 
 import { useRouter} from 'next/router';
 import {userInfo} from '../interface/userSes'
-import { MyContext } from 'lib/UserContext';
 import { extensionId } from "../extension"
+import { GetServerSidePropsContext } from "next";
+import {authOptions}  from "./api/auth/[...nextauth]";
+import { getServerSession } from "next-auth";
 
 
-export default function Signup(){
+export default function Signup({userInfo}){
 
-    const{data: session} = useSession(); 
-    const {setMyId} = useContext(MyContext); 
+    const user = JSON.parse(userInfo)
     const router = useRouter();
     const nameInputRef = useRef<HTMLInputElement>(null);
   
@@ -22,7 +22,7 @@ export default function Signup(){
     const submitName = (event: React.SyntheticEvent) => {
         const name:string = nameInputRef.current.value;
         event.preventDefault();
-        const email:string = session.user.email
+        const email:string = user.email
         const userData:userInfo = {name,email}
         const updatedData = fetchData(userData);
         if(updatedData){router.replace('/dashboard')}
@@ -40,7 +40,6 @@ export default function Signup(){
             const dataJson = await updateurl.json();
             var userKey = dataJson._id
             chrome?.runtime?.sendMessage( extensionId, {type:'browser',data:userKey})
-            setMyId({name:dataJson.name,_id:dataJson._id});
             return true;
         }catch(error){
             console.log(error)
@@ -75,4 +74,22 @@ export default function Signup(){
             </main>
         </div>
   )
+}
+
+export async function getServerSideProps(context:GetServerSidePropsContext){
+
+    const session = await getServerSession(context.req,context.res,authOptions);
+    if(!session) return{
+        redirect:{
+            destination:'/login',
+            permanent:false
+        }
+    }
+    const { user} = session
+    const userInfo =JSON.stringify(user)
+    return {
+        props: {
+          userInfo
+        },
+    };
 }
