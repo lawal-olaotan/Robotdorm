@@ -2,14 +2,15 @@ import Link from "next/link";
 import { useState, useEffect } from "react";
 import { Navitems } from "@components/LandingPage/Navitems";
 import { DashIcons } from "@components/dashboard/DashIcons";
-import { signOut, useSession } from "next-auth/react";
+import { useSession } from "next-auth/react";
 import { Session } from "next-auth";
-import { extensionId } from "../../extension"
+import { useRouter } from "next/router";
+import {logout} from '../../lib/AuthFunc'
 
 export const DashNav = () => {
   const [active, setActive] = useState(false);
-  const { data: session, status }: { data: Session; status: string } =
-    useSession();
+  const { data: session, status }: { data: Session; status: string } = useSession();
+    const router = useRouter();
 
   useEffect(() => {
     if (active) {
@@ -27,8 +28,7 @@ export const DashNav = () => {
         setActive(false);
       });
   }, [active]);
-  
-  if (status !== "authenticated") return null;
+
 
   return (
     <nav className="flex items-center justify-between py-4 pr-12 pl-0 lg:pl-[75px] xl:pl-[90px] fixed left-0 right-0 top-0 z-[1] h-[68px] shadow-5xl bg-white">
@@ -42,10 +42,12 @@ export const DashNav = () => {
           <Navitems
             routeName="Sell on Jumia"
             routeLink="https://www.youtube.com/results?search_query=selling+on+jumia"
+            isLink={true}
           />
           <Navitems
             routeName="Chrome Extension"
             routeLink="https://chromewebstore.google.com/detail/jumia-keyword-tool/iebnenlmoeolohhmbjilijlgpjbjljhm"
+            isLink={true}
           />
         </div>
       </div>
@@ -92,13 +94,7 @@ export const DashNav = () => {
                 <button
                   role="button"
                   className="w-full text-sm font-semibold text-blue block mt-2"
-                  onClick={async (e) => {
-                    e.preventDefault();
-                      chrome?.runtime.sendMessage(extensionId,{
-                      type:"delete"
-                    })
-                    signOut();
-                  }}
+                  onClick={logout}
                 >
                   Logout
                 </button>
