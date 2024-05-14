@@ -13,7 +13,6 @@ import { Loader } from '@components/dashboard/Loader';
 import { GetServerSidePropsContext } from "next";
 import {authOptions}  from "../api/auth/[...nextauth]";
 
-
 export default function Insights({user}){
     const {id} = JSON.parse(user)
     const fetcher = (url) => fetch(url).then((res)=> res.json() ); 
