@@ -1,10 +1,8 @@
-
-import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'; 
-import type { IconDefinition } from '@fortawesome/free-solid-svg-icons';
 import {NextPage} from 'next';
+import FeatherIcon from 'feather-icons-react';
 
 interface Props{
-    iconTypes : IconDefinition,
+    iconTypes : string,
     iconText : string
 }
 
@@ -13,7 +11,7 @@ export const Todo:NextPage<Props>=(Props)=> {
     
     return(
         <div className="flex items-center text-primary font-medium"> 
-            <FontAwesomeIcon icon={iconTypes}/>
+            <FeatherIcon icon={iconTypes}/>
             <p className="ml-4">{iconText}</p> 
         </div>)
 

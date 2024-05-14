@@ -54,11 +54,11 @@ export const DashPage =() => {
                             </div>
     
                             <ul className="flex flex-col h-3/5 justify-around">
-                                    <Todo iconTypes={faDownload} iconText="Download our chrome extension and register an account" />
-                                    <Todo iconTypes={faSearch} iconText="Search our desired keywords on any jumia website" />
-                                    <Todo iconTypes={faPager} iconText="Use our chrome extension to get the best sellers" />
-                                    <Todo iconTypes={faSave} iconText="Save your desired products to your list" />
-                                    <Todo iconTypes={faStoreAlt} iconText="Download products to csv (coming soon)" />
+                                    <Todo iconTypes='download' iconText="Download our chrome extension and register an account" />
+                                    <Todo iconTypes='search' iconText="Search our desired keywords on any jumia website" />
+                                    <Todo iconTypes='layout' iconText="Use our chrome extension to get the best sellers" />
+                                    <Todo iconTypes='pocket' iconText="Save your desired products to your list" />
+                                    <Todo iconTypes='database' iconText="Download products to csv (coming soon)" />
                             </ul>
                         </div>
                         <div>
