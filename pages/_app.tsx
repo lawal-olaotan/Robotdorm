@@ -26,6 +26,7 @@ export default function MyApp({Component, pageProps: {session, ...pageProps} }: 
 
   // initialise google analytics
   ReactGA.initialize(process.env.NEXT_PUBLIC_GA);
+
   
   return (
     
