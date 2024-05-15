@@ -1,9 +1,11 @@
+"use client";
+
 import Image from 'next/image'
 import { motion, useMotionValue, animate } from "framer-motion";
 import useMeasure  from "react-use-measure"
 import { useEffect,useState} from "react";
 
-"use client";
+
 export const Review = ()=> {
 
     const reviews = [

@@ -21,7 +21,7 @@ const AuthForm = ()=> {
     const [userInfo, setUserInfo] = useState<IUsers>({email:""}); 
 
 
-    
+    // TODO: Move to service layer
     const submitForm = async (event: React.SyntheticEvent) => {
         event.preventDefault();
         setButtonPushed(true)
@@ -31,6 +31,7 @@ const AuthForm = ()=> {
         const userdetails = {
             email: InputEmail
         };
+
         setUserInfo(userdetails)
     
         const result = await signIn('email', {
@@ -41,6 +42,7 @@ const AuthForm = ()=> {
 
         if(result.ok){
             setEmailSent(true)
+            setButtonPushed(false)
         }
 
     }
@@ -50,7 +52,7 @@ const AuthForm = ()=> {
        
     return (
         Emailsent? (
-            <EmailMes email={userInfo.email} />
+            <EmailMes email={userInfo.email} pageToggle={setEmailSent} />
 
         ): (
             <div>
@@ -60,7 +62,7 @@ const AuthForm = ()=> {
             </Head>
         <main className="flex items-center justify-center py-20">
 
-            <div className="xl:w-[25%] lg:w-2/6">
+            <div className="xl:w-[25%] lg:w-2/6 sm:w-4/5">
 
                 <Lheader Title="Login In / Register to RobotDorm"/>
 
@@ -69,7 +71,7 @@ const AuthForm = ()=> {
                     <InputCom labelName='Email' id="email" type="email" placeholder="Please enter your email" refName={emailInputRef} />
 
                     <button className="rounded-lg mt-8 bg-secondary p-3.5 w-full text-white flex items-center justify-center">
-                        { buttonPushed ? <SignupLoader/> :'Send Verification Link' }
+                        { buttonPushed ? <SignupLoader/> :'Send Verification Token' }
                         </button>
                 </form>
 

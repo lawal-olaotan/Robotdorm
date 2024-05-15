@@ -5,8 +5,10 @@ import { Layouts01 } from "@components/Layouts01"
 import type { ReactElement } from 'react'
 
 
-
 export default function Home(){
+
+// track page for google analytics
+
   return (
         <div>
             <Head>

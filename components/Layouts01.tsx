@@ -1,5 +1,5 @@
 import React from 'react';
-import { Navbar } from './LandingPage/Navbar';
+import Navbar  from './LandingPage/Navbar';
 import { Footer } from './LandingPage/Footer';
 
 

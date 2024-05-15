@@ -1,5 +1,8 @@
 import {useSession } from 'next-auth/react';
-import {useRouter}  from 'next/router'; 
+import {useRouter}  from 'next/router';
+import { extensionId } from "../extension"
+import { signOut} from "next-auth/react";
+
 
 export function AuthFunc ({children}:{children:React.ReactNode}){
     const router = useRouter(); 
@@ -13,4 +16,20 @@ export function AuthFunc ({children}:{children:React.ReactNode}){
          return {children}
      }
      return(<div>Loading ... </div>)
+}
+
+
+
+export async function logout (event:React.SyntheticEvent){
+    event.preventDefault()
+    
+    try{    
+        await chrome?.runtime.sendMessage(extensionId,{
+            type:"delete"
+        })
+    }catch(error){
+        console.log("Error in logging out",)
+    }
+    
+    signOut();
 }
