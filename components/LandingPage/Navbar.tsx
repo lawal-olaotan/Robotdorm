@@ -23,7 +23,7 @@ export default function Navbar(){
                             </button>
                                 
                             <Navitems routeName="Pricing" routeLink="/pricing" isLink={true} />
-                            <Navitems routeName="Community" routeLink="/pricing" isLink={true} />
+                            <Navitems routeName="Community" routeLink="https://chat.whatsapp.com/Lugl9SwxFhe6hQyJ34lJ6t" isLink={true} />
                         </div>
                         </NavLayout>
                     )}

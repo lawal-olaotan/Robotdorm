@@ -21,7 +21,7 @@ export const Footer = () => {
         }
         ,{
             icon:"twitter",
-            link:"https://www.linkedin.com/company/robot-dorm/"
+            link:"https://twitter.com/robotdorm"
         }
     ]
     
