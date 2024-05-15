@@ -138,7 +138,7 @@ export const DashQuote:NextPage<quoteRequesterId> = (quoteRequesterId)=> {
         <div className={`${quoteStatus ? 'flex' : 'hidden'} justify-center h-full w-full z-30 bg-black absolute top-0 right-0 opacity-100`}>
 
             <div className='absolute top-[2pc] right-[4pc]' onClick={()=> {setQuoteStatus(false)}}>
-                <Image  height='30px' width='30px' src='/close-white.svg' alt='close-quote' />
+                <Image  height={30} width={30} src='/close-white.svg' alt='close-quote' />
             </div>
 
             <form onSubmit={handleQuote} className='mt-16 flex flex-col max-h-[520px] w-1/2 bg-white opacity-100 z-50 p-4'>
