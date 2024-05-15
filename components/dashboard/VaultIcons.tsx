@@ -74,7 +74,7 @@ export const VaultIcons: NextPage<VaultProps>=(VaultProps) => {
     return (
         <div className='flex flex-col items-center relative' >
             <div onClick={handleVaultIcons} className={`${imgStyle} cursor-pointer`}>
-                {imgAlt === 'source' ? <div data-alt={imgAlt} className="w-fit px-4 py-2 rounded-lg bg-primary text-white">Request Quote</div> : <Image height='20px' width='20px' src={imgsrc} data-alt={imgAlt} />}
+                {imgAlt === 'source' ? <div data-alt={imgAlt} className="w-fit px-4 py-2 rounded-lg bg-primary text-white">Request Quote</div> : <Image height={20} width={20} src={imgsrc} alt={imgAlt} />}
             </div>
         </div>
         
