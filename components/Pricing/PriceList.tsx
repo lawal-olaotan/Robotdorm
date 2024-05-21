@@ -21,7 +21,7 @@ export const PriceList = ()=> {
             priceId: beePriceId,
             isDemo:false,
             trialDays:1,
-            features:['Weekly access','30 min expert session']
+            features:['1 day free trial','Weekly access']
         },
         {
             title:'Atlas',
@@ -31,7 +31,7 @@ export const PriceList = ()=> {
             priceId:atlasPriceId,
             isDemo:false,
             trialDays:7,
-            features:['7 day free trial','Cancel anytime']
+            features:['7 day free trial','Monthly access']
         },
         {
             title:'Enterprise',

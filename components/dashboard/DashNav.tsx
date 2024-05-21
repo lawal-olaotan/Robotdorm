@@ -38,15 +38,20 @@ export const DashNav = () => {
             <img className="w-100" src="/logo2.png" alt="robotdorm-logo" />
           </a>
         </Link>
-        <div className="flex items-center">
-          <Navitems
-            routeName="Sell on Jumia"
-            routeLink="https://www.youtube.com/results?search_query=selling+on+jumia"
+        <div className="flex items-center mr-6">
+        <Navitems
+            routeName="How to use robotdorm"
+            routeLink="https://youtu.be/Vgo3Kl7YuKI?si=aGSoSd0Cudz1tJy"
             isLink={true}
           />
           <Navitems
-            routeName="Chrome Extension"
-            routeLink="https://chromewebstore.google.com/detail/jumia-keyword-tool/iebnenlmoeolohhmbjilijlgpjbjljhm"
+            routeName="Source Product"
+            routeLink="https://calendly.com/robotdorm/product-sourcing-meeting"
+            isLink={true}
+          />
+          <Navitems
+            routeName="Launch Series"
+            routeLink="https://dmr4lc06ats.typeform.com/to/DqPgcUIR"
             isLink={true}
           />
         </div>

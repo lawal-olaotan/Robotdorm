@@ -3,7 +3,7 @@ import  Head  from 'next/head';
 import { Lheader } from '@components/Lheader';
 import { InputCom } from '@components/Auth/InputCom';
 import { FormFooters } from '@components/FormFooters';
-import {useRef, useContext} from 'react'; 
+import {useRef} from 'react'; 
 import { useRouter} from 'next/router';
 import {userInfo} from '../interface/userSes'
 import { extensionId } from "../extension"
@@ -25,7 +25,7 @@ export default function Signup({userInfo}){
         const email:string = user.email
         const userData:userInfo = {name,email}
         const updatedData = fetchData(userData);
-        if(updatedData){router.replace('/dashboard')}
+        if(updatedData){router.replace('/pricing')}
     }
 
     const fetchData = async (userData:userInfo) => {

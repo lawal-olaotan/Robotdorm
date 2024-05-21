@@ -20,16 +20,12 @@ export default handler.use(post(validator))
         let emailClient = emailMarketingProvider()
         const data = req.body;
         const {name,email} = data
+        const query = {name,isPremium:false}
 
+        const document = await dbInstance.collection('users').findOneAndUpdate({email},{$set:query},{returnDocument:'after'})
+        await emailClient.createContact(email,name)
+        return res.status(200).send(document.value)
 
-        await dbInstance.collection('users').findOneAndUpdate({email},{$set:{name,isPremium:false}},{returnDocument:'after'}, async(err,document) => {
-                if(err) throw new Error(JSON.stringify(err));
-                await emailClient.createContact(email,name)
-                return res.status(200).send(document.value)
-        });
-    
-         
-    
     }catch (error:any){
             res.status(500).json({
                 message: error.message
