@@ -1,11 +1,14 @@
 import FeatherIcon from 'feather-icons-react'
 import { useRouter } from 'next/router'
 import { checkout } from 'lib/payment'
-import {useSession} from 'next-auth/react'; 
+import { UserSession } from 'interface/userSes'
+import { NextPage } from 'next'
 
-export const PriceList = ()=> {
+
+export const PriceList:NextPage<UserSession> = (UserSession)=> {
     const router = useRouter()
-    const{data: session} = useSession();
+    const {user} = UserSession
+    const { email, id} = user
     //TODO: create a currency conversion based on users ip address
 
     const beePriceId = process.env.NEXT_PUBLIC_BEEID as string
@@ -47,7 +50,6 @@ export const PriceList = ()=> {
 
     const routePaymentButtons = async(event:React.SyntheticEvent)=> {
         event.preventDefault();
-        if(!session) return router.replace('/login')
 
         const  button = event.target as HTMLButtonElement;
         const priceId = button.getAttribute('data-priceid');
@@ -57,13 +59,16 @@ export const PriceList = ()=> {
     
         const return_url = window.location.href
         const success_link = process.env.NEXT_PUBLIC_SUCCESS_URL as string
-        const checkoutInformation = {priceId,return_url,email:session.user.email,userId:session.user.id,trialDays,success_link}
+        const checkoutInformation = {priceId,return_url,email:email,userId:id,trialDays,success_link}
 
         // TODO get user section and 
         const checkoutSession = await checkout('POST',checkoutInformation);
         router.replace(checkoutSession.session.url)
 
     }
+
+
+
 
     return (
         <div  className="flex lg:flex-row sm:flex-col lg:space-y-0 lg:space-x-8 sm:space-y-6 sm:space-x-0">

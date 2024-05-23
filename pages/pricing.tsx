@@ -4,11 +4,14 @@ import  Head  from 'next/head';
 import { PriceList } from "../components/Pricing/PriceList"
 import { Title } from "@components/Pricing/Title";
 import { Review } from "@components/Pricing/Review";
+import { GetServerSidePropsContext } from "next";
+import {authOptions}  from "./api/auth/[...nextauth]";
+import { getServerSession } from "next-auth";
 
 
-export default function Pricing(){
+export default function Pricing({user}){
 
-    
+    const userDetails = JSON.parse(user)
 
     return (
 
@@ -20,12 +23,31 @@ export default function Pricing(){
 
             <div className="bg-gradient-to-b from-sky-50 to-sky-100 px-40 py-12 sm:p-8 lg:px-24 overflow-hidden">
                 <Title subTextPos="" logoSize={30}/>
-                <PriceList/>
+                <PriceList user={userDetails}/>
                 <Review/>
             </div>
         </div>
 
         )
+}
+
+
+export async function getServerSideProps(context:GetServerSidePropsContext){
+
+    const session = await getServerSession(context.req,context.res,authOptions);
+    if(!session) return{
+        redirect:{
+            destination:'/login',
+            permanent:false
+        }
+    }
+
+    const { user} = session
+    return {
+        props: {
+          user:JSON.stringify(user)
+        },
+    };
 }
 
 Pricing.getLayout = function getLayout(page:ReactElement){
