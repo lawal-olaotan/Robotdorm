@@ -76,7 +76,7 @@ const AuthForm = ()=> {
                 </form>
 
                 <div className="mt-9 flex flex-col items-center">
-                        <FormFooters question="Problems or Questions?" link="Contact Us" url="https://api.whatsapp.com/send?phone=254700418727&text=I%20think%20I%20need%20your%20attention"/>
+                        <FormFooters question="Problems or Questions?" link="Contact Us" url="https://us12.list-manage.com/contact-form?u=2fb544e735311cbddb1b13831&form_id=77652526220b2b199c0794a74dbfbe86"/>
                 </div>
 
             </div>  

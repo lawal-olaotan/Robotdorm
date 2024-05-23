@@ -46,7 +46,7 @@ export const DashNav = () => {
           />
           <Navitems
             routeName="Source Product"
-            routeLink="https://calendly.com/robotdorm/product-sourcing-meeting"
+            routeLink="https://calendly.com/robotdorm/30min"
             isLink={true}
           />
           <Navitems
@@ -91,7 +91,7 @@ export const DashNav = () => {
                 <p className="text-sm mb-2">
                   <span>{session?.user?.name}</span>
                 </p>
-                <Link href="https://wa.link/mkzt3n">
+                <Link href="https://us12.list-manage.com/contact-form?u=2fb544e735311cbddb1b13831&form_id=77652526220b2b199c0794a74dbfbe86https://us12.list-manage.com/contact-form?u=2fb544e735311cbddb1b13831&form_id=77652526220b2b199c0794a74dbfbe86">
                   <a className="text-sm font-semibold text-blue">
                     Contact Support
                   </a>
