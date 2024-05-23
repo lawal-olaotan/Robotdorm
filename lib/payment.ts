@@ -1,14 +1,7 @@
-import {Stripe as _Stripe, loadStripe} from '@stripe/stripe-js'; 
+import {Stripe as _Stripe,} from '@stripe/stripe-js'; 
 import Stripe from 'stripe';
 
-let stripePromise: Promise<_Stripe | null>;
 
-export const createStripeInstance = ()=>{
-    if(!stripePromise){
-        stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLIC!)
-    }
-    return stripePromise;
-}
 
 export const paymentEngine = ()=>{
 
@@ -36,6 +29,12 @@ export const paymentEngine = ()=>{
     });
         return session.url;
         
+    }
+
+    
+    const flutterWave = () => {
+
+
     }
 
 

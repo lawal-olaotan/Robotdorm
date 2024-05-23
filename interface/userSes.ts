@@ -9,7 +9,8 @@ export type userDetails ={
      name:string,
     email:string,
     _id:string,
-    emailVerified:string
+    emailVerified:string,
+    id? :string,
 }
 
 export type summmaryDetails = {
@@ -38,4 +39,20 @@ export type quoteDetails = {
     postedBy:string,
     quoteContact:string
 }
+
+export interface UserSession {
+    user:{
+        name:string,
+        email:string,
+        id:string,
+        emailVerified:string,
+        isPremium:boolean,
+        service?:{
+        used:number,
+        total:number
+        }
+
+    }
+    
+  }
 
