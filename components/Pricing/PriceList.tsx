@@ -3,17 +3,12 @@ import { useRouter } from 'next/router'
 import { checkout } from 'lib/payment'
 import { UserSession } from 'interface/userSes'
 import { NextPage } from 'next'
+import  { useState } from 'react'
 
 
 export const PriceList:NextPage<UserSession> = (UserSession)=> {
-    const router = useRouter()
-    const {user} = UserSession
-    const { email, id} = user
-    //TODO: create a currency conversion based on users ip address
 
-    const beePriceId = process.env.NEXT_PUBLIC_BEEID as string
-    const atlasPriceId = process.env.NEXT_PUBLIC_ATLASID as string
-
+    // TODO: Transfer as a JSON to S3 
     const pricingdescriptions = [
 
         {
@@ -21,7 +16,7 @@ export const PriceList:NextPage<UserSession> = (UserSession)=> {
             subtitle:"For short-term product research",
             priceTitle:"£5/week",
             priceSubTitle:"Unlimited access to product research tool.",
-            priceId: beePriceId,
+            priceId:'price_1P1ocIAvIJrXKY25kFkSOeQf',
             isDemo:false,
             trialDays:1,
             features:['1 day free trial','Weekly access']
@@ -31,7 +26,7 @@ export const PriceList:NextPage<UserSession> = (UserSession)=> {
             subtitle:"For professional sellers",
             priceTitle:"£12/month",
             priceSubTitle:"£12 billed monthtly",
-            priceId:atlasPriceId,
+            priceId:'price_1P1oedAvIJrXKY25Lky0FZXG',
             isDemo:false,
             trialDays:7,
             features:['7 day free trial','Monthly access']
@@ -47,7 +42,12 @@ export const PriceList:NextPage<UserSession> = (UserSession)=> {
             features:['API access','customer success manager']
         }
     ]
+    const router = useRouter()
+    const [priceLists,setPriceList] = useState(pricingdescriptions)
+    const {user} = UserSession
+    const { email, id} = user
 
+    
     const routePaymentButtons = async(event:React.SyntheticEvent)=> {
         event.preventDefault();
 
@@ -73,7 +73,7 @@ export const PriceList:NextPage<UserSession> = (UserSession)=> {
     return (
         <div  className="flex lg:flex-row sm:flex-col lg:space-y-0 lg:space-x-8 sm:space-y-6 sm:space-x-0">
 
-        {pricingdescriptions.map((pricing,index)=>(
+        {priceLists.map((pricing,index)=>(
             <div key={index} className="bg-white p-6 2xl:w-1/4 sm:w-full">
                 <div className="my-3">
                     <h3 className="text-2xl font-medium">{pricing.title}</h3>

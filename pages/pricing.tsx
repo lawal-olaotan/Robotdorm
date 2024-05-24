@@ -9,6 +9,7 @@ import {authOptions}  from "./api/auth/[...nextauth]";
 import { getServerSession } from "next-auth";
 
 
+
 export default function Pricing({user}){
 
     const userDetails = JSON.parse(user)
@@ -35,13 +36,6 @@ export default function Pricing({user}){
 export async function getServerSideProps(context:GetServerSidePropsContext){
 
     const session = await getServerSession(context.req,context.res,authOptions);
-    if(!session) return{
-        redirect:{
-            destination:'/login',
-            permanent:false
-        }
-    }
-
     const { user} = session
     return {
         props: {
