@@ -36,7 +36,8 @@ export default function Pricing({user}){
 export async function getServerSideProps(context:GetServerSidePropsContext){
 
     const session = await getServerSession(context.req,context.res,authOptions);
-    const { user} = session
+
+    const user = session ? session.user : null 
     return {
         props: {
           user:JSON.stringify(user)

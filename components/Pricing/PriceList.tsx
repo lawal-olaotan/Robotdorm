@@ -45,21 +45,21 @@ export const PriceList:NextPage<UserSession> = (UserSession)=> {
     const router = useRouter()
     const [priceLists,setPriceList] = useState(pricingdescriptions)
     const {user} = UserSession
-    const { email, id} = user
 
     
     const routePaymentButtons = async(event:React.SyntheticEvent)=> {
         event.preventDefault();
 
+        if(!user) return router.replace('/login')
+
         const  button = event.target as HTMLButtonElement;
         const priceId = button.getAttribute('data-priceid');
         const trialDays = button.getAttribute('data-free');
         if(!priceId) router.push('https://us12.list-manage.com/contact-form?u=2fb544e735311cbddb1b13831&form_id=77652526220b2b199c0794a74dbfbe86'); 
-
     
         const return_url = window.location.href
         const success_link = process.env.NEXT_PUBLIC_SUCCESS_URL as string
-        const checkoutInformation = {priceId,return_url,email:email,userId:id,trialDays,success_link}
+        const checkoutInformation = {priceId,return_url,email:user?.email,userId:user?.id,trialDays,success_link}
 
         // TODO get user section and 
         const checkoutSession = await checkout('POST',checkoutInformation);
