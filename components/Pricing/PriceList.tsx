@@ -16,7 +16,7 @@ export const PriceList:NextPage<UserSession> = (UserSession)=> {
             subtitle:"For short-term product research",
             priceTitle:"£5/week",
             priceSubTitle:"Unlimited access to product research tool.",
-            priceId:'price_1P1ocIAvIJrXKY25kFkSOeQf',
+            priceId:process.env.NEXT_PUBLIC_BEEID,
             isDemo:false,
             trialDays:1,
             features:['1 day free trial','Weekly access']
@@ -26,7 +26,7 @@ export const PriceList:NextPage<UserSession> = (UserSession)=> {
             subtitle:"For professional sellers",
             priceTitle:"£12/month",
             priceSubTitle:"£12 billed monthtly",
-            priceId:'price_1P1oedAvIJrXKY25Lky0FZXG',
+            priceId:process.env.NEXT_PUBLIC_ATLASID,
             isDemo:false,
             trialDays:7,
             features:['7 day free trial','Monthly access']
@@ -45,7 +45,7 @@ export const PriceList:NextPage<UserSession> = (UserSession)=> {
     const router = useRouter()
     const [priceLists,setPriceList] = useState(pricingdescriptions)
     const {user} = UserSession
-    
+
 
     
     const routePaymentButtons = async(event:React.SyntheticEvent)=> {
