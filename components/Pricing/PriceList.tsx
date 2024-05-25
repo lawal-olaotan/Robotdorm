@@ -45,12 +45,13 @@ export const PriceList:NextPage<UserSession> = (UserSession)=> {
     const router = useRouter()
     const [priceLists,setPriceList] = useState(pricingdescriptions)
     const {user} = UserSession
+    
 
     
     const routePaymentButtons = async(event:React.SyntheticEvent)=> {
         event.preventDefault();
 
-        if(!user) return router.replace('/login')
+        if(user === null) return router.replace('/login')
 
         const  button = event.target as HTMLButtonElement;
         const priceId = button.getAttribute('data-priceid');
@@ -73,7 +74,7 @@ export const PriceList:NextPage<UserSession> = (UserSession)=> {
     return (
         <div  className="flex lg:flex-row sm:flex-col lg:space-y-0 lg:space-x-8 sm:space-y-6 sm:space-x-0">
 
-        {priceLists.map((pricing,index)=>(
+        {pricingdescriptions.map((pricing,index)=>(
             <div key={index} className="bg-white p-6 2xl:w-1/4 sm:w-full">
                 <div className="my-3">
                     <h3 className="text-2xl font-medium">{pricing.title}</h3>
