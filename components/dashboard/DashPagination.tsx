@@ -15,7 +15,7 @@ export const DashPagination: NextPage<Props> = (Props) => {
     
     return (
         <>
-            <div className="absolute bottom-[2pc] lg:flex sm:hidden">
+            <div className="lg:flex sm:hidden">
               <button onClick={()=> SetPageNumber(pageNumber - 1)} className={`mr-4 px-8 py-2  text-white rounded-md ${pageNumber === 0 ? 'bg-disabledprimary' : 'bg-primary'}`} disabled={pageNumber === 0 ? true : false} >Prev</button>
               <button disabled={((pageNumber*6) > itemCount || itemCount < 6) ? true  : false} onClick={nextBtnHandler} className={`mr-4 px-8 py-2  text-white rounded-md ${((pageNumber*6) > itemCount || itemCount < 6) ? 'bg-disabledprimary'  : 'bg-primary'}`}>Next</button>
           </div>

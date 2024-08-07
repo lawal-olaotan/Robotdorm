@@ -1,37 +1,25 @@
-
+import React from 'react';
 import {NextPage} from 'next'
-import React,{useEffect,useState,useContext} from 'react';
-import {Card } from 'antd'
 import FeatherIcons from 'feather-icons-react'
-import { useRouter } from 'next/router';
-import {getSession} from 'next-auth/react'; 
 
 // components 
 import {DashHead} from '@components/dashboard/DashHead'; 
 import { DashTitle } from './DashTitle';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 
 interface UserName {
     name: string;
 }
 
-export const DashPage= () => {
+export const DashPage:NextPage<UserName> = (UserName) => {
+    const {name} = UserName
     const router = useRouter()
-    const [userName, setUserName] = useState<string>('')
-
-    useEffect(()=>{
-        getSession()
-        .then((session)=>{
-            if(!session) return router.replace('/login')
-                const name = session.user.name.split(' ')[0]
-                setUserName(name)
-        })
-    },[router])
 
     // resources for cards 
       const instructions = [
         {
-            title:"Install Chrome Extension",
+            title:"Install Extension",
             icon:'download',
             description:"Get access to our exclusive Chrome extension that helps you find profitable products on Jumia."
         },
@@ -41,7 +29,7 @@ export const DashPage= () => {
             description:"Search your desired keywords or choose your desired category on any jumia website."
         },
         {
-            title:"Find Validated Products",
+            title:"Find Products",
             icon:'layout',
             description:"Search your desired keywords or choose your desired category on any jumia website"
         },
@@ -86,38 +74,36 @@ export const DashPage= () => {
                 </div>
 
                 <div className='px-6 py-4 lg:ml-20 sm:ml-0'>
-                    <DashTitle DashTitle={` Welcome ${userName ? userName : ''}`} />
+                    <DashTitle DashTitle={` Welcome ${name}`} />
 
-                    <div className='flex lg:flex-row lg:items-center sm:flex-col items-center sm:space-y-4  lg:space-y-0 lg:flex-wrap sm:flex-nowrap my-6 lg:gap-x-4 sm:gap-x-0'>
+                    <div className='flex lg:flex-row lg:items-center sm:flex-col items-center sm:space-y-2  lg:space-y-0 lg:flex-wrap sm:flex-nowrap my-6 lg:gap-x-4 sm:gap-x-0'>
                         {
                            actions.map((action,index) => (
-                            
-                            <div key={index} className={`${action.hidden ? 'lg:hidden sm:w-full' : 'lg:w-2/6 2xl:w-1/4 sm:w-full'}  my-4  border border-gray-400`}><Card>
-                            <h2 className='font-bold text-xl my-2'>{action.title}</h2>
-                            <p className='text-base'>{action.description}
+                            <div key={index} className={`${action.hidden ? 'lg:hidden sm:w-full' : 'lg:w-2/6 2xl:w-1/4 sm:w-full'}  my-4  border border-gray-400 p-4 bg-white`}>
+                            <h2 className='font-bold lg:text-xl my-2'>{action.title}</h2>
+                            <p className='lg:text-base sm:text-sm'>{action.description}
                             </p>
                             <button onClick={()=> {router.push(action.path)}} className='px-6 py-3 bg-secondary text-white my-4 rounded-md'>{action.cta}</button>
-                            </Card></div>
+                            </div>
                             )) 
                         }
 
                     </div>
 
-                    <div className='mt-12 sm:hidden lg:block'>
+                    <div className='mt-8 sm:hidden lg:block'>
 
                         <h2 className='font-bold text-2xl text-secondary my-2'>How to Get started</h2>
 
-                        <div className='flex items-center'>
+                        <div className='flex items-center space-x-2'>
                             {
                                 instructions.map((instruction:any, index:number) => (
-                                    <Card key={index} className='bg-transparent lg:w-1/4 2xl:w-1/6 p-0'>
-                                        <div className='flex items-center gap-x-2 my-3'>
+                                    <div key={index} className='bg-transparent lg:w-1/5 2xl:w-1/6 p-4'>
+                                        <div className='flex items-center gap-x-2 my-2'>
                                             <FeatherIcons icon={instruction.icon} size={30} />
                                             <h3 className='font-medium text-lg my-2'>{instruction.title}</h3>
                                         </div>
                                         <p className='text-sm'>{instruction.description}</p>
-                                    </Card>
-                                    
+                                    </div>
                                 ))
                             }
                         </div>
