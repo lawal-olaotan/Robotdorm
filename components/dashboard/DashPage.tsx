@@ -81,12 +81,12 @@ export const DashPage:NextPage<UserName> = (UserName) => {
                         {
                            actions.map((action,index) => (
                             
-                            <Card key={index} className={`${action.hidden ? 'lg:hidden sm:w-full' : 'lg:w-2/6 2xl:w-1/4 sm:w-full'}  my-4  border border-gray-400`}>
+                            <div key={index} className={`${action.hidden ? 'lg:hidden sm:w-full' : 'lg:w-2/6 2xl:w-1/4 sm:w-full'}  my-4  border border-gray-400`}><Card>
                             <h2 className='font-bold text-xl my-2'>{action.title}</h2>
                             <p className='text-base'>{action.description}
                             </p>
                             <button onClick={()=> {router.push(action.path)}} className='px-6 py-3 bg-secondary text-white my-4 rounded-md'>{action.cta}</button>
-                            </Card>
+                            </Card></div>
                             )) 
                         }
 
@@ -99,13 +99,16 @@ export const DashPage:NextPage<UserName> = (UserName) => {
                         <div className='flex items-center'>
                             {
                                 instructions.map((instruction:any, index:number) => (
-                                    <Card key={index} className='bg-transparent lg:w-1/4 2xl:w-1/6 p-0'>
+                                    <div key={index} className='bg-transparent lg:w-1/4 2xl:w-1/6 p-0'>
+                                    <Card>
                                         <div className='flex items-center gap-x-2 my-3'>
                                             <FeatherIcons icon={instruction.icon} size={30} />
                                             <h3 className='font-medium text-lg my-2'>{instruction.title}</h3>
                                         </div>
                                         <p className='text-sm'>{instruction.description}</p>
                                     </Card>
+                                    </div>
+                                    
                                 ))
                             }
                         </div>
