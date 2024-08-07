@@ -4,8 +4,6 @@ import { VaultContext} from 'context/VaultProvider';
 import { ProductDetails,quoteDetails} from 'interface/userSes';
 import {getCoreRowModel, useReactTable, flexRender,createColumnHelper} from '@tanstack/react-table';
 import { NextPage } from 'next';
-import {useSession} from 'next-auth/react'
-import { usePaystackPayment } from 'react-paystack';
 import {toast} from 'react-toastify'
 
 interface quoteRequesterId {
@@ -25,7 +23,7 @@ export const DashQuote:NextPage<quoteRequesterId> = (quoteRequesterId)=> {
                header: () => <span>Product</span>,
                cell: ({ row }) =>  (
                    <a href={row.original.link} target="_blank" rel="noreferrer" className='flex items-center'>
-                       <img className='w-[40px] h-[40px] mr-3' src={row.original.img}/>
+                       <img alt={row.original.title} className='w-[40px] h-[40px] mr-3' src={row.original.img}/>
                        <div className='lg:flex sm:hidden flex-col text-sm'>{row.original.title}</div>
                    </a>
     ),

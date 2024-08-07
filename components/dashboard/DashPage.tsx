@@ -78,7 +78,7 @@ export const DashPage:NextPage<UserName> = (UserName) => {
 
                     <div className='flex lg:flex-row lg:items-center sm:flex-col items-center sm:space-y-2  lg:space-y-0 lg:flex-wrap sm:flex-nowrap my-6 lg:gap-x-4 sm:gap-x-0'>
                         {
-                           actions.map((action,index) => (
+                           actions.map((action:any,index:number) => (
                             <div key={index} className={`${action.hidden ? 'lg:hidden sm:w-full' : 'lg:w-2/6 2xl:w-1/4 sm:w-full'}  my-4  border border-gray-400 p-4 bg-white`}>
                             <h2 className='font-bold lg:text-xl my-2'>{action.title}</h2>
                             <p className='lg:text-base sm:text-sm'>{action.description}
