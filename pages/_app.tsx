@@ -11,6 +11,7 @@ import {ContextProvider} from '../context/UserContext';
 import {PageProvider} from '../context/PageProvider';
 import {VaultProvider} from '../context/VaultProvider';
 import ReactGA from 'react-ga4';
+import { ChakraProvider } from '@chakra-ui/react'
 
 
 
@@ -30,16 +31,18 @@ export default function MyApp({Component, pageProps: {session, ...pageProps} }: 
 
   
   return (
-    
-      <SessionProvider session={session}>
-        <ContextProvider>
-        <PageProvider>
-          <VaultProvider>
-          {getLayout(<Component {...pageProps} />)}
-        </VaultProvider>
-        </PageProvider>
-        </ContextProvider>
-      </SessionProvider>)
+    <ChakraProvider>
+        <SessionProvider session={session}>
+          <ContextProvider>
+          <PageProvider>
+            <VaultProvider>
+            {getLayout(<Component {...pageProps} />)}
+          </VaultProvider>
+          </PageProvider>
+          </ContextProvider>
+        </SessionProvider>
+    </ChakraProvider>
+  )
 }
 
 

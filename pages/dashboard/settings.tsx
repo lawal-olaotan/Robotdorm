@@ -8,24 +8,31 @@ import { paymentEngine } from "util/payment";
 import { GetServerSidePropsContext } from "next";
 import Link from 'next/link';
 import { logout } from 'lib/events';
-import { Button, Modal } from 'antd';
+import {
+    Modal,
+    ModalOverlay,
+    ModalContent,
+    ModalHeader,
+    ModalFooter,
+    ModalBody,
+    ModalCloseButton,
+    useDisclosure,
+    Button
+  } from '@chakra-ui/react'
 import { useRouter } from 'next/router';
 
 export default function Billing({userInfo}){
 
     const router = useRouter()
     const {user,portal}= JSON.parse(userInfo)
-    const [isModalOpen, setIsModalOpen] = useState(false);
-
+    const { isOpen, onOpen, onClose } = useDisclosure()
 
     // TODO 
     // Create isUserPremium hook and check if user has subscribed to activate manage subscription manage
-
-
     const deleteAccount = async(event:React.SyntheticEvent)=> {
         event.preventDefault();
         const userId = user.id
-        // TODO: clean up API route
+        // // TODO: clean up API route
         const isResourcesDeleted = await fetch('/api/deleteUser', {
             method:'POST', 
             body:JSON.stringify(userId),
@@ -37,8 +44,8 @@ export default function Billing({userInfo}){
         if(!isResourcesDeleted.ok) return false;
 
         logout(event)
-        setIsModalOpen(false);
         router.replace('/login');
+        onClose()
     }
 
     return (
@@ -57,12 +64,27 @@ export default function Billing({userInfo}){
                             </div> 
                             <div className='my-4 flex flex-col justify-start w-fit items-start space-y-2 text-white '>
                                 <button className='px-4 py-2 bg-secondary rounded-md mb-4' onClick={logout}>Logout</button>
-                                <div>   
-                                <Button danger type="primary" className='p-2 bg-red-500 text-white' onClick={()=> {setIsModalOpen(true)}}>Delete Account</Button>
-                                <Modal className='text-2xl' okType='danger' title="Are you sure you?" open={isModalOpen} onOk={deleteAccount} onCancel={()=> {setIsModalOpen(false)}}>
-                                    <p>This will permanently delete all your products saved and your subscription will be cancelled</p>
-                                    <p className='text-red-500 font-bold'>This action cannot be undone</p>
-                                </Modal>
+                                <div>  
+
+                                    <button className='p-2 bg-red-500 text-white' onClick={onOpen}>Delete Account</button>
+
+                                    <Modal isOpen={isOpen} onClose={onClose}>
+                                        <ModalOverlay/>
+                                        <ModalContent>
+                                            <ModalHeader>Delete Account</ModalHeader>
+                                            <ModalCloseButton />
+                                            <ModalBody>
+                                                <p>This will permanently delete all your products saved and your subscription will be cancelled</p>
+                                                <p className='text-red-500 font-bold'>This action cannot be undone</p>
+                                            </ModalBody>
+                                            <ModalFooter>
+                                                    <Button colorScheme='blue' mr={3} onClick={onClose}>
+                                                    Close
+                                                    </Button>
+                                                    <Button onClick={deleteAccount} colorScheme='red' > I agree</Button>
+                                                </ModalFooter>
+                                        </ModalContent>
+                                    </Modal>
                                                                 
                                 </div>
                                 

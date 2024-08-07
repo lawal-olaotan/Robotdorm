@@ -6,22 +6,22 @@ import { DashTitle } from '@components/dashboard/DashTitle';
 import { Summary } from '@components/dashboard/Summary';
 import { EmptySection } from '@components/dashboard/EmptySection';
 import { DashPagination } from '@components/dashboard/DashPagination';
-import { getServerSession } from "next-auth";
 import { PageContext } from 'context/PageProvider';
 import useSWR from 'swr'; 
 import { Loader } from '@components/dashboard/Loader';
-import { GetServerSidePropsContext } from "next";
-import {authOptions}  from "../api/auth/[...nextauth]";
+import { UseAuth } from 'hooks/auth';
 
 export default function Insights({user}){
-    const {id} = JSON.parse(user)
+
+    const id = UseAuth();
     const fetcher = (url) => fetch(url).then((res)=> res.json() ); 
     const {pageNumber} = useContext(PageContext); 
 
 
 
     const url = `/api/getSummary?query=${id}&page=${pageNumber}&collection=summaries`;
-    const { data, error } = useSWR(url, fetcher);  
+    const { data, error } = useSWR(url, fetcher); 
+
     if(data === undefined){
         return <Loader/>
     }
@@ -42,22 +42,3 @@ export default function Insights({user}){
             </div>         
       </DashLayout>
 )}
-
-export async function getServerSideProps(context:GetServerSidePropsContext){
-
-
-    const session = await getServerSession(context.req,context.res,authOptions);
-    if(!session) return{
-        redirect:{
-            destination:'/login',
-            permanent:false
-        }
-    }
-
-    const { user} = session
-    return {
-        props: {
-          user:JSON.stringify(user)
-        },
-    };
-}
