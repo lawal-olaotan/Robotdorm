@@ -7,7 +7,7 @@ import { Summary } from '@components/dashboard/Summary';
 import { EmptySection } from '@components/dashboard/EmptySection';
 import { DashPagination } from '@components/dashboard/DashPagination';
 import { getServerSession } from "next-auth";
-import { PageContext } from 'lib/PageProvider';
+import { PageContext } from 'context/PageProvider';
 import useSWR from 'swr'; 
 import { Loader } from '@components/dashboard/Loader';
 import { GetServerSidePropsContext } from "next";
@@ -28,17 +28,17 @@ export default function Insights({user}){
     return (
         <DashLayout>
             <DashHead PageName="Market Insights"/> 
-            <div>
-            <DashTitle DashTitle="Search Insights"/>
+            <div className='lg:ml-20 sm:ml-5 lg:mt-10 sm:mt-5'>
+                <DashTitle DashTitle="Search Insights"/>
 
-            <div className="flex flex-wrap mt-8">
-                { data.data.length !== 0 ?
-                    data.data.map((summary:any)=> ( 
-                        <Summary keyWord={summary.keyWord} key={summary._id.toString()} EstTotalRevenue={summary.EstTotalRevenue} EstAverageRevenue={summary.EstAverageRevenue} EstTotalUnitsSold={summary.EstTotalUnitsSold} AveragePrice={summary.AveragePrice} /> 
-                    )): <EmptySection title="Try your first Search" text="Keep track of your search keywords and metrics to make informed business decisions with up-to-date market insights."/>
-                }
-            </div>
-            <DashPagination itemCount={data.count}/> 
+                <div className="flex lg:flex-row flex-wrap mt-8 sm:flex-col">
+                    { data.data.length !== 0 ?
+                        data.data.map((summary:any)=> ( 
+                            <Summary keyWord={summary.keyWord} key={summary._id.toString()} EstTotalRevenue={summary.EstTotalRevenue} EstAverageRevenue={summary.EstAverageRevenue} EstTotalUnitsSold={summary.EstTotalUnitsSold} AveragePrice={summary.AveragePrice} /> 
+                        )): <EmptySection title="Try your first Search" text="Keep track of your search keywords and metrics to make informed business decisions with up-to-date market insights."/>
+                    }
+                </div>
+                <DashPagination itemCount={data.count}/> 
             </div>         
       </DashLayout>
 )}

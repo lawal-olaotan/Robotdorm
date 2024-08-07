@@ -7,10 +7,11 @@ import type { AppProps } from 'next/app';
 import type {ReactElement, ReactNode} from 'react';
 import type {NextPage} from 'next'; 
 import {SessionProvider} from 'next-auth/react';
-import {ContextProvider} from '../lib/UserContext';
-import {PageProvider} from '../lib/PageProvider';
-import {VaultProvider} from '../lib/VaultProvider';
+import {ContextProvider} from '../context/UserContext';
+import {PageProvider} from '../context/PageProvider';
+import {VaultProvider} from '../context/VaultProvider';
 import ReactGA from 'react-ga4';
+
 
 
 type NextPageWithLayout = NextPage & {

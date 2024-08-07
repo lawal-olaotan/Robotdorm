@@ -4,7 +4,7 @@ import ClientPromise from '../../../lib/mongoDb';
 import  EmailProvider from 'next-auth/providers/email';
 import {createTransport} from 'nodemailer'; 
 import type { NextAuthOptions } from 'next-auth';
-import { db } from 'lib/db';
+import { db } from 'util/db';
 import crypto from "node:crypto"
 
 

@@ -15,7 +15,7 @@ import { EmptySection } from '@components/dashboard/EmptySection';
 import {IndeterminateCheckbox} from '@components/dashboard/IndeterminateCheckbox';
 import { VaultIcons } from '@components/dashboard/VaultIcons'
 import { ProductDetails } from 'interface/userSes';
-import { VaultContext} from 'lib/VaultProvider';
+import { VaultContext} from 'context/VaultProvider';
 import { DashQuote } from '@components/dashboard/DashQuote';
 import { Loader } from '@components/dashboard/Loader';
 
@@ -29,8 +29,8 @@ export default function Lists({user}){
                 header: () => <span>Product</span>,
                 cell: ({ row }) =>  (
                     <a href={row.original.link} target="_blank" rel="noreferrer" className='flex items-center'>
-                        <img className='w-[50px] h-[50px] mr-3' src={row.original.img}/>
-                        <div className='flex flex-col'> <span>{row.original.title}</span> <span>{row.original.keyWord}</span></div>
+                        <img className='lg:w-[50px] lg:h-[50px] lg:mr-3 sm:m-0' src={row.original.img}/>
+                        <div className='sm:hidden lg:flex flex-col'> <span>{row.original.title}</span> <span>{row.original.keyWord}</span></div>
                     </a>
      ),
                 footer: props => props.column.id,
@@ -63,7 +63,7 @@ export default function Lists({user}){
                 />
             ),
             cell:({ row }) => (
-                <div className='px-1'>
+                <div className='lg:px-1 sm:p-4'>
                     <IndeterminateCheckbox
                     {...{
                         checked: row.getIsSelected(),
@@ -101,7 +101,7 @@ export default function Lists({user}){
     } 
 
     return (
-    <div>
+    <div className='lg:ml-20 sm:mx-4 lg:mt-10 sm:mt-5'>
         <div>
             <DashHead PageName="Vault"/> 
             <div className='relative'>

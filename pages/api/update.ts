@@ -1,7 +1,7 @@
 import type { NextApiResponse, NextApiRequest} from "next";
 import handler,{check,post,initiValidation} from '../../lib/middlehelper'
 import ClientPromise from '../../lib/mongoDb';
-import emailMarketingProvider from "lib/Email";
+import emailMarketingProvider from "util/Email";
 
 
 const validator = initiValidation([

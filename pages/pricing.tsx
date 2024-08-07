@@ -7,12 +7,18 @@ import { Review } from "@components/Pricing/Review";
 import { GetServerSidePropsContext } from "next";
 import {authOptions}  from "./api/auth/[...nextauth]";
 import { getServerSession } from "next-auth";
-
+import ReactGA from 'react-ga4';
 
 
 export default function Pricing({user}){
 
     const userDetails = JSON.parse(user)
+
+    ReactGA.send({
+        hitType:"pageView",
+        page:"/pricing",
+        title:"pricing"
+    })
 
     return (
 
