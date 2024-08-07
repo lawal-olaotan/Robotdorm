@@ -11,17 +11,16 @@ import { getSession} from "next-auth/react";
     
 export const  UseAuth = () => {
     const router = useRouter()
+    const [userId,setUserId] = useState<string>()
 
     useEffect(()=> {
             getSession().then((session)=> {
-                if(!session) return false
+                if(!session) router.replace('/login')
                 const {id} = session.user
-                chrome.runtime.sendMessage(extensionId(),{ type:"browser", data:id})
-                router.replace('/dashboard')
-                
+                setUserId(id)
             })
     }, [router])
-
+    return userId
 }
 
 
