@@ -1,6 +1,6 @@
 import Image from 'next/image'
 import { useContext, useRef, useState} from 'react'
-import { VaultContext} from 'lib/VaultProvider';
+import { VaultContext} from 'context/VaultProvider';
 import { ProductDetails,quoteDetails} from 'interface/userSes';
 import {getCoreRowModel, useReactTable, flexRender,createColumnHelper} from '@tanstack/react-table';
 import { NextPage } from 'next';
@@ -27,7 +27,7 @@ export const DashQuote:NextPage<quoteRequesterId> = (quoteRequesterId)=> {
                cell: ({ row }) =>  (
                    <a href={row.original.link} target="_blank" rel="noreferrer" className='flex items-center'>
                        <img className='w-[40px] h-[40px] mr-3' src={row.original.img}/>
-                       <div className='flex flex-col text-sm'>{row.original.title}</div>
+                       <div className='lg:flex sm:hidden flex-col text-sm'>{row.original.title}</div>
                    </a>
     ),
                footer: props => props.column.id,
@@ -39,8 +39,8 @@ export const DashQuote:NextPage<quoteRequesterId> = (quoteRequesterId)=> {
            cell: ({ row }) => (
             <input
             type="number"
-            min='25'
-            max='200'
+            min='50'
+            max='20000'
             defaultValue=''
             className={row.original.title}
         required/>)}),
@@ -53,14 +53,7 @@ export const DashQuote:NextPage<quoteRequesterId> = (quoteRequesterId)=> {
             className={row.original.title}
         />)}),
     ]
-    const config = {
-        Reference: session.user.id,
-        email:session.user.email,
-        amount:107500,
-        publicKey:process.env.NEXT_PUBLIC_PAYSTACK
-    }
 
-    const initializePayment = usePaystackPayment(config);
 
     const table = useReactTable({
         data,
@@ -69,11 +62,6 @@ export const DashQuote:NextPage<quoteRequesterId> = (quoteRequesterId)=> {
         debugTable: true,
     })
 
-    const onSuccess = async () => {
-        await fetchData(quoteData)
-        
-    }
-
     const successMsg = () => {
         return (<div>
         <h4 className='font-semibold mb-2 text-primary'>Quote Request Confirmed</h4>
@@ -81,10 +69,6 @@ export const DashQuote:NextPage<quoteRequesterId> = (quoteRequesterId)=> {
         </div>)
     }
 
-    const onClose = () => {
-        // implementation for  whatever you want to do when the Paystack dialog closed.
-        console.log('closed')
-    }
 
     const handleQuote = async(event: React.SyntheticEvent) =>{
         event.preventDefault();
@@ -97,7 +81,7 @@ export const DashQuote:NextPage<quoteRequesterId> = (quoteRequesterId)=> {
             postedBy:postedBy
         })
         setQuoteStatus(false)
-        initializePayment(onSuccess, onClose)
+        await fetchData(quoteData)
     }
 
     const fetchData = async (data:quoteDetails) => {
@@ -114,7 +98,7 @@ export const DashQuote:NextPage<quoteRequesterId> = (quoteRequesterId)=> {
             if(res.message === 'success')
             {   
                 toast.success(successMsg, {
-                    position: toast.POSITION.TOP_RIGHT,
+                    position:"top-right",
                   });
                 setCheckedRow({}) 
             }
@@ -141,10 +125,10 @@ export const DashQuote:NextPage<quoteRequesterId> = (quoteRequesterId)=> {
                 <Image  height={30} width={30} src='/close-white.svg' alt='close-quote' />
             </div>
 
-            <form onSubmit={handleQuote} className='mt-16 flex flex-col max-h-[520px] w-1/2 bg-white opacity-100 z-50 p-4'>
+            <form onSubmit={handleQuote} className='mt-16 flex flex-col max-h-[520px] lg:w-1/2 sm:w-[95%] bg-white opacity-100 z-50 lg:p-4 sm:p-2'>
                     <div className='text-center mb-3'>
-                        <h3 className='font-bold text-xl'>Save time and get the best pricing quote within 24 hours</h3>
-                        <p className='text-red-800'>Note: we only source minimum of 25 units upwards</p>
+                        <h3 className='font-bold lg:text-xl'>Save time and get the best pricing quote within 24 hours</h3>
+                        <p className='text-red-800'>Note: we only source minimum of 50 units upwards</p>
                     </div>
               
                 <div className='max-h-[400px] overflow-y-scroll'>
@@ -187,21 +171,12 @@ export const DashQuote:NextPage<quoteRequesterId> = (quoteRequesterId)=> {
                     </table> 
                 </div>
 
-                <div className='mt-4'>
+                <div className='my-8'>
                     <label className='mr-2 whatsapp' htmlFor="whatsapp-no"> Whatsapp Number</label>
                     <input ref={wsRef} className='border border-solid border-black p-1' type='tel' id='whatsapp-no'name='whatsapp-no' required/>
                 </div>
-              <div className='self-end w-1/3'>
-                <div className='flex items-center justify-between text-sm'>
-                    <span>Preparation fee</span>
-                    <span>{Intl.NumberFormat('en-NG', { style: 'currency', currency: 'NGN' }).format(1000)}</span>
-                </div>
-                <div className='flex items-center justify-between mt-2 text-sm'>
-                    <span>VAT(7.5%)</span>
-                    <span>{Intl.NumberFormat('en-NG', { style: 'currency', currency: 'NGN' }).format(75)}</span>
-                </div>
-              <input className='mt-4 w-full py-2.5 px-5 bg-primary text-white' type='submit' value={`Request Quote  (${Intl.NumberFormat('en-NG', { style: 'currency', currency: 'NGN' }).format(1075)})`}/>
-              </div>
+
+                <button className='w-fit py-2 px-6 bg-primary text-white mb-2' type='submit'>{`Request Quote`}</button>                     
                 
             </form>
       

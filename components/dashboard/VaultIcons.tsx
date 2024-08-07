@@ -2,7 +2,7 @@ import {NextPage} from 'next';
 import {useSession} from 'next-auth/react'
 import Image from 'next/image'
 import {useContext} from 'react'
-import { VaultContext} from 'lib/VaultProvider';
+import { VaultContext} from 'context/VaultProvider';
 import { ProductDetails } from 'interface/userSes';
 import {useSWRConfig} from 'swr'; 
 import {toast} from 'react-toastify'

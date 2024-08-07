@@ -15,3 +15,4 @@ import { Footer } from './LandingPage/Footer';
         </div>
         )
 }
+

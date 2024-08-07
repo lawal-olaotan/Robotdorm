@@ -31,8 +31,8 @@ export const Section:NextPage<Props> = (Props)=> {
                 <a className="px-8 py-4 bg-secondary  rounded-lg lg:hidden">Start a free trial</a>
             </Link>
             </div>
-            <div className="w-[33%] shadow-lg shadow-primary sm:hidden lg:inline">
-                <img className="w-100 rounded-lg" src={imgTitle} alt="extensionpic" />
+            <div className="w-[33%] shadow-lg shadow-primary sm:hidden lg:inline ">
+                <img className="w-full rounded-lg" src={imgTitle} alt="extensionpic" />
             </div>
         </div>
 

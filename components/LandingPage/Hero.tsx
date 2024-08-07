@@ -1,18 +1,16 @@
-import { Section }from './Section'
 import { Second } from './Second'
 import {DynamicSection} from './DynamicSection'
-import { Review } from '@components/Pricing/Review'
 import { Title } from '@components/Pricing/Title'
 
 export const Hero = () => {
     return (
         <div>
-            <DynamicSection sectionSubTitle="By 2025 half a billion people in Africa will be e-commerce users. Find best selling products and start selling on Africa's biggest marketplace." sectionTitle={`Start and run your Jumia business from anywhere`} imgTitle="/firstpic.png"/>
+            <DynamicSection sectionTitle={`Find winning products in minutes.`} sectionSubTitle="We've removed the guesswork so you can find validated products idea on African's largest ecommerce database." imgTitle="/firstpic.png"/>
             <Second/>
-            <div className='flex flex-col items-center justify-center py-4 px-20 bg-gradient-to-bl from-sky-100 to-blue-500'>
-                <Title logoSize={50} subTextPos='text-center font-bold'/>
+            <div className='flex flex-col items-center justify-center lg:py-4 lg:px-20 bg-gradient-to-bl from-sky-100 to-blue-500'>
+                <Title logoSize={60} subTextPos='text-center font-bold'/>
             </div>
-            <Section sectionSubTitle="Robotdorm provides you the right data to find best selling products on Jumia, that can boost your sales and boost profits" sectionTitle="Outclass your competitors" imgTitle="/secondpic.png"/>
+            <DynamicSection sectionSubTitle="Robotdorm provides you the tools to find best selling products on Jumia, so you can boost your ecommerce sales and profits." sectionTitle="Outclass your competitors" imgTitle="/secondpic.png"/>
         </div>
     )
 }

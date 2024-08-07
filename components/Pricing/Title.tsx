@@ -12,8 +12,8 @@ export const Title:NextPage<TitleProps> = (TitleProps)=> {
     const supportedCountries = ['dz','ng','ke','ug','tn','ma','eg','za','sn','ci','gh']
 
     return (
-        <div className="my-12 sm:hidden lg:block p-4">
-                        <h2 className="text-3xl font-bold ">The tool trusted by 500+ Jumia Sellers.</h2>
+        <div className="my-12 p-4 text-center">
+                        <h2 className="lg:text-3xl sm:text-xl font-bold">Trusted by 600+ Sellers.</h2>
                     <div className={`my-4 ${subTextPos}`}>
                         <h2 className="text-gray-700">LIVE IN 11 COUNTRIES</h2>
                         <div className="overflow-hidden flex items-center justify-left my-4">

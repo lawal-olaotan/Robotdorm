@@ -1,6 +1,6 @@
 import FeatherIcon from 'feather-icons-react'
 import { useRouter } from 'next/router'
-import { checkout } from 'lib/payment'
+import { checkout } from 'util/payment'
 import { UserSession } from 'interface/userSes'
 import { NextPage } from 'next'
 import  { useState } from 'react'
@@ -15,21 +15,21 @@ export const PriceList:NextPage<UserSession> = (UserSession)=> {
             title:'Bee',
             subtitle:"For short-term product research",
             priceTitle:"£5/week",
-            priceSubTitle:"Unlimited access to product research tool.",
+            priceSubTitle:"Billed Weekly",
             priceId:'price_1P1ocIAvIJrXKY25kFkSOeQf',
             isDemo:false,
             trialDays:1,
-            features:['1 day free trial','Weekly access']
+            features:['Weekly consulting session','Unlimited search Access', '7 day access']
         },
         {
             title:'Atlas',
             subtitle:"For professional sellers",
             priceTitle:"£12/month",
-            priceSubTitle:"£12 billed monthtly",
+            priceSubTitle:"billed Monthtly",
             priceId:'price_1P1oedAvIJrXKY25Lky0FZXG',
             isDemo:false,
             trialDays:7,
-            features:['7 day free trial','Monthly access']
+            features:['Everything in Bee plan','Monthly access', 'Unlimited Quote Request']
         },
         {
             title:'Enterprise',

@@ -15,7 +15,7 @@ export const Summary: NextPage<Props> = (Props) => {
 
     return (
         <>
-        { <div  className="flex flex-col p-8 bg-white mr-8 rounded-lg mb-8 shadow-6xl w-1/5 xl:w-1/4 lg:w-[36%]">
+        { <div  className="flex flex-col p-8 bg-white mr-8 rounded-lg mb-8 shadow-6xl xl:w-1/4 lg:w-[36%] sm:w-[320px]">
                         <p className="mb-6 font-semibold"> <span>Keyword:</span> <span className="text-secondary">{keyWord}</span> </p>
                         <div className="flex flex-col">
                             <div  className="flex mb-4">
