@@ -6,7 +6,7 @@ import { useEffect } from "react";
 import { getServerSession } from "next-auth";
 import { GetServerSidePropsContext } from "next";
 import {authOptions}  from "./api/auth/[...nextauth]";
-import ReactGA from 'react-ga4';
+
 
 export default function Login({id}){
     const router = useRouter()
@@ -16,14 +16,10 @@ export default function Login({id}){
           chrome.runtime.sendMessage(extensionId(),{ type:"browser", data:id})
           router.push('/dashboard')
         }
-}, [router])
+}, [id,router])
 
 
-ReactGA.send({
-  hitType:"pageView",
-  page:"/login",
-  title:"login"
-})
+
 
   return (<AuthForm />)
 };

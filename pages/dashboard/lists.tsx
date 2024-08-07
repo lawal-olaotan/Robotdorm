@@ -28,8 +28,8 @@ export default function Lists(){
                 header: () => <span>Product</span>,
                 cell: ({ row }) =>  (
                     <a href={row.original.link} target="_blank" rel="noreferrer" className='flex items-center'>
-                        <Image height={50} width={50} alt={row.original.title} className='lg:mr-3 sm:m-0' src={row.original.img}/>
-                        <div className='sm:hidden lg:flex flex-col'> <span>{row.original.title}</span> <span>{row.original.keyWord}</span></div>
+                        <Image height={50} width={50} alt={row.original.title} src={row.original.img}/>
+                        <div className='sm:hidden lg:flex flex-col lg:ml-3 sm:m-0'> <span>{row.original.title}</span> <span>{row.original.keyWord}</span></div>
                     </a>
      ),
                 footer: props => props.column.id,
@@ -79,9 +79,8 @@ export default function Lists(){
     
     const url = `/api/getSummary?query=${id}&collection=lists`;
     const { data, error } = useSWR(url, fetcher);  
-    if(data !== undefined){
-        setListData(data);
-    }
+    if(!data)setListData(data);
+
 
     const table = useReactTable({
         data,

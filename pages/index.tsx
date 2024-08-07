@@ -2,21 +2,12 @@
 import { Hero }from  '@components/LandingPage/Hero';
 import  Head  from 'next/head';
 import { Layouts01 } from "@components/Layouts01"
-import type { ReactElement } from 'react'
-import ReactGA from 'react-ga4';
-
 
 export default function Home(){
 
 // track page for google analytics
-
-    ReactGA.send({
-        hitType:"pageView",
-        page:"/",
-        title:"home"
-    })
-
   return (
+    <Layouts01>
         <div>
             <Head>
                 <title>Welcome | RobotDorm</title>
@@ -27,21 +18,9 @@ export default function Home(){
             </main>
            
         </div>
-    
+        </Layouts01>
   )
 }
 
-
-
-Home.getLayout = function getLayout(page:ReactElement){
-
-    return (
-        <Layouts01>
-        {page}
-        </Layouts01>
-
-    )
-   
-}   
 
 
