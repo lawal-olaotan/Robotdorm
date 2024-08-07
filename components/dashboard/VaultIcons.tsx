@@ -36,7 +36,7 @@ export const VaultIcons: NextPage<VaultProps>=(VaultProps) => {
                     mutate(`/api/getSummary?query=${session.user.id}&collection=lists`)
                  }
                  toast.success("Product Removed!", {
-                    position: toast.POSITION.TOP_RIGHT
+                    position:"top-right",
                   });
                  
              }
