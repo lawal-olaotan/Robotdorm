@@ -1,21 +1,32 @@
-import React from 'react';
+
 import {NextPage} from 'next'
+import React,{useEffect,useState,useContext} from 'react';
 import {Card } from 'antd'
 import FeatherIcons from 'feather-icons-react'
+import { useRouter } from 'next/router';
+import {getSession} from 'next-auth/react'; 
 
 // components 
 import {DashHead} from '@components/dashboard/DashHead'; 
 import { DashTitle } from './DashTitle';
 import Link from 'next/link';
-import { useRouter } from 'next/router';
 
 interface UserName {
     name: string;
 }
 
-export const DashPage:NextPage<UserName> = (UserName) => {
-    const {name} = UserName
+export const DashPage= () => {
     const router = useRouter()
+    const [userName, setUserName] = useState<string>('')
+
+    useEffect(()=>{
+        getSession()
+        .then((session)=>{
+            if(!session) return router.replace('/login')
+                const name = session.user.name.split(' ')[0]
+                setUserName(name)
+        })
+    },[router])
 
     // resources for cards 
       const instructions = [
@@ -75,7 +86,7 @@ export const DashPage:NextPage<UserName> = (UserName) => {
                 </div>
 
                 <div className='px-6 py-4 lg:ml-20 sm:ml-0'>
-                    <DashTitle DashTitle={` Welcome ${name}`} />
+                    <DashTitle DashTitle={` Welcome ${userName ? userName : ''}`} />
 
                     <div className='flex lg:flex-row lg:items-center sm:flex-col items-center sm:space-y-4  lg:space-y-0 lg:flex-wrap sm:flex-nowrap my-6 lg:gap-x-4 sm:gap-x-0'>
                         {
@@ -99,15 +110,13 @@ export const DashPage:NextPage<UserName> = (UserName) => {
                         <div className='flex items-center'>
                             {
                                 instructions.map((instruction:any, index:number) => (
-                                    <div key={index} className='bg-transparent lg:w-1/4 2xl:w-1/6 p-0'>
-                                    <Card>
+                                    <Card key={index} className='bg-transparent lg:w-1/4 2xl:w-1/6 p-0'>
                                         <div className='flex items-center gap-x-2 my-3'>
                                             <FeatherIcons icon={instruction.icon} size={30} />
                                             <h3 className='font-medium text-lg my-2'>{instruction.title}</h3>
                                         </div>
                                         <p className='text-sm'>{instruction.description}</p>
                                     </Card>
-                                    </div>
                                     
                                 ))
                             }
