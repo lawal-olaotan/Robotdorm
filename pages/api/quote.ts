@@ -8,13 +8,10 @@ export default async function handler (req:NextApiRequest, res:NextApiResponse){
        try{
         
        const dbInstance = (await ClientPromise).db();
-       dbInstance.collection('quote').insertOne(data,function(err){
-        if(err){
-            console.log(err);
-        }
-        return res.status(200).send({message:'success'});
+       await dbInstance.collection('quote').insertOne(data)
+        return res.status(200).send({message:'success'});   
 
-        });}catch (e:any){
+        }catch (e:any){
             console.error(e);
             return res.status(500).json({
                 message:"server error"
