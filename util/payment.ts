@@ -30,14 +30,7 @@ export const paymentEngine = ()=>{
         return session.url;
         
     }
-
     
-    const flutterWave = () => {
-
-
-    }
-
-
     return {
         portalUrl
     }

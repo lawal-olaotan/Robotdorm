@@ -1,23 +1,57 @@
 import { DashLayout } from '@components/dashboard/DashLayout';
 import { DashHead } from '@components/dashboard/DashHead';
 import { DashTitle } from '@components/dashboard/DashTitle';
-import React from "react";
-import {authOptions}  from "../api/auth/[...nextauth]";
+import React,{useState} from "react";
+import {authOptions}  from "@api/auth/[...nextauth]";
 import { getServerSession } from "next-auth";
-import { paymentEngine } from "../../lib/payment";
+import { paymentEngine } from "util/payment";
 import { GetServerSidePropsContext } from "next";
 import Link from 'next/link';
-import FeatherIcon from 'feather-icons-react';
-import {logout} from '../../lib/AuthFunc'
+import { logout } from 'lib/events';
+import {
+    Modal,
+    ModalOverlay,
+    ModalContent,
+    ModalHeader,
+    ModalFooter,
+    ModalBody,
+    ModalCloseButton,
+    useDisclosure,
+    Button
+  } from '@chakra-ui/react'
+import { useRouter } from 'next/router';
 
 export default function Billing({userInfo}){
 
+    const router = useRouter()
     const {user,portal}= JSON.parse(userInfo)
+    const { isOpen, onOpen, onClose } = useDisclosure()
+
+    // TODO 
+    // Create isUserPremium hook and check if user has subscribed to activate manage subscription manage
+    const deleteAccount = async(event:React.SyntheticEvent)=> {
+        event.preventDefault();
+        const userId = user.id
+        // // TODO: clean up API route
+        const isResourcesDeleted = await fetch('/api/deleteUser', {
+            method:'POST', 
+            body:JSON.stringify(userId),
+            headers: {
+                'Content-Type': 'application/json',
+            }, 
+        })
+        
+        if(!isResourcesDeleted.ok) return false;
+
+        logout(event)
+        router.replace('/login');
+        onClose()
+    }
 
     return (
         <DashLayout>
             <DashHead PageName='Acccount'/>
-            <div>
+            <div className='lg:ml-20 sm:ml-5 lg:mt-10 sm:mt-5'>
                 <DashTitle DashTitle="Account"/>
                 <div className="my-4">
                         <h4 className='text-lg font-semibold mb-10'>sign in as {user.email}</h4>
@@ -30,7 +64,31 @@ export default function Billing({userInfo}){
                             </div> 
                             <div className='my-4 flex flex-col justify-start w-fit items-start space-y-2 text-white '>
                                 <button className='px-4 py-2 bg-secondary rounded-md mb-4' onClick={logout}>Logout</button>
-                                <Link href='https://wa.link/7mqehr'><a className='px-2 py-1 bg-red-500 text-xs flex items-center space-x-2'><FeatherIcon size={14} icon='trash'/> Delete Account</a></Link>
+                                <div>  
+
+                                    <button className='p-2 bg-red-500 text-white' onClick={onOpen}>Delete Account</button>
+
+                                    <Modal isOpen={isOpen} onClose={onClose}>
+                                        <ModalOverlay/>
+                                        <ModalContent>
+                                            <ModalHeader>Delete Account</ModalHeader>
+                                            <ModalCloseButton />
+                                            <ModalBody>
+                                                <p>This will permanently delete all your products saved and your subscription will be cancelled</p>
+                                                <p className='text-red-500 font-bold'>This action cannot be undone</p>
+                                            </ModalBody>
+                                            <ModalFooter>
+                                                    <Button colorScheme='blue' mr={3} onClick={onClose}>
+                                                    Close
+                                                    </Button>
+                                                    <Button onClick={deleteAccount} colorScheme='red' > I agree</Button>
+                                                </ModalFooter>
+                                        </ModalContent>
+                                    </Modal>
+                                                                
+                                </div>
+                                
+                                
                             </div>
                         </div>
                 
@@ -40,15 +98,14 @@ export default function Billing({userInfo}){
                                 <h4 className='font-semibold'>Membership</h4>
                                 <span className='text-sm'>This is your robotdom membership section, where you can control your subscription</span>
                             </div> 
-                            <div className='my-4 flex flex-col justify-start w-fit items-start space-y-2 text-white '>
+                            {<div className='my-4 flex flex-col justify-start w-fit items-start space-y-2 text-white '>
                                 <Link href={portal}><a className='px-4 py-2 bg-secondary rounded-md mb-4'>Manage Subscription</a></Link>
     
-                            </div>
+                            </div>}
                         </div>
-                
                 </div>
             </div>
-    </DashLayout>
+        </DashLayout>
 
     )
     
@@ -68,14 +125,9 @@ export async function getServerSideProps(context:GetServerSidePropsContext){
     }
 
     const { user} = session
-    const portal = await stripe.portalUrl(user.email);
+    let portal = await stripe.portalUrl(user.email);
+    if(!portal) portal = ''
    
-    if(!portal) return{
-        redirect:{
-            destination:'/billing',
-            permanent:false
-        }
-    }
     const userInfo =JSON.stringify({user,portal})
     return {
         props: {

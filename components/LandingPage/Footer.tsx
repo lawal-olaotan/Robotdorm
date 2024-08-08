@@ -26,7 +26,7 @@ export const Footer = () => {
     ]
     
     return(
-        <div className="bg-secondary from-sky-100 to-blue-500 text-white  space-y-6">
+        <div className="bg-secondary from-sky-100 to-blue-500 text-white  space-y-6 mt-8">
 
             <div className='2xl:w-[1440px] m-auto w-full grid items-center xl:px-24 lg:px-12 sm:py-8 sm:px-6 space-y-6'>
 

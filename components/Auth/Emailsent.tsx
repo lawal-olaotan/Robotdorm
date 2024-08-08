@@ -24,7 +24,8 @@ export const EmailMes : NextPage<Props> = (Props) => {
         const token = (tokenRef.current.value).toLowerCase()
 
         const response = await fetch(`/api/auth/callback/email?email=${email}&token=${token}`);
-        router.push(response.url);
+        // if(response.ok) router.replace('/dashboard')
+        router.replace(response.url);
     }
 
     return (

@@ -22,7 +22,12 @@
     "paths":{
       "@components/*":["components/*.tsx"],
       "@styles/*":["styles/*"],
-      "@pages/*": ["pages/*.tsx"]
+      "@pages/*": ["pages/*.tsx"],
+      "@lib/*": ["lib/*.ts",],
+      "@context/*": ["context/*.tsx"],
+      "@util/*": ["util/*tsx","util/*ts"],
+      "@service/*": ["service/*.ts"],
+      "@api/*": ["pages/api/*.ts"],
     }
     
   },

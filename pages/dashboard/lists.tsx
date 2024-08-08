@@ -1,11 +1,9 @@
-import {useSession, getSession} from 'next-auth/react'
 import {getCoreRowModel, useReactTable, flexRender,createColumnHelper} from '@tanstack/react-table';
-import React, {useEffect, useContext, useState} from 'react'; 
+import React, {useContext } from 'react'; 
 import useSWR from 'swr'; 
 import {ToastContainer} from 'react-toastify';
-import { GetServerSidePropsContext } from "next";
-import {authOptions}  from "../api/auth/[...nextauth]";
-import { getServerSession } from "next-auth";
+import Image from 'next/image';
+
 
 
 import { DashLayout } from '@components/dashboard/DashLayout';
@@ -15,13 +13,14 @@ import { EmptySection } from '@components/dashboard/EmptySection';
 import {IndeterminateCheckbox} from '@components/dashboard/IndeterminateCheckbox';
 import { VaultIcons } from '@components/dashboard/VaultIcons'
 import { ProductDetails } from 'interface/userSes';
-import { VaultContext} from 'lib/VaultProvider';
+import { VaultContext} from 'context/VaultProvider';
 import { DashQuote } from '@components/dashboard/DashQuote';
 import { Loader } from '@components/dashboard/Loader';
+import { UseAuth } from 'hooks/auth';
 
-export default function Lists({user}){
-    const {id} = JSON.parse(user)
+export default function Lists(){
     const {setListData,setCheckedRow,rowSelection, nameInputRef,selectedProduct} = useContext(VaultContext); 
+    const id = UseAuth()
     const fetcher = (url) => fetch(url).then((res)=> res.json() ); 
      const columnHelper = createColumnHelper<ProductDetails>();
      const columns = [
@@ -29,8 +28,8 @@ export default function Lists({user}){
                 header: () => <span>Product</span>,
                 cell: ({ row }) =>  (
                     <a href={row.original.link} target="_blank" rel="noreferrer" className='flex items-center'>
-                        <img className='w-[50px] h-[50px] mr-3' src={row.original.img}/>
-                        <div className='flex flex-col'> <span>{row.original.title}</span> <span>{row.original.keyWord}</span></div>
+                        <Image height={50} width={50} alt={row.original.title} src={row.original.img}/>
+                        <div className='sm:hidden lg:flex flex-col lg:ml-3 sm:m-0'> <span>{row.original.title}</span> <span>{row.original.keyWord}</span></div>
                     </a>
      ),
                 footer: props => props.column.id,
@@ -63,7 +62,7 @@ export default function Lists({user}){
                 />
             ),
             cell:({ row }) => (
-                <div className='px-1'>
+                <div className='lg:px-1 sm:p-4'>
                     <IndeterminateCheckbox
                     {...{
                         checked: row.getIsSelected(),
@@ -77,13 +76,11 @@ export default function Lists({user}){
             }),
 
      ]
-
-
+    
     const url = `/api/getSummary?query=${id}&collection=lists`;
     const { data, error } = useSWR(url, fetcher);  
-    if(data !== undefined){
-        setListData(data);
-    }
+    if(!data)setListData(data);
+
 
     const table = useReactTable({
         data,
@@ -96,12 +93,12 @@ export default function Lists({user}){
         debugTable: true,
     })
 
-    if(data === undefined){
+    if(!data){
         return <Loader/>
     } 
 
     return (
-    <div>
+    <div className='lg:ml-20 sm:mx-4 lg:mt-10 sm:mt-5'>
         <div>
             <DashHead PageName="Vault"/> 
             <div className='relative'>
@@ -164,28 +161,12 @@ export default function Lists({user}){
 )
 }
 
+
+
 Lists.getLayout = function getLayout(page:React.ReactElement){
     return(
         <DashLayout>
             {page}
         </DashLayout>
     )
-}
-
-export async function getServerSideProps(context:GetServerSidePropsContext){
-
-    const session = await getServerSession(context.req,context.res,authOptions);
-    if(!session) return{
-        redirect:{
-            destination:'/login',
-            permanent:false
-        }
-    }
-
-    const { user} = session
-    return {
-        props: {
-          user:JSON.stringify(user)
-        },
-    };
 }

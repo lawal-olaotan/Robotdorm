@@ -1,25 +1,32 @@
 
 
 import {NextPage} from 'next';
-import Link from 'next/link'; 
-import { useRouter } from 'next/router'; 
+import { useRouter } from 'next/router';
+import Image from 'next/image';
 
 interface Props{
     dashLink:string,
     dashSrc: string,
     dashText:string,
-    dashBg?: string
+    dashBg?: string,
+    trigger: ()=> void
+    isHidden:boolean
 }
 
 export const DashItems: NextPage<Props> = (Props) => {
-    const {dashLink, dashSrc, dashText,dashBg} = Props; 
-    const router = useRouter(); 
+    const {dashLink, dashSrc, dashText,dashBg,trigger,isHidden} = Props; 
+    const router = useRouter();
+
+    const dashEvent = () => {
+        trigger()
+        router.push(dashLink)
+    }
+
 
     return (
-        <Link href={dashLink}><a className={`${router.pathname == dashLink ? "bg-primary" : "bg-transparent" } ${dashBg}  flex items-center px-6 py-4 w-[288px] hover:bg-primary`}>
-                        <img className="w-[30px] mr-6" src={dashSrc} alt={dashText} />
-                        <span>{dashText}</span>
-            </a></Link>
-
+        <button onClick={dashEvent} className={`${router.pathname == dashLink ? "bg-primary" : "bg-transparent" } ${dashBg} ${isHidden ? 'sm:flex lg:hidden' : 'flex'}   items-center m-0 px-6 py-4 w-[288px] lg:hover:bg-primary`}>
+                            <Image width={30} height={30} src={dashSrc} alt={dashText} />
+                            <span className='ml-6 lg:text-base sm:text-xl'>{dashText}</span>
+        </button>
     )
 }

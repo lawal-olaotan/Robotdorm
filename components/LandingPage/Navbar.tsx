@@ -13,18 +13,10 @@ export default function Navbar(){
             <nav className='sticky top-0 w-100 bg-gradient-to-tl from-sky-100 to-blue-500'>
                     {showFeatures ? (<NavLayout navigation={setFeatures} isNavigation={showFeatures}> <Solutions isActive={showFeatures}/></NavLayout>) : (
                         <NavLayout >
-                        <div className='flex  sm:flex-col lg:flex-row w-full'>
-                            <button className='sm:hidden lg:flex items-center' onMouseEnter={()=>setSolution(true) }>
-                                <Navitems  routeName="Solutions" routeLink="/pricing" isLink={false}/>
-                            </button>
-                                
-                            <button onClick={()=> {setFeatures(true)}}>
-                                <Navitems routeName="Solutions" isLink={false} customStyle='lg:hidden'/>
-                            </button>
-                                
-                            <Navitems routeName="Pricing" routeLink="/pricing" isLink={true} />
-                            <Navitems routeName="Community" routeLink="https://chat.whatsapp.com/Lugl9SwxFhe6hQyJ34lJ6t" isLink={true} />
-                        </div>
+                            <div className='flex  sm:flex-col lg:flex-row w-full'>      
+                               <Navitems routeName="Pricing" routeLink="/pricing" isLink={true} />
+                                <Navitems routeName="Community" routeLink="https://chat.whatsapp.com/Lugl9SwxFhe6hQyJ34lJ6t" isLink={true} />
+                            </div>
                         </NavLayout>
                     )}
 

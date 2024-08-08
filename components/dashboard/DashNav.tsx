@@ -1,16 +1,20 @@
 import Link from "next/link";
 import { useState, useEffect } from "react";
-import { Navitems } from "@components/LandingPage/Navitems";
 import { DashIcons } from "@components/dashboard/DashIcons";
 import { useSession } from "next-auth/react";
 import { Session } from "next-auth";
-import { useRouter } from "next/router";
-import {logout} from '../../lib/AuthFunc'
+import {logout} from 'lib/events'
+import FeatherIcons from "feather-icons-react";
+import { NextPage } from "next";
 
-export const DashNav = () => {
+interface DashStateProps {
+  state:boolean
+  stateTrigger: ()=> void
+}
+
+export const DashNav:NextPage<DashStateProps> = ({stateTrigger, state}) => {
   const [active, setActive] = useState(false);
   const { data: session, status }: { data: Session; status: string } = useSession();
-    const router = useRouter();
 
   useEffect(() => {
     if (active) {
@@ -31,32 +35,17 @@ export const DashNav = () => {
 
 
   return (
-    <nav className="flex items-center justify-between py-4 pr-12 pl-0 lg:pl-[75px] xl:pl-[90px] fixed left-0 right-0 top-0 z-[1] h-[68px] shadow-5xl bg-white">
-      <div className="w-full flex items-center lg:justify-between">
+    <nav className="flex items-center justify-between py-4 sm:px-6 lg:pl-[75px] xl:pl-[90px] fixed left-0 right-0 top-0 lg:z-[1] sm:z-20 h-[68px] shadow-5xl bg-white">
+  
+
         <Link href="/dashboard">
-          <a className="inline-flex lg:w-48 sm:w-48">
+          <a className="inline-flex lg:w-48 sm:w-40 lg:mx-0">
             <img className="w-100" src="/logo2.png" alt="robotdorm-logo" />
           </a>
         </Link>
-        <div className="flex items-center mr-6">
-        <Navitems
-            routeName="How to use robotdorm"
-            routeLink="https://youtu.be/Vgo3Kl7YuKI?si=aGSoSd0Cudz1tJy"
-            isLink={true}
-          />
-          <Navitems
-            routeName="Source Product"
-            routeLink="https://calendly.com/robotdorm/30min"
-            isLink={true}
-          />
-          <Navitems
-            routeName="Launch Series"
-            routeLink="https://dmr4lc06ats.typeform.com/to/DqPgcUIR"
-            isLink={true}
-          />
-        </div>
-      </div>
-      <div className="flex items-center justify-between w-48">
+
+      <div className="flex items-center justify-between lg:w-48 sm:w1/2">
+
         <div className="flex items-center justify-between">
           <DashIcons
             imgsrc="/fb.png"
@@ -67,9 +56,9 @@ export const DashNav = () => {
             soLink="https://www.instagram.com/robotdorm/"
           />
         </div>
+
         <div>
-          <div
-            className="flex items-center justify-center bg-black rounded-full p-1 w-[45px] h-[45px]"
+          <div className="sm:hidden lg:flex items-center justify-center bg-black rounded-full p-1 w-[45px] h-[45px]"
             onMouseEnter={() => setActive(!active)}
           >
             <img src="/icons.png" alt="profile-pic" />
@@ -107,6 +96,12 @@ export const DashNav = () => {
             </div>
           </div>
         </div>
+
+        <button className="lg:hidden ml-2 inline-flex outline-none text-secondary" onClick={stateTrigger}>
+                <FeatherIcons icon={state ? 'menu' : 'x'} size={40}/>
+        </button>
+
+
       </div>
     </nav>
   );

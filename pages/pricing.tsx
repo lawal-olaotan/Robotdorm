@@ -9,7 +9,6 @@ import {authOptions}  from "./api/auth/[...nextauth]";
 import { getServerSession } from "next-auth";
 
 
-
 export default function Pricing({user}){
 
     const userDetails = JSON.parse(user)
@@ -23,7 +22,7 @@ export default function Pricing({user}){
             </Head>
 
             <div className="bg-gradient-to-b from-sky-50 to-sky-100 px-40 py-12 sm:p-8 lg:px-24 overflow-hidden">
-                <Title subTextPos="" logoSize={30}/>
+                <Title subTextPos="text-center" logoSize={30}/>
                 <PriceList user={userDetails}/>
                 <Review/>
             </div>

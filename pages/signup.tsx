@@ -6,7 +6,7 @@ import { FormFooters } from '@components/FormFooters';
 import {useRef} from 'react'; 
 import { useRouter} from 'next/router';
 import {userInfo} from '../interface/userSes'
-import { extensionId } from "../extension"
+import { extensionId } from "../util/extension"
 import { GetServerSidePropsContext } from "next";
 import {authOptions}  from "./api/auth/[...nextauth]";
 import { getServerSession } from "next-auth";
@@ -25,7 +25,7 @@ export default function Signup({userInfo}){
         const email:string = user.email
         const userData:userInfo = {name,email}
         const updatedData = fetchData(userData);
-        if(updatedData){router.replace('/pricing')}
+        if(updatedData){router.replace('/dashboard')}
     }
 
     const fetchData = async (userData:userInfo) => {
@@ -39,7 +39,7 @@ export default function Signup({userInfo}){
             })
             const dataJson = await updateurl.json();
             var userKey = dataJson._id
-            chrome?.runtime?.sendMessage( extensionId, {type:'browser',data:userKey})
+            chrome?.runtime?.sendMessage(extensionId(), {type:'browser',data:userKey})
             return true;
         }catch(error){
             console.log(error)

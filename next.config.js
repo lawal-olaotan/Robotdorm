@@ -11,7 +11,7 @@ const nextConfig = {
     return config;
   },
   images: {
-    domains:['flagcdn.com']
+    domains:['flagcdn.com', 'ng.jumia.is','ke.jumia.is','tn.jumia.is','dz.jumia.is','gh.jumia.is','sn.jumia.is','ug.jumia.is','eg.jumia.is','ma.jumia.is','ci.jumia.is','za.jumia.is']
   }
 }
 

@@ -79,7 +79,7 @@ export const Review = ()=> {
         }
 
         return controls?.stop;
-    }, [xTranslation, width]);
+    }, [xTranslation, width, mustFinish,render,duration]);
 
     
     return(
