@@ -1,5 +1,5 @@
 /*
-! tailwindcss v3.4.3 | MIT License | https://tailwindcss.com
+! tailwindcss v3.4.8 | MIT License | https://tailwindcss.com
 *//*
 1. Prevent padding and border from affecting element width. (https://github.com/mozdevs/cssremedy/issues/4)
 2. Allow adding a border to an element by just adding a border-width. (https://github.com/tailwindcss/tailwindcss/pull/116)
@@ -516,9 +516,6 @@ video {
 .sticky {
   position: sticky;
 }
-.bottom-\[2pc\] {
-  bottom: 2pc;
-}
 .left-0 {
   left: 0px;
 }
@@ -548,9 +545,6 @@ video {
 }
 .top-\[4\.5pc\] {
   top: 4.5pc;
-}
-.bottom-\[0pc\] {
-  bottom: 0pc;
 }
 .z-0 {
   z-index: 0;
@@ -1035,17 +1029,11 @@ video {
 .to-sky-100 {
   --tw-gradient-to: #e0f2fe var(--tw-gradient-to-position);
 }
-.p-0 {
-  padding: 0px;
-}
 .p-1 {
   padding: 0.25rem;
 }
 .p-2 {
   padding: 0.5rem;
-}
-.p-3 {
-  padding: 0.75rem;
 }
 .p-3\.5 {
   padding: 0.875rem;
@@ -1385,6 +1373,12 @@ video {
     margin-left: calc(0px * calc(1 - var(--tw-space-x-reverse)));
   }
 
+  .sm\:space-y-2 > :not([hidden]) ~ :not([hidden]) {
+    --tw-space-y-reverse: 0;
+    margin-top: calc(0.5rem * calc(1 - var(--tw-space-y-reverse)));
+    margin-bottom: calc(0.5rem * var(--tw-space-y-reverse));
+  }
+
   .sm\:space-y-4 > :not([hidden]) ~ :not([hidden]) {
     --tw-space-y-reverse: 0;
     margin-top: calc(1rem * calc(1 - var(--tw-space-y-reverse)));
@@ -1395,12 +1389,6 @@ video {
     --tw-space-y-reverse: 0;
     margin-top: calc(1.5rem * calc(1 - var(--tw-space-y-reverse)));
     margin-bottom: calc(1.5rem * var(--tw-space-y-reverse));
-  }
-
-  .sm\:space-y-2 > :not([hidden]) ~ :not([hidden]) {
-    --tw-space-y-reverse: 0;
-    margin-top: calc(0.5rem * calc(1 - var(--tw-space-y-reverse)));
-    margin-bottom: calc(0.5rem * var(--tw-space-y-reverse));
   }
 
   .sm\:bg-white {
@@ -1489,14 +1477,14 @@ video {
     line-height: 1.75rem;
   }
 
-  .sm\:text-xl {
-    font-size: 1.25rem;
-    line-height: 1.75rem;
-  }
-
   .sm\:text-sm {
     font-size: 0.875rem;
     line-height: 1.25rem;
+  }
+
+  .sm\:text-xl {
+    font-size: 1.25rem;
+    line-height: 1.75rem;
   }
 
   .sm\:font-bold {
@@ -1573,8 +1561,8 @@ video {
     margin-left: 5rem;
   }
 
-  .lg\:mr-3 {
-    margin-right: 0.75rem;
+  .lg\:ml-3 {
+    margin-left: 0.75rem;
   }
 
   .lg\:mt-10 {
@@ -1601,10 +1589,6 @@ video {
     display: none;
   }
 
-  .lg\:h-\[50px\] {
-    height: 50px;
-  }
-
   .lg\:h-\[50vh\] {
     height: 50vh;
   }
@@ -1620,6 +1604,10 @@ video {
 
   .lg\:w-1\/4 {
     width: 25%;
+  }
+
+  .lg\:w-1\/5 {
+    width: 20%;
   }
 
   .lg\:w-2\/5 {
@@ -1670,16 +1658,8 @@ video {
     width: 46%;
   }
 
-  .lg\:w-\[50px\] {
-    width: 50px;
-  }
-
   .lg\:w-\[70px\] {
     width: 70px;
-  }
-
-  .lg\:w-1\/5 {
-    width: 20%;
   }
 
   .lg\:flex-row {
