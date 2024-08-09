@@ -6,6 +6,7 @@ import { InputCom } from '@components/Auth/InputCom';
 import { FormFooters } from '@components/FormFooters';
 import { EmailMes } from '@components/Auth/Emailsent';
 import {  SignupLoader } from '@components/dashboard/Loader';
+import { redirect } from 'next/dist/server/api-utils';
 
 interface IUsers {
     email:string
@@ -28,6 +29,9 @@ const AuthForm = ()=> {
 
         const InputEmail = emailInputRef.current.value
 
+        const userStatus = await fetch(`/api/getInfo?email=${InputEmail}`).then((response) => response.json());
+        const callbackUrl = userStatus.ok ? '/dashboard' : '/signup'
+
         const userdetails = {
             email: InputEmail
         };
@@ -36,7 +40,8 @@ const AuthForm = ()=> {
     
         const result = await signIn('email', {
             redirect:false,
-            email: InputEmail
+            email: InputEmail,
+            callbackUrl
         });
         
 

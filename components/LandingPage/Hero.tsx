@@ -4,7 +4,7 @@ import { Title } from '@components/Pricing/Title'
 
 export const Hero = () => {
     return (
-        <div>
+        <div className='lg:mt-20 sm:mt-20'>
             <DynamicSection sectionTitle={`Find winning products in minutes.`} sectionSubTitle="We've removed the guesswork so you can find validated products idea on African's largest ecommerce database." imgTitle="/firstpic.png"/>
             <Second/>
             <div className='flex flex-col items-center justify-center lg:py-4 lg:px-20 bg-gradient-to-bl from-sky-100 to-blue-500'>

@@ -17,7 +17,7 @@ export const DynamicSection:NextPage<Props> = (Props)=> {
 
             <div className='lg:flex bg-gradient-to-bl from-sky-100 to-blue-500 sm:flex-col lg:flex-row items-center justify-center sm:h-auto'>
 
-            <div className='lg:flex justify-between items-center lg:py-12 2xl:py-20  xl:px-24 sm:px-6 sm:py-12  lg:px-12 2xl:w-[1440px] m-auto'>
+            <div className='lg:flex justify-between items-center lg:py-14 2xl:py-20  xl:px-24 sm:px-6 sm:py-12  lg:px-12 2xl:w-[1440px] m-auto'>
 
                 <div className="text-black sm:w-full lg:w-[44%] 2xl:w-1/2 sm:text-center lg:text-left">
 

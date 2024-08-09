@@ -22,9 +22,7 @@ export const EmailMes : NextPage<Props> = (Props) => {
     const verifyToken = async(event:React.SyntheticEvent) => {
         event.preventDefault()
         const token = (tokenRef.current.value).toLowerCase()
-
         const response = await fetch(`/api/auth/callback/email?email=${email}&token=${token}`);
-        // if(response.ok) router.replace('/dashboard')
         router.replace(response.url);
     }
 

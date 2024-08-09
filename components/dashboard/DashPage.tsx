@@ -31,7 +31,7 @@ export const DashPage:NextPage<UserName> = (UserName) => {
         {
             title:"Find Products",
             icon:'layout',
-            description:"Search your desired keywords or choose your desired category on any jumia website"
+            description:"Use Robotdorm to filter best performing products based on your desired keywords or choose your desired category"
         },
         {
             title:"Save and Export",
@@ -42,14 +42,7 @@ export const DashPage:NextPage<UserName> = (UserName) => {
 
     const actions = [
         {
-            title:"Turn Selling on Jumia to your 9-5!",
-            hidden:false,
-            description:"Created by an elite team of Jumia sellers, teaching you everything you need to create a sustainable Jumia business.",
-            path:"https://robotdorm.teachable.com/p/jumia-six-figure",
-            cta:'Enroll Now'
-        },
-        {
-            title:"Install Robotdorm Chrome Extension",
+            title:"Install our Chrome Extension",
             hidden:false,
             description:"Get inspired and start finding your next winning product and carrying out extensive competitors analysis from our Jumia database.",
             path:"https://chromewebstore.google.com/detail/robotdorm-jumia-keyword-t/iebnenlmoeolohhmbjilijlgpjbjljhm?hl=en-GB",
@@ -62,6 +55,13 @@ export const DashPage:NextPage<UserName> = (UserName) => {
             path:"/dashboard/research",
             cta:'Coming soon'
         },
+        {
+            title:"Turn Selling on Jumia to your 9-5!",
+            hidden:false,
+            description:"Created by an elite team of Jumia sellers, teaching you everything you need to create a sustainable Jumia business.",
+            path:"https://robotdorm.teachable.com/p/jumia-six-figure",
+            cta:'Enroll Now'
+        },
     ]
 
     return (
@@ -69,8 +69,8 @@ export const DashPage:NextPage<UserName> = (UserName) => {
                 <DashHead PageName="Dashboard"/>
                 
                 <div className="flex lg:flex-row sm: flex-col items-center justify-center space-x-4 shadow-6xl bg-sky-100 rounded-lg sm:p-2 lg:py-1 lg:px-0 text-center mb-4">
-                        <h6 className="text-center font-medium">Uncover the secret to build a six-figure business on Jumia</h6>
-                        <Link href='https://robotdorm.teachable.com/p/jumia-six-figure'><a className='px-6 py-3 bg-secondary text-white my-4 rounded-md'>Explore Jumia Secret</a></Link>
+                        <h6 className="text-center font-medium">Uncover the secret to building a six-figure business on Jumia.</h6>
+                        <Link href='https://robotdorm.teachable.com/p/jumia-six-figure'><a className='px-6 py-3 bg-secondary text-white my-4 rounded-md'>Explore Course</a></Link>
                 </div>
 
                 <div className='px-6 py-4 lg:ml-20 sm:ml-0'>

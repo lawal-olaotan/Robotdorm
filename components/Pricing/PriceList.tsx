@@ -72,7 +72,7 @@ export const PriceList:NextPage<UserSession> = (UserSession)=> {
 
 
     return (
-        <div  className="flex lg:flex-row sm:flex-col lg:space-y-0 lg:space-x-8 sm:space-y-6 sm:space-x-0">
+        <div  className="flex justify-center lg:flex-row sm:flex-col lg:space-y-0 lg:space-x-8 sm:space-y-6 sm:space-x-0">
 
         {pricingdescriptions.map((pricing,index)=>(
             <div key={index} className="bg-white p-6 2xl:w-1/4 sm:w-full">
