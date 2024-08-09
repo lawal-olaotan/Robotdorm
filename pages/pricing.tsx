@@ -15,17 +15,21 @@ export default function Pricing({user}){
 
     return (
 
-        <div>
+        <div className="w-full mt-20">
             <Head>
                 <title>Pricing</title>
                 <link rel="icon" href="/favicon.ico" />
             </Head>
+            <div className="flex items-center justify-center bg-gradient-to-b from-sky-50 to-sky-100 w-full">
 
-            <div className="bg-gradient-to-b from-sky-50 to-sky-100 px-40 py-12 sm:p-8 lg:px-24 overflow-hidden">
-                <Title subTextPos="text-center" logoSize={30}/>
-                <PriceList user={userDetails}/>
-                <Review/>
+                    <div className="px-40 py-12 sm:p-8 lg:px-24 overflow-hidden 2xl:w-[1440px]">
+                        <Title subTextPos="text-center" logoSize={30}/>
+                        <PriceList user={userDetails}/>
+                        <Review/>
+                    </div>
+
             </div>
+            
         </div>
 
         )

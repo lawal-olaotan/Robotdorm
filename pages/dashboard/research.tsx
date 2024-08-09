@@ -22,7 +22,7 @@ export default function Research({user}){
                 </div>
                 <div className='m-auto text-center my-8 px-6'>
                       <h3 className='text-2xl font-semibold '>Uh-oh! we are currently working to deliver this feature</h3>
-                      <p className='my-6'>submit your contact information so we can let you know once ready</p>
+                      <p className='my-6'>Submit your contact information so we can let you know once ready.</p>
                       <Link href="https://lodq9254x9n.typeform.com/to/oC2EKHPj"><a className='bg-secondary px-10 py-4 text-white rounded-md'>Submit Information</a></Link>
                 </div>
             </div>         

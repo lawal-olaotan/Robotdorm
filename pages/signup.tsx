@@ -54,7 +54,7 @@ export default function Signup({userInfo}){
             </Head>
             <main className="flex items-center justify-center py-20">
 
-                <div className="lg:w-[28%] sm:w-4/5">
+                <div className="lg:w-1/5 sm:w-4/5">
 
                     <Lheader Title="Register to RobotDorm"/>
 

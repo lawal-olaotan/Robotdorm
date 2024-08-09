@@ -9,12 +9,11 @@ export default async function handler(req:NextApiRequest,res:NextApiResponse){
 
         try{
             const Db = (await ClientPromise).db(); 
-            const session = await getSession({req})
-            const user = session.user; 
-            let userDetails = await Db.collection('users').findOne({
-                email: user.email
+            const {email} = req.query
+            let userDetails = await Db.collection('users').findOne({email
             });
-            res.status(200).send(userDetails);
+            const isUserSaved = userDetails ? true : false
+            res.status(200).send({ok:isUserSaved});
         }catch (e:any){
             console.error(e);
             res.status(500).json({
