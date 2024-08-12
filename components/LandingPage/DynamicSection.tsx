@@ -28,7 +28,7 @@ export const DynamicSection:NextPage<Props> = (Props)=> {
                     <Link href="https://chromewebstore.google.com/detail/robotdorm-jumia-keyword-t/iebnenlmoeolohhmbjilijlgpjbjljhm?hl=en-GB" ><a className=" sm:hidden lg:inline px-12 py-4 bg-secondary text-white rounded-md">Get Started</a>
                     </Link>
 
-                    <Link href="/dashboard" ><a className="lg:hidden px-12 py-4 bg-secondary text-white rounded-md">Get Started</a>
+                    <Link href="/login" ><a className="lg:hidden px-12 py-4 bg-secondary text-white rounded-md">Get Started</a>
                     </Link>
                 </div>
 
