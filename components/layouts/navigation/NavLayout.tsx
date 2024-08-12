@@ -5,6 +5,7 @@ import Image from 'next/image'
 import { useRouter } from 'next/router';
 import FeatherIcons from 'feather-icons-react'
 import { NextPage } from 'next';
+import useAuthContext from "@context/AuthContext"
 
 
 interface NavLayoutProps{
@@ -16,6 +17,7 @@ interface NavLayoutProps{
 export const NavLayout:NextPage<NavLayoutProps> = ({children,navigation,isNavigation}) => {
     const [active, setActive] = useState(false);
     const router = useRouter(); 
+    const {url} = useAuthContext()
 
 
     useEffect(() =>{
@@ -48,10 +50,10 @@ export const NavLayout:NextPage<NavLayoutProps> = ({children,navigation,isNaviga
                     
                         </div>
                         {children}
-                        <Link href='/login'><a className="mt-20 lg:hidden px-12 py-2 text-white bg-secondary ">Login</a></Link>
+                        <Link href={url}><a className="mt-20 lg:hidden px-12 py-2 text-white bg-secondary ">Login</a></Link>
                     </div>
 
-                    <Link href='/login'><a className="px-6 py-2 text-sm text-white bg-secondary sm:mr-3">Login</a></Link>
+                    <Link href={url}><a className="px-6 py-2 text-sm text-white bg-secondary sm:mr-3">Login</a></Link>
 
                 </div>
 
