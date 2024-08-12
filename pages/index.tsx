@@ -2,8 +2,18 @@
 import { Hero }from  '@components/LandingPage/Hero';
 import  Head  from 'next/head';
 import { Layouts01 } from "@components/Layouts01"
+import { GetServerSidePropsContext } from "next";
+import {authOptions}  from "@api/auth/[...nextauth]";
+import { getServerSession } from "next-auth";
+import { useEffect } from 'react';
+import useAuthContext from "@context/AuthContext"
+export default function Home({url}){
 
-export default function Home(){
+    const { setUrl} = useAuthContext()
+
+    useEffect(()=> {
+        setUrl(url)
+    }, [url,setUrl])
 
 // track page for google analytics
   return (
@@ -22,5 +32,14 @@ export default function Home(){
   )
 }
 
+export async function getServerSideProps(context:GetServerSidePropsContext){
 
+    const session = await getServerSession(context.req,context.res,authOptions);
+   const url = !session ? '/login' : '/dashboard'
+  return {
+      props: {
+        url
+      },
+  };
+}
 

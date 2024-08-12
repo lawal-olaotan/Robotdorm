@@ -12,6 +12,8 @@ import {PageProvider} from '../context/PageProvider';
 import {VaultProvider} from '../context/VaultProvider';
 import ReactGA from 'react-ga4';
 import { ChakraProvider } from '@chakra-ui/react'
+import { AuthProvider } from '@context/AuthContext';
+import { Analytics } from '@vercel/analytics/react'
 
 
 
@@ -33,13 +35,16 @@ export default function MyApp({Component, pageProps: {session, ...pageProps} }: 
   return (
     <ChakraProvider>
         <SessionProvider session={session}>
-          <ContextProvider>
-          <PageProvider>
-            <VaultProvider>
-            {getLayout(<Component {...pageProps} />)}
-          </VaultProvider>
-          </PageProvider>
-          </ContextProvider>
+        <AuthProvider>
+              <ContextProvider>
+              <PageProvider>
+                <VaultProvider>
+                {getLayout(<Component {...pageProps} />)}
+                <Analytics/>
+              </VaultProvider>
+              </PageProvider>
+              </ContextProvider>
+          </AuthProvider>
         </SessionProvider>
     </ChakraProvider>
   )

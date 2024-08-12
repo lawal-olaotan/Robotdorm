@@ -10,7 +10,7 @@ import AnimationData from "../../lottie/mobile.json";
 import Lottie from "lottie-react";
 import Link from 'next/link'
 
-export default function Research({user}){
+export default function Research(){
 
     return (
         <DashLayout>
