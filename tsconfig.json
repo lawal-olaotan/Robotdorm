@@ -28,6 +28,7 @@
       "@util/*": ["util/*tsx","util/*ts"],
       "@service/*": ["service/*.ts"],
       "@api/*": ["pages/api/*.ts"],
+      "@types/*": ["types/*.ts"],
     }
     
   },

@@ -40,7 +40,6 @@ export default function MyApp({Component, pageProps: {session, ...pageProps} }: 
               <PageProvider>
                 <VaultProvider>
                 {getLayout(<Component {...pageProps} />)}
-                <Analytics/>
               </VaultProvider>
               </PageProvider>
               </ContextProvider>
