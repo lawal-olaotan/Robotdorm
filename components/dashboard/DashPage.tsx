@@ -76,7 +76,7 @@ export const DashPage:NextPage<UserName> = (UserName) => {
                 <div className='px-6 py-4 lg:ml-20 sm:ml-0'>
                     <DashTitle DashTitle={` Welcome ${name}`} />
 
-                    <div className='flex lg:flex-row lg:items-center sm:flex-col items-center sm:space-y-4  lg:space-y-0 lg:flex-wrap sm:flex-nowrap my-6 lg:gap-x-4 sm:gap-x-0'>
+                    <div className='flex lg:flex-row lg:items-center sm:flex-col items-center sm:space-y-4    lg:space-y-0 lg:flex-wrap sm:flex-nowrap my-6 lg:gap-x-4 sm:gap-x-0'>
                         {
                            actions.map((action:any,index:number) => (
                             <div key={index} className={`${action.hidden ? 'lg:hidden sm:w-full' : 'lg:w-2/6 2xl:w-1/4 sm:w-full'}  my-4  border border-gray-400 p-4 bg-white`}>
@@ -92,7 +92,7 @@ export const DashPage:NextPage<UserName> = (UserName) => {
 
                     <div className='mt-8 sm:hidden lg:block'>
 
-                        <h2 className='font-bold text-2xl text-secondary my-2'>How to Get started</h2>
+                        <h2 className='font-bold text-2xl text-secondary my-2'>How to get started</h2>
 
                         <div className='flex items-center space-x-2'>
                             {
