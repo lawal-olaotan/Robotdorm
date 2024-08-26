@@ -8,6 +8,10 @@ import  { useState } from 'react'
 
 export const PriceList:NextPage<UserSession> = (UserSession)=> {
 
+
+    const BEEID = process.env.NEXT_PUBLIC_BEEID
+    const ATLASID = process.env.NEXT_PUBLIC_ATLASID
+
     // TODO: Transfer as a JSON to S3 
     const pricingdescriptions = [
 
@@ -16,7 +20,7 @@ export const PriceList:NextPage<UserSession> = (UserSession)=> {
             subtitle:"For short-term product research",
             priceTitle:"£5/week",
             priceSubTitle:"Billed Weekly",
-            priceId:'price_1P1ocIAvIJrXKY25kFkSOeQf',
+            priceId:BEEID,
             isDemo:false,
             trialDays:1,
             features:['Weekly consulting session','Unlimited search Access', '7 day access']
@@ -26,7 +30,7 @@ export const PriceList:NextPage<UserSession> = (UserSession)=> {
             subtitle:"For professional sellers",
             priceTitle:"£12/month",
             priceSubTitle:"billed Monthtly",
-            priceId:'price_1P1oedAvIJrXKY25Lky0FZXG',
+            priceId:ATLASID,
             isDemo:false,
             trialDays:7,
             features:['Everything in Bee plan','Monthly access', 'Unlimited Quote Request']
