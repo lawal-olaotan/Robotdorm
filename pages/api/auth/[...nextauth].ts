@@ -2,6 +2,7 @@ import NextAuth from 'next-auth'
 import { MongoDBAdapter } from '@next-auth/mongodb-adapter'
 import ClientPromise from '../../../lib/mongoDb'; 
 import  EmailProvider from 'next-auth/providers/email';
+import GoogleProvider from "next-auth/providers/google";
 import {createTransport} from 'nodemailer'; 
 import type { NextAuthOptions } from 'next-auth';
 import { db } from 'util/db';
@@ -54,41 +55,16 @@ export const authOptions : NextAuthOptions = {
               html: html({url,email,token}) 
            })
         }
-     })
+     }),
+     GoogleProvider({
+      clientId: process.env.G_CLIENT_ID,
+      clientSecret: process.env.G_CLIENT_SECRET,
+    }),
   ], 
   pages:{
      signIn:'/login',
      newUser: '/signup',
-  }, 
-  callbacks:{
-     async session ({session}){
-       let dbClient = db(); 
-       const userDetails = await dbClient.getUserByEmail(session.user.email);
-       if(!userDetails) return session
-    
-        const { _id,emailVerified,name,email,isPremium} =  userDetails;
-        let userAccess = await dbClient.getAccessbyId(_id.toString()); 
-        let service = !userAccess ? {total:5,used:0} : userAccess.services;
-
-        if(!userAccess){
-          //add default access for a new user
-          const accessObject = {userId:_id.toString(),service}
-          await dbClient.saveUserAccess(accessObject)
-        }
-
-         let user:userInfo = {
-             id:_id.toString(),
-            emailVerified,
-            name,
-            email,
-            isPremium,
-            service
-         }
-         session.user = user;
-       return session
-     }, 
-    //  TODO add signIn to check for existing users
-  }
+  },
   
 }
 

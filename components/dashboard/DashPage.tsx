@@ -5,7 +5,6 @@ import FeatherIcons from 'feather-icons-react'
 // components 
 import {DashHead} from '@components/dashboard/DashHead'; 
 import { DashTitle } from './DashTitle';
-import Link from 'next/link';
 import { useRouter } from 'next/router';
 
 interface UserName {
@@ -67,11 +66,6 @@ export const DashPage:NextPage<UserName> = (UserName) => {
     return (
             <>
                 <DashHead PageName="Dashboard"/>
-                
-                {/* <div className="flex lg:flex-row sm: flex-col items-center justify-center space-x-4 shadow-6xl bg-sky-100 rounded-lg sm:p-2 lg:py-1 lg:px-0 text-center mb-4">
-                        <h6 className="text-center font-medium">Uncover the secret to building a six-figure business on Jumia.</h6>
-                        <Link href='https://robotdorm.teachable.com/p/jumia-six-figure'><a className='px-6 py-3 bg-secondary text-white my-4 rounded-md'>Explore Course</a></Link>
-                </div> */}
 
                 <div className='px-6 py-4 lg:ml-20 sm:ml-0'>
                     <DashTitle DashTitle={` Welcome ${name}`} />

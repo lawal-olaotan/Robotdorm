@@ -29,10 +29,15 @@ export async function getServerSideProps(context:GetServerSidePropsContext){
 
   const session = await getServerSession(context.req,context.res,authOptions);
 
-  if(!session) return{
-      props:{
-          id:'no_user',
-      }
+    if(!session) {
+      return{
+        props:{
+            id:'no_user',
+        }
+    }
+      
+    
+    
   }
 
   const { user} = session

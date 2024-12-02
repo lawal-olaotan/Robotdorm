@@ -16,9 +16,6 @@ export default function Navbar(){
                             </div>
                         </NavLayout>
             </nav> 
-           
-            
-
     )
 }
 

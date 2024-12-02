@@ -7,10 +7,12 @@ import { Review } from "@components/Pricing/Review";
 import { GetServerSidePropsContext } from "next";
 import {authOptions}  from "./api/auth/[...nextauth]";
 import { getServerSession } from "next-auth";
+import { usePageTracking} from '../hooks/tracking'
 
 
 export default function Pricing({user}){
 
+    usePageTracking()
     const userDetails = JSON.parse(user)
 
     return (

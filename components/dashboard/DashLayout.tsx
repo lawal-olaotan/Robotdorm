@@ -1,11 +1,13 @@
 import {DashNav} from '@components/dashboard/DashNav'
 import {DashSide} from '@components/dashboard/DashSide'; 
 import {useState} from 'react'; 
-import { useRouter } from 'next/router';
-
+import { useRouter } from 'next/router'
+import { usePageTracking} from '../../hooks/tracking'
 
 export const DashLayout = ({children} : {children:React.ReactNode}) => {
   const router = useRouter();
+
+    usePageTracking(); 
 
   const [toogleState, setToggleState] = useState(true);
   const [toggleMenu, setMenuState] = useState(false);

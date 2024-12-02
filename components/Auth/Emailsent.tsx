@@ -33,7 +33,7 @@ export const EmailMes : NextPage<Props> = (Props) => {
             </Head> 
             
             <main className='flex items-center justify-center py-20'>
-                <div className='xl:w-[25%] lg:w-3/6 sm:w-4/5'> 
+                <div> 
                     <div>
                         <span onClick={()=> {pageToggle(false)}}><FeatherIcon size={32} icon='x' /></span>
                         <Lheader Title={`Please enter the OTP sent to ${email}`}/>

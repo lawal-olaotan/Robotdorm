@@ -2,8 +2,6 @@ import type { NextApiResponse, NextApiRequest} from "next";
 import handler,{check,post,initiValidation} from '../../lib/middlehelper'
 import ClientPromise from '../../lib/mongoDb';
 import emailMarketingProvider from "util/Email";
-import Tiktok from "components/Analytics/tiktok";
-import { IncomingMessage } from "http";
 
 
 const validator = initiValidation([
@@ -15,25 +13,26 @@ export default handler.use(post(validator))
 
 
 .post( async (req:NextApiRequest,res:NextApiResponse)=> {
-        
+    
+    const environment = process.env.ENVIRONMENT
         
     try{
         const dbInstance = (await ClientPromise).db();
         let emailClient = emailMarketingProvider()
-        let tiktok = Tiktok()
 
         const data = req.body;
         const {name,email} = data
-        const query = {name,isPremium:false}
 
-        const document = await dbInstance.collection('users').findOneAndUpdate({email},{$set:query},{returnDocument:'after'});
-        const {_id} = document.value
-        const tiktokTrackableData = {req:req as IncomingMessage,user:{email,id:_id.toString()},view:'CompleteRegistration'}
-        await emailClient.createContact(email,name)
-        await tiktok.track(tiktokTrackableData).then(()=> res.status(200).send(document.value))
+        const userData = {email,name,isPremium:false,emailVerified:'not-verified',}
+        await dbInstance.collection('users').insertOne(userData);
+        if(environment !== 'dev') await emailClient.createContact(email,name)
+
+        res.status(200).json({ok:true});
     }catch (error:any){
+        console.log(error)
             res.status(500).json({
-                message: error.message
+                message: error.message,
+                ok:false
             })
         }
 });

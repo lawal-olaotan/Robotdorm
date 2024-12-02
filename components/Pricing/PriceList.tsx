@@ -23,7 +23,7 @@ export const PriceList:NextPage<UserSession> = (UserSession)=> {
             priceId:BEEID,
             isDemo:false,
             trialDays:1,
-            features:['Weekly consulting session','Unlimited search Access', '7 day access']
+            features:['Unlimited search Access', '7 day access']
         },
         {
             title:'Atlas',
@@ -33,7 +33,7 @@ export const PriceList:NextPage<UserSession> = (UserSession)=> {
             priceId:ATLASID,
             isDemo:false,
             trialDays:7,
-            features:['Everything in Bee plan','Monthly access', 'Unlimited Quote Request']
+            features:['Everything in Bee plan','Monthly access',]
         },
         {
             title:'Enterprise',
@@ -43,7 +43,7 @@ export const PriceList:NextPage<UserSession> = (UserSession)=> {
             priceId:'',
             isDemo:true,
             trialDays:0,
-            features:['API access','customer success manager']
+            features:['API access','Everything in Bee plan', 'custom solutions']
         }
     ]
     const router = useRouter()

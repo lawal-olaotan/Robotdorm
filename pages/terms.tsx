@@ -8,7 +8,7 @@ export default function Terms(){
     const terms = [
         {
             title:'Introduction to Services',
-            term:'RobotDorm, referred to as "RobotDorm," provides educational services to support Amazon merchants. owned by RobotDorm UK LTD, a limited partnership.'
+            term:'RobotDorm, referred to as "RobotDorm," provides educational services to support ecommerce merchants. owned by RobotDorm UK LTD, a limited partnership.'
         },
         {
             title:'Membership Requirements',
