@@ -61,7 +61,7 @@ const AuthForm = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main className="flex items-center justify-center py-20">
-        <div className="xl:w-[25%] lg:w-2/6 sm:w-4/5">
+        <div className="max-w-[400px] sm:w-4/5 mx-auto">
           <Lheader Title="Login to RobotDorm" />
 
           <form onSubmit={submitForm}>

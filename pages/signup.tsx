@@ -26,7 +26,7 @@ export default function Signup(){
                 <title> Register | RobotDorm</title>
                 <link rel="icon" href="/favicon.ico" />
             </Head>
-            <main className='max-w-[480px] sm:w-4/5 mx-auto my-8'>
+            <main className='max-w-[400px] sm:w-4/5 mx-auto my-8'>
             {!Emailsent ? (
                 <div className="w-fit">
                     <Lheader Title="Register to RobotDorm"/>
