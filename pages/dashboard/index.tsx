@@ -1,14 +1,25 @@
 
-import React from 'react';
+import React, {useEffect} from 'react';
 import { GetServerSidePropsContext } from "next";
 import {authOptions}  from "../api/auth/[...nextauth]";
 import { getServerSession } from "next-auth";
+import { useRouter } from 'next/router';
+import { extensionId } from "util/extension";
 
 // components 
 import { DashLayout } from '@components/dashboard/DashLayout';
 import { DashPage } from '@components/dashboard/DashPage';
 
-export default function Dashboard({name}){
+export default function Dashboard({name,id}){
+
+    const router = useRouter();
+
+    useEffect(()=> {
+        if(id !== 'no_user'){
+          chrome.runtime.sendMessage(extensionId(),{ type:"browser", data:id})
+          router.push('/dashboard')
+        }
+}, [id,router])
 
     return (<DashPage name={name}/>)
 }
@@ -31,10 +42,13 @@ export async function getServerSideProps(context:GetServerSidePropsContext){
             permanent:false
         }
     }
-    const name = session.user.name
+    console.log(session.user)
+    const {name, id} = session.user
+
   return {
       props: {
-        name
+        name,
+        id
       },
   };
 }

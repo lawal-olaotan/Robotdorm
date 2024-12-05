@@ -65,6 +65,35 @@ export const authOptions : NextAuthOptions = {
      signIn:'/login',
      newUser: '/signup',
   },
+  callbacks:{
+    async session ({session}){
+      let dbClient = db(); 
+      const userDetails = await dbClient.getUserByEmail(session.user.email);
+      if(!userDetails) return session
+   
+       const { _id,emailVerified,name,email,isPremium} =  userDetails;
+       let userAccess = await dbClient.getAccessbyId(_id.toString()); 
+       let service = !userAccess ? {total:5,used:0} : userAccess.services;
+
+       if(!userAccess){
+         //add default access for a new user
+         const accessObject = {userId:_id.toString(),service}
+         await dbClient.saveUserAccess(accessObject)
+       }
+
+        let user:userInfo = {
+            id:_id.toString(),
+           emailVerified,
+           name,
+           email,
+           isPremium,
+           service
+        }
+        session.user = user;
+      return session
+    }, 
+   //  TODO add signIn to check for existing users
+ }
   
 }
 
