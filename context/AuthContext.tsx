@@ -19,7 +19,6 @@ export const AuthProvider: FC = ({ children }) => {
 
   useEffect(() => {
     getSession().then((session) => {
-        console.log(session);
        const url = session ? '/login' : '/signup';
        setUrl(url);
     });

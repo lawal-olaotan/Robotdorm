@@ -23,8 +23,7 @@ const Tiktok = () => {
 
     const track = async(data:trackingDetails) => {
         const payload = await createPayload(data)
-        const response = await api(payload)
-        console.log(response)
+        await api(payload)
     }
 
     const createPayload = async(pageData:pageData) => {

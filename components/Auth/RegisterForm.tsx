@@ -1,10 +1,9 @@
 import { InputCom } from '@components/Auth/InputCom';
 import { signIn } from 'next-auth/react';
-import { EmailMes } from "@components/Auth/Emailsent";
-import { useState, useRef,SetStateAction } from 'react'
-import { SessionItems } from '../../interface/index'
+import { SetStateAction } from 'react'
 import { useRouter } from 'next/router';
 import { NextPage } from 'next';
+import Link from 'next/link';
 
 interface formResults {
   setEmailSent:React.Dispatch<SetStateAction<boolean>>
@@ -69,7 +68,11 @@ export const RegisterForm:NextPage<formResults> = (formResults) => {
                         <InputCom labelName='Full name' id="name" type="name" placeholder="Janny Smith" />
                         <InputCom labelName='Email address' id="email" type="email" placeholder="janny@example.com"/>
                     </div>
-                    <button className="rounded-lg mt-8 bg-secondary p-3.5 w-full text-white">Create an Account</button>
+                    <div>
+                    <button className="rounded-lg mt-8 mb-4 bg-secondary p-3.5 w-full text-white">Create an Account</button>
+                    <Link className='text-xs' href='/login'>Login Instead</Link>
+                    </div>
+
               </form>
           </>
             

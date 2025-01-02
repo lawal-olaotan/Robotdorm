@@ -2,6 +2,17 @@ import ClientPromise from '../lib/mongoDb';
 import { ObjectId } from 'mongodb';
 
 
+export type User = {
+    _id:ObjectId,
+    email:string,
+    name:string,
+    isPremium?:boolean,
+    emailVerified?:boolean | null | string,
+}
+
+export type UserResponse = boolean | User;
+
+
  export const db = ()=> {
 
     const start = async(collectionId:string)=> {
@@ -10,12 +21,11 @@ import { ObjectId } from 'mongodb';
         return collection
     }
 
-    const getUserByEmail = async(email:string) => {
+    const getUserByEmail = async(email:string):Promise<UserResponse> =>  {
         const db = await start('users');
         const userDetails = await db.findOne( { email} ) 
         if(!userDetails) return false
-        return userDetails
-
+        return userDetails as User
     }
 
     const getAccessbyId = async(userId:string)=> {

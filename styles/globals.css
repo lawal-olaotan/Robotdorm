@@ -783,11 +783,11 @@ video {
 .min-w-\[300px\] {
   min-width: 300px;
 }
+.max-w-\[400px\] {
+  max-width: 400px;
+}
 .max-w-\[450px\] {
   max-width: 450px;
-}
-.max-w-\[480px\] {
-  max-width: 480px;
 }
 .grow {
   flex-grow: 1;
@@ -1885,10 +1885,6 @@ video {
   }
 
   .xl\:w-1\/4 {
-    width: 25%;
-  }
-
-  .xl\:w-\[25\%\] {
     width: 25%;
   }
 

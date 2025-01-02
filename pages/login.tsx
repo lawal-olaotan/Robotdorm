@@ -9,19 +9,18 @@ import {authOptions}  from "./api/auth/[...nextauth]";
 
 
 export default function Login({id}){
-    const router = useRouter()
+  
+  const router = useRouter()
 
   useEffect(()=> {
-        if(id !== 'no_user'){
-          chrome.runtime.sendMessage(extensionId(),{ type:"browser", data:id})
-          router.push('/dashboard')
-        }
-}, [id,router])
+          if(id !== 'no_user'){
+            chrome.runtime.sendMessage(extensionId(),{ type:"browser", data:id})
+            router.push('/dashboard')
+          }
+  }, [id,router])
 
+  return (<AuthForm />);
 
-
-
-  return (<AuthForm />)
 };
 
 export async function getServerSideProps(context:GetServerSidePropsContext){

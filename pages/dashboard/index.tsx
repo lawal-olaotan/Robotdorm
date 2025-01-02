@@ -42,7 +42,7 @@ export async function getServerSideProps(context:GetServerSidePropsContext){
             permanent:false
         }
     }
-    console.log(session.user)
+
     const {name, id} = session.user
 
   return {
